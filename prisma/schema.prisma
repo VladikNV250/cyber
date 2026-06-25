@@ -87,6 +87,7 @@ model Review {
 
   @@unique([userId, productId])
 }
+
 model Order {
   id          String      @id @default(uuid())
   totalAmount Decimal
@@ -97,7 +98,7 @@ model Order {
   shippingMethod ShippingMethod
   paymentMethod  PaymentMethod
   shippingDetails Json
-  transactionId String?
+  transactionId String? @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

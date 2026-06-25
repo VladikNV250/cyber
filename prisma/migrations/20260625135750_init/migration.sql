@@ -137,7 +137,7 @@ CREATE TABLE "Address" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+CREATE UNIQUE INDEX "User_email_key" ON "User"(lower("email"));
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Category_name_key" ON "Category"("name");
@@ -153,6 +153,12 @@ CREATE UNIQUE INDEX "Review_userId_productId_key" ON "Review"("userId", "product
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Favorite_userId_productId_key" ON "Favorite"("userId", "productId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Order_transactionId_key" ON "Order"("transactionId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Address_userId_isDefault_unique" ON "Address"("userId") WHERE "isDefault" = true;
 
 -- AddForeignKey
 ALTER TABLE "Category" ADD CONSTRAINT "Category_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "Category"("id") ON DELETE SET NULL ON UPDATE CASCADE;
