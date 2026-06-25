@@ -189,3 +189,36 @@ ALTER TABLE "Favorite" ADD CONSTRAINT "Favorite_productId_fkey" FOREIGN KEY ("pr
 
 -- AddForeignKey
 ALTER TABLE "Address" ADD CONSTRAINT "Address_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- ======================================================
+-- CUSTOM DATA INTEGRITY CHECKS
+-- ======================================================
+
+-- Ensures a user cannot break the math with a 0-star or 100-star review
+ALTER TABLE "Review" ADD CONSTRAINT "valid_rating_range" CHECK ("rating" >= 1 AND "rating" <= 5);
+-- Ensures the cached average on the Product stays within logical limits
+ALTER TABLE "Product" ADD CONSTRAINT "valid_average_rating" CHECK ("averageRating" >= 0 AND "averageRating" <= 5);
+-- You cannot have a negative amount of reviews
+ALTER TABLE "Product" ADD CONSTRAINT "positive_review_count" CHECK ("reviewCount" >= 0);
+
+-- A product's price cannot be negative (0 is allowed for 100% discount promotions/gifts)
+ALTER TABLE "ProductVariant" ADD CONSTRAINT "price_must_be_positive" CHECK ("price" >= 0);
+-- You cannot have negative physical boxes in a warehouse
+ALTER TABLE "ProductVariant" ADD CONSTRAINT "stock_must_be_positive" CHECK ("stock" >= 0);
+
+-- An order total cannot be negative
+ALTER TABLE "Order" ADD CONSTRAINT "total_amount_positive" CHECK ("totalAmount" >= 0);
+-- You cannot buy 0 items or a negative amount of an item
+ALTER TABLE "OrderItem" ADD CONSTRAINT "quantity_must_be_greater_than_zero" CHECK ("quantity" > 0);
+-- The locked-in historical price cannot be negative
+ALTER TABLE "OrderItem" ADD CONSTRAINT "price_at_purchase_positive" CHECK ("priceAtPurchase" >= 0);
+
+-- Prisma ensures strings aren't NULL, but a user could theoretically send an empty string (""). 
+-- These checks ensure required text fields actually contain characters.
+ALTER TABLE "Category" ADD CONSTRAINT "category_name_not_empty" CHECK (char_length("name") > 0);
+ALTER TABLE "Brand" ADD CONSTRAINT "brand_name_not_empty" CHECK (char_length("name") > 0);
+ALTER TABLE "ProductVariant" ADD CONSTRAINT "sku_not_empty" CHECK (char_length("sku") > 0);
+
+-- Basic sanity check for emails (must contain an @ symbol)
+-- Complex validation still happens in Zod on the server, this is just a baseline database safety net.
+ALTER TABLE "User" ADD CONSTRAINT "email_contains_at_symbol" CHECK ("email" LIKE '%@%');
