@@ -13,6 +13,9 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-ring: var(--ring);
+  --color-input-bg: var(--input-bg);
+
+  --font-figtree: var(--font-figtree);
 }
 
 @layer base {
@@ -29,6 +32,8 @@
     --accent: #f5f5f5;
     --accent-foreground: #000000;
     --ring: #000000;
+    --input-bg: #f5f5f5;
+    --input-placeholder: #656565;
   }
 }
 
