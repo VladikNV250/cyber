@@ -16,15 +16,44 @@ const buttonVariants = cva(
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
       },
+      color: {
+        default: '',
+        white: '',
+        black: '',
+      },
       size: {
-        default: 'h-10 px-4 py-2',
-        sm: 'h-9 rounded-md px-3',
-        lg: 'h-11 rounded-md px-8',
-        icon: 'h-10 w-10',
+        default: 'px-14 py-4 rounded-md text-base font-medium',
+        sm: 'h-9 rounded-md px-3 bg-blue-300',
+        lg: 'rounded-lg px-16 py-3 text-sm font-medium',
+        icon: 'size-10',
       },
     },
+    compoundVariants: [
+      {
+        variant: 'outline',
+        color: 'white',
+        className:
+          'border-white text-white hover:bg-white hover:text-black hover:border-transparent',
+      },
+      {
+        variant: 'default',
+        color: 'white',
+        className: 'bg-white text-black hover:bg-gray-100',
+      },
+      {
+        variant: 'outline',
+        color: 'black',
+        className: 'border-black text-black hover:bg-black hover:text-white',
+      },
+      {
+        variant: 'default',
+        color: 'black',
+        className: 'bg-black text-white hover:bg-black/90',
+      },
+    ],
     defaultVariants: {
       variant: 'default',
+      color: 'default',
       size: 'default',
     },
   },
@@ -32,17 +61,17 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'color'>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, variant, color, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? SlotPrimitive.Slot : 'button';
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(buttonVariants({ variant, color, size, className }))}
         ref={ref}
         {...props}
       />
