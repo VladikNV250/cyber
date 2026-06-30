@@ -1,6 +1,7 @@
 import { Container } from '@/shared/ui';
 import { ProductCard } from '@/entities/product';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/shared/ui';
+import iphoneProductImg from '@/shared/assets/iphone-product.png';
 
 export function ProductTabsSection() {
   const dummyProducts = [
@@ -8,6 +9,7 @@ export function ProductTabsSection() {
       title: 'Apple iPhone 14 Pro Max 128GB Deep Purple',
       price: '$900',
       isFavorite: false,
+      imageUrl: iphoneProductImg,
     },
     {
       title: 'Blackmagic Design Pocket Cinema Camera 6K',
@@ -19,7 +21,12 @@ export function ProductTabsSection() {
       price: '$399',
       isFavorite: false,
     },
-    { title: 'AirPods Max Silver', price: '$549', isFavorite: false },
+    {
+      title: 'AirPods Max Silver',
+      price: '$549',
+      isFavorite: false,
+      imageUrl: iphoneProductImg,
+    },
     {
       title: 'Samsung Galaxy Watch6 Classic 47mm Black',
       price: '$369',
@@ -43,13 +50,19 @@ export function ProductTabsSection() {
   ];
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-14 bg-background">
       <Container>
         <Tabs defaultValue="new-arrival" className="w-full">
           <TabsList className="mb-8">
-            <TabsTrigger value="new-arrival">New Arrival</TabsTrigger>
-            <TabsTrigger value="bestseller">Bestseller</TabsTrigger>
-            <TabsTrigger value="featured">Featured Products</TabsTrigger>
+            <TabsTrigger value="new-arrival" className="px-0">
+              New Arrival
+            </TabsTrigger>
+            <TabsTrigger value="bestseller" className="px-0">
+              Bestseller
+            </TabsTrigger>
+            <TabsTrigger value="featured" className="px-0">
+              Featured Products
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="new-arrival" className="mt-0">
@@ -60,6 +73,7 @@ export function ProductTabsSection() {
                   title={p.title}
                   price={p.price}
                   isFavorite={p.isFavorite}
+                  imageUrl={p.imageUrl}
                 />
               ))}
             </div>
