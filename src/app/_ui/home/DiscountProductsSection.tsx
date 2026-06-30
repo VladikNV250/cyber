@@ -23,12 +23,12 @@ export function DiscountProductsSection() {
 
   return (
     <section className="py-20 bg-white">
-      <Container>
-        <h2 className="text-2xl font-semibold tracking-tight mb-10">
+      <Container className="flex flex-col gap-8">
+        <h2 className="text-2xl font-medium text-foreground">
           Discount up to -50%
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {dummyProducts.map((p, i) => (
             <ProductCard
               key={i}

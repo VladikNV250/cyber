@@ -8,7 +8,7 @@ import { NavLinks } from './NavLinks';
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full flex flex-col">
+    <header className="sticky top-0 z-100 w-full flex flex-col">
       <div className="w-full bg-background border-b border-border py-4">
         <Container className="flex items-center gap-8">
           <Link href="/" className="shrink-0">

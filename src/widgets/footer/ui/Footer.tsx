@@ -2,102 +2,47 @@ import { Container } from '@/shared/ui';
 import Link from 'next/link';
 import Image from 'next/image';
 import logoWhite from '@/shared/assets/logo-white.png';
+import { SERVICES_LINKS, ASSISTANCE_LINKS } from '../config';
 
 export function Footer() {
   return (
     <footer className="bg-primary text-primary-foreground py-16 mt-auto">
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          <div className="flex flex-col gap-4 lg:col-span-2">
+          <div className="flex flex-col gap-6 lg:col-span-2">
             <Link href="/" className="flex items-center gap-2">
               <Image src={logoWhite} alt="Cyber Logo" className="h-8 w-auto" />
             </Link>
-            <p className="text-gray-400 text-sm leading-relaxed max-w-sm mt-4">
+            <p className="text-[#CFCFCF] font-medium text-sm leading-relaxed max-w-sm">
               We are a residential interior design firm located in Portland. Our
               boutique-studio offers more than.
             </p>
           </div>
 
           <div className="flex flex-col gap-4">
-            <h4 className="font-semibold text-lg mb-2">Services</h4>
-            <Link
-              href="#"
-              className="text-gray-400 hover:text-white transition-colors text-sm"
-            >
-              Bonus program
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-400 hover:text-white transition-colors text-sm"
-            >
-              Gift cards
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-400 hover:text-white transition-colors text-sm"
-            >
-              Credit and payment
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-400 hover:text-white transition-colors text-sm"
-            >
-              Service contracts
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-400 hover:text-white transition-colors text-sm"
-            >
-              Non-cash account
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-400 hover:text-white transition-colors text-sm"
-            >
-              Payment
-            </Link>
+            <h4 className="font-semibold text-base">Services</h4>
+            {SERVICES_LINKS.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="text-[#CFCFCF] hover:text-background transition-colors font-light text-sm"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
 
           <div className="flex flex-col gap-4">
-            <h4 className="font-semibold text-lg mb-2">
-              Assistance to the buyer
-            </h4>
-            <Link
-              href="#"
-              className="text-gray-400 hover:text-white transition-colors text-sm"
-            >
-              Find an order
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-400 hover:text-white transition-colors text-sm"
-            >
-              Terms of delivery
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-400 hover:text-white transition-colors text-sm"
-            >
-              Exchange and return of goods
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-400 hover:text-white transition-colors text-sm"
-            >
-              Guarantee
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-400 hover:text-white transition-colors text-sm"
-            >
-              Frequently asked questions
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-400 hover:text-white transition-colors text-sm"
-            >
-              Terms of use of the site
-            </Link>
+            <h4 className="font-semibold text-base">Assistance to the buyer</h4>
+            {ASSISTANCE_LINKS.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="text-[#CFCFCF] hover:text-background transition-colors font-light text-sm"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
 
