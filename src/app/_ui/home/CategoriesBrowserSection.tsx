@@ -14,19 +14,19 @@ import {
 
 export function CategoriesBrowserSection() {
   const categories = [
-    { title: 'Phones', icon: <Smartphone className="h-10 w-10" /> },
-    { title: 'Smart Watches', icon: <Watch className="h-10 w-10" /> },
-    { title: 'Cameras', icon: <Camera className="h-10 w-10" /> },
-    { title: 'Headphones', icon: <Headphones className="h-10 w-10" /> },
-    { title: 'Computers', icon: <Monitor className="h-10 w-10" /> },
-    { title: 'Gaming', icon: <Gamepad2 className="h-10 w-10" /> },
+    { title: 'Phones', icon: <Smartphone className="size-10" /> },
+    { title: 'Smart Watches', icon: <Watch className="size-10" /> },
+    { title: 'Cameras', icon: <Camera className="size-10" /> },
+    { title: 'Headphones', icon: <Headphones className="size-10" /> },
+    { title: 'Computers', icon: <Monitor className="size-10" /> },
+    { title: 'Gaming', icon: <Gamepad2 className="size-10" /> },
   ];
 
   return (
     <section className="py-20 bg-[#FAFAFA]">
       <Container>
         <div className="flex items-center justify-between mb-10">
-          <h2 className="text-2xl font-semibold tracking-tight">
+          <h2 className="text-2xl font-medium text-foreground tracking-tight">
             Browse By Category
           </h2>
           <div className="flex items-center gap-6">
@@ -35,19 +35,19 @@ export function CategoriesBrowserSection() {
               size="icon"
               className="hover:bg-transparent p-0 h-auto text-black hover:opacity-70 transition-opacity"
             >
-              <ChevronLeft className="h-8 w-8 stroke-[1.5]" />
+              <ChevronLeft className="size-8 stroke-[1.5]" />
             </Button>
             <Button
               variant="ghost"
               size="icon"
               className="hover:bg-transparent p-0 h-auto text-black hover:opacity-70 transition-opacity"
             >
-              <ChevronRight className="h-8 w-8 stroke-[1.5]" />
+              <ChevronRight className="size-8 stroke-[1.5]" />
             </Button>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-8">
           {categories.map((category) => (
             <CategoryCard
               key={category.title}
