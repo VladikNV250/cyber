@@ -1,7 +1,29 @@
+import { Header } from '@/widgets/header';
+import { Footer } from '@/widgets/footer';
+import {
+  CategoriesBrowserSection,
+  CategoryBannersSection,
+  DiscountProductsSection,
+  HeroSection,
+  PopularProductsSection,
+  ProductTabsSection,
+  SaleBannerSection,
+} from './_ui/home';
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold">Cyber Store</h1>
-    </main>
+    <>
+      <Header />
+      <main className="flex-1">
+        <HeroSection />
+        <CategoryBannersSection />
+        <CategoriesBrowserSection />
+        <ProductTabsSection />
+        <PopularProductsSection />
+        <DiscountProductsSection />
+        <SaleBannerSection />
+      </main>
+      <Footer />
+    </>
   );
 }
