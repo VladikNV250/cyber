@@ -27,8 +27,9 @@ export function PopularProductsSection() {
             Popular Products
           </h3>
           <p className="text-sm text-[#909090] font-medium max-w-sm">
-            iPad combines a magnificent 10.2-inch Retina display, incredible
-            performance, multitasking and ease of use.
+            Discover our most sought-after tech gadgets, featuring cutting-edge
+            smartwatches, premium accessories, and more to elevate your
+            lifestyle.
           </p>
           <Button variant="outline" color="black">
             Shop Now
@@ -44,8 +45,9 @@ export function PopularProductsSection() {
           </div>
           <h3 className="text-4xl font-light z-10">Ipad Pro</h3>
           <p className="text-sm text-[#909090] font-medium max-w-sm z-10">
-            iPad combines a magnificent 10.2-inch Retina display, incredible
-            performance, multitasking and ease of use.
+            iPad Pro features a stunning Liquid Retina display, the
+            revolutionary M2 chip, and unmatched versatility for professionals
+            and creatives.
           </p>
           <Button variant="outline" color="black" className="z-10">
             Shop Now
@@ -61,8 +63,8 @@ export function PopularProductsSection() {
           </div>
           <h3 className="text-4xl font-light z-10">Samsung Galaxy</h3>
           <p className="text-sm text-[#909090] font-medium max-w-sm z-10">
-            iPad combines a magnificent 10.2-inch Retina display, incredible
-            performance, multitasking and ease of use.
+            Experience the next generation of mobile innovation with Galaxy.
+            Breathtaking displays, pro-grade cameras, and all-day battery life.
           </p>
           <Button variant="outline" color="black" className="z-10">
             Shop Now
@@ -78,8 +80,8 @@ export function PopularProductsSection() {
           </div>
           <h3 className="text-4xl font-light z-10">Macbook Pro</h3>
           <p className="text-sm text-[#909090] font-medium max-w-sm z-10">
-            iPad combines a magnificent 10.2-inch Retina display, incredible
-            performance, multitasking and ease of use.
+            MacBook Pro redefines power. Experience mind-blowing performance, a
+            brilliant Liquid Retina XDR display, and incredible battery life.
           </p>
           <Button variant="outline" color="white" className="z-10">
             Shop Now
