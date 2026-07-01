@@ -14,7 +14,7 @@ export function SaleBannerSection() {
         <Image
           src={banner1}
           alt=""
-          className="absolute bottom-3.5 -left-18 w-[418px] w-max-none z-40"
+          className="absolute bottom-3.5 -left-18 w-[418px] z-40"
         />
         <Image
           src={banner2}
