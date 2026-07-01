@@ -51,6 +51,7 @@ export function Footer() {
           <Link
             href="#"
             className="hover:text-primary-foreground transition-colors"
+            aria-label="Twitter"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -69,6 +70,7 @@ export function Footer() {
           <Link
             href="#"
             className="hover:text-primary-foreground transition-colors"
+            aria-label="Facebook"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -87,6 +89,7 @@ export function Footer() {
           <Link
             href="#"
             className="hover:text-primary-foreground transition-colors"
+            aria-label="Instagram"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -107,6 +110,7 @@ export function Footer() {
           <Link
             href="#"
             className="hover:text-primary-foreground transition-colors"
+            aria-label="GitHub"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
