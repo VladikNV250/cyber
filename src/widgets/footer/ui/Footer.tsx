@@ -14,8 +14,9 @@ export function Footer() {
               <Image src={logoWhite} alt="Cyber Logo" className="h-8 w-auto" />
             </Link>
             <p className="text-text-muted-light font-medium text-sm leading-relaxed max-w-sm">
-              We are a residential interior design firm located in Portland. Our
-              boutique-studio offers more than.
+              We are a premium electronics retailer dedicated to providing the
+              latest technology and top-tier gadgets to elevate your digital
+              lifestyle.
             </p>
           </div>
 
