@@ -16,7 +16,7 @@ export function Header() {
           </Link>
 
           <div className="hidden flex-1 md:flex max-w-md relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-6 text-[#989898]" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-6 text-text-muted-icon" />
             <Input
               type="search"
               placeholder="Search"
@@ -40,8 +40,8 @@ export function Header() {
         </Container>
       </div>
 
-      <div className="w-full bg-[#2E2E2E] hidden md:block py-3">
-        <Container className="flex items-center justify-between divide-x divide-[#ffffff33]">
+      <div className="w-full bg-background-header hidden md:block py-3">
+        <Container className="flex items-center justify-between divide-x divide-white/20">
           {categories.map((category) => (
             <Link
               key={category.name}

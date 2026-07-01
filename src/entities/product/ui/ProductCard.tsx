@@ -16,7 +16,7 @@ export function ProductCard({
   isFavorite = false,
 }: ProductCardProps) {
   return (
-    <div className="group relative flex flex-col items-center justify-between rounded-lg bg-[#F6F6F6] px-4 py-6  transition-shadow hover:shadow-md h-[432px]">
+    <div className="group relative flex flex-col items-center justify-between rounded-lg bg-card px-4 py-6  transition-shadow hover:shadow-md h-[432px]">
       <Button
         variant="ghost"
         size="icon"

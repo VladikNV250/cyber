@@ -43,7 +43,7 @@ export function SaleBannerSection() {
           <h2 className="text-background text-6xl md:text-7xl font-thin tracking-tight leading-18">
             Big Summer <span className="font-medium">Sale</span>
           </h2>
-          <p className="text-[#787878] text-sm md:text-base mb-10 max-w-lg">
+          <p className="text-text-muted-dark text-sm md:text-base mb-10 max-w-lg">
             Commodo fames vitae vitae leo mauris in. Eu consequat.
           </p>
           <Button variant="outline" color="white">

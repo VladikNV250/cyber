@@ -21,19 +21,19 @@ export function CategoryBannersSection() {
             <h2 className="text-5xl font-medium text-foreground">
               Playstation 5
             </h2>
-            <p className="text-[#909090] font-medium text-sm max-w-xs">
+            <p className="text-text-muted font-medium text-sm max-w-xs">
               Incredibly powerful CPUs, GPUs, and an SSD with integrated I/O
               will redefine your PlayStation experience.
             </p>
           </div>
         </div>
 
-        <div className="col-span-1 md:col-span-2 xl:col-span-2 xl:row-span-2 bg-[#EDEDED] flex items-center p-8 md:p-12 relative overflow-hidden min-h-[400px]">
+        <div className="col-span-1 md:col-span-2 xl:col-span-2 xl:row-span-2 bg-banner-light flex items-center p-8 md:p-12 relative overflow-hidden min-h-[400px]">
           <div className="flex flex-col items-start text-left gap-4 max-w-sm z-10 relative">
             <h2 className="text-6xl font-thin text-foreground">
               Macbook <span className="font-medium">Air</span>
             </h2>
-            <p className="text-[#909090] text-sm font-medium">
+            <p className="text-text-muted text-sm font-medium">
               The new 15‑inch MacBook Air makes room for more of what you love
               with a spacious Liquid Retina display.
             </p>
@@ -48,7 +48,7 @@ export function CategoryBannersSection() {
           />
         </div>
 
-        <div className="col-span-1 bg-[#EDEDED] flex items-center justify-end relative overflow-hidden p-12 border-b md:border-b-0 border-border md:border-r min-h-[250px]">
+        <div className="col-span-1 bg-banner-light flex items-center justify-end relative overflow-hidden p-12 border-b md:border-b-0 border-border md:border-r min-h-[250px]">
           <div className="absolute -left-35 top-0 h-full w-auto">
             <Image
               src={airpodsImg}
@@ -62,13 +62,13 @@ export function CategoryBannersSection() {
               <br />
               AirPods <span className="font-medium">Max</span>
             </h2>
-            <p className="text-[#909090] text-sm font-medium max-w-[160px]">
+            <p className="text-text-muted text-sm font-medium max-w-[160px]">
               Computational audio. Listen, it&apos;s powerful.
             </p>
           </div>
         </div>
 
-        <div className="col-span-1 bg-[#353535] flex items-center justify-end relative overflow-hidden p-6 md:p-12 xl:border-r border-border min-h-[250px]">
+        <div className="col-span-1 bg-banner-darker flex items-center justify-end relative overflow-hidden p-6 md:p-12 xl:border-r border-border min-h-[250px]">
           <div className="absolute -left-44 top-0 h-full w-auto flex items-center">
             <Image
               src={visionProImg}
@@ -82,7 +82,7 @@ export function CategoryBannersSection() {
               <br />
               Vision <span className="font-medium">Pro</span>
             </h2>
-            <p className="text-[#909090] text-sm font-medium max-w-[160px]">
+            <p className="text-text-muted text-sm font-medium max-w-[160px]">
               An immersive way to experience entertainment.
             </p>
           </div>

@@ -49,7 +49,7 @@ export function CategoriesBrowserSection() {
   );
 
   return (
-    <section className="py-20 bg-[#FAFAFA]">
+    <section className="py-20 bg-muted">
       <Container>
         <div className="flex items-center justify-between mb-10">
           <h2 className="text-2xl font-medium text-foreground tracking-tight">
@@ -61,7 +61,7 @@ export function CategoriesBrowserSection() {
               size="icon"
               onClick={handlePrev}
               disabled={startIndex === 0}
-              className="hover:bg-transparent p-0 h-auto text-black hover:opacity-70 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
+              className="hover:bg-transparent p-0 h-auto text-foreground hover:opacity-70 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
             >
               <ChevronLeft className="size-8 stroke-[1.5]" />
             </Button>
@@ -70,7 +70,7 @@ export function CategoriesBrowserSection() {
               size="icon"
               onClick={handleNext}
               disabled={startIndex >= maxIndex}
-              className="hover:bg-transparent p-0 h-auto text-black hover:opacity-70 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
+              className="hover:bg-transparent p-0 h-auto text-foreground hover:opacity-70 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
             >
               <ChevronRight className="size-8 stroke-[1.5]" />
             </Button>
