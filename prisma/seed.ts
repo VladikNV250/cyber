@@ -97,6 +97,7 @@ async function main() {
           'The definitive premium smartphone experience with a 48MP camera, Dynamic Island, and the powerful A16 Bionic processor.',
         categoryId: phones.id,
         brandId: apple.id,
+        minPrice: 43999.0,
         baseSpecs: {
           screenDiagonal: '6.7 inches',
           screenType: 'Super Retina XDR OLED',
@@ -148,6 +149,7 @@ async function main() {
           'Powerful and portable high-performance gaming laptop with AMD Ryzen 9 and NVIDIA RTX 4060 graphics.',
         categoryId: computers.id,
         brandId: asus.id,
+        minPrice: 69999.0,
         baseSpecs: {
           screenDiagonal: '14.0 inches',
           screenType: 'ROG Nebula Display QHD+ 165Hz',
@@ -183,6 +185,7 @@ async function main() {
           'Industry-leading noise-canceling wireless over-ear headphones with exceptional audio purity.',
         categoryId: audio.id,
         brandId: sony.id,
+        minPrice: 15499.0,
         baseSpecs: {
           connectionType: 'Wireless / Bluetooth 5.2',
           batteryLife: 'Up to 30 hours',
