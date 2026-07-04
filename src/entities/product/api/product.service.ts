@@ -8,82 +8,41 @@ import {
   UpdateProductVariantInput,
 } from '../model/schemas';
 
+export type ProductResult = Prisma.ProductGetPayload<{
+  include: {
+    brand: true;
+    category: true;
+    variants: true;
+  };
+}>;
+
 export async function getProducts(query: ProductListQuery) {
-  const { page, limit, categoryId, brandIds, minPrice, maxPrice, sort, specs } =
-    query;
-
-  const where: Prisma.ProductWhereInput = {};
-
-  if (categoryId) {
-    where.categoryId = categoryId;
-  }
-
-  if (brandIds && brandIds.length > 0) {
-    where.brandId = { in: brandIds };
-  }
-
-  const variantConditions: Prisma.ProductVariantWhereInput[] = [];
-
-  if (minPrice !== undefined) {
-    variantConditions.push({ price: { gte: minPrice } });
-  }
-  if (maxPrice !== undefined) {
-    variantConditions.push({ price: { lte: maxPrice } });
-  }
-
-  const specConditions = buildSpecsFilter(specs);
-  if (specConditions.length > 0) {
-    variantConditions.push(...specConditions);
-  }
-
-  if (variantConditions.length > 0) {
-    where.variants = {
-      some: {
-        AND: variantConditions,
-      },
-    };
-  }
-
-  let orderBy: Prisma.ProductOrderByWithRelationInput = {};
-  switch (sort) {
-    case 'price_asc':
-      orderBy = { minPrice: 'asc' };
-      break;
-    case 'price_desc':
-      orderBy = { minPrice: 'desc' };
-      break;
-    case 'newest':
-      orderBy = { createdAt: 'desc' };
-      break;
-    case 'rating_desc':
-    default:
-      orderBy = { averageRating: 'desc' };
-      break;
-  }
-
+  const { page, limit, sort } = query;
   const offset = (page - 1) * limit;
 
-  const [products, total] = await Promise.all([
-    prisma.product.findMany({
-      where,
-      skip: offset,
-      take: limit,
-      orderBy,
-      include: {
-        brand: true,
-        category: true,
-        variants: {
-          take: 1, // Get the first matching variant to show default price/image
-          where:
-            variantConditions.length > 0
-              ? { AND: variantConditions }
-              : undefined,
-          orderBy: { price: 'asc' },
-        },
-      },
-    }),
-    prisma.product.count({ where }),
-  ]);
+  const { where, variantConditions } = buildPrismaWhereFilters(query);
+
+  const isPriceSort = sort === 'price_asc' || sort === 'price_desc';
+
+  // We use Raw SQL when sorting by price AND filtering by variants because
+  // Prisma cannot currently sort parent models (Product) by an aggregated field
+  // (MIN price) of a dynamically filtered relation (ProductVariant).
+  // Without this, products would be sorted by their absolute global `minPrice`,
+  // which might belong to a variant that is excluded by the user's current filters.
+  const needsRawSql = isPriceSort && variantConditions.length > 0;
+
+  // We fallback to standard Prisma query for all other cases (e.g., sorting
+  // by rating, newest, or if there are no variant filters) because it is much
+  // faster and simpler to rely on native table fields or the pre-calculated `Product.minPrice`.
+  const { products, total } = needsRawSql
+    ? await fetchProductsWithRawSql(query, variantConditions, limit, offset)
+    : await fetchProductsWithPrisma(
+        where,
+        variantConditions,
+        sort,
+        limit,
+        offset,
+      );
 
   return {
     products,
@@ -285,4 +244,188 @@ function buildSpecsFilter(
     }
   }
   return conditions;
+}
+
+function buildPrismaWhereFilters(query: ProductListQuery) {
+  const { categoryId, brandIds, minPrice, maxPrice, specs } = query;
+  const where: Prisma.ProductWhereInput = {};
+
+  if (categoryId) {
+    where.categoryId = categoryId;
+  }
+
+  if (brandIds && brandIds.length > 0) {
+    where.brandId = { in: brandIds };
+  }
+
+  const variantConditions: Prisma.ProductVariantWhereInput[] = [];
+
+  if (minPrice !== undefined) {
+    variantConditions.push({ price: { gte: minPrice } });
+  }
+  if (maxPrice !== undefined) {
+    variantConditions.push({ price: { lte: maxPrice } });
+  }
+
+  const specConditions = buildSpecsFilter(specs);
+  if (specConditions.length > 0) {
+    variantConditions.push(...specConditions);
+  }
+
+  if (variantConditions.length > 0) {
+    where.variants = {
+      some: {
+        AND: variantConditions,
+      },
+    };
+  }
+
+  return { where, variantConditions };
+}
+
+async function fetchProductsWithRawSql(
+  query: ProductListQuery,
+  variantConditions: Prisma.ProductVariantWhereInput[],
+  limit: number,
+  offset: number,
+): Promise<{ products: ProductResult[]; total: number }> {
+  const { categoryId, brandIds, minPrice, maxPrice, sort, specs } = query;
+  const sqlConditions: Prisma.Sql[] = [];
+
+  if (categoryId) {
+    sqlConditions.push(Prisma.sql`p."categoryId" = ${categoryId}::uuid`);
+  }
+
+  if (brandIds && brandIds.length > 0) {
+    const brandIdsSql = Prisma.join(
+      brandIds.map((id) => Prisma.sql`${id}::uuid`),
+    );
+    sqlConditions.push(Prisma.sql`p."brandId" IN (${brandIdsSql})`);
+  }
+
+  if (minPrice !== undefined) {
+    sqlConditions.push(Prisma.sql`pv."price" >= ${minPrice}`);
+  }
+
+  if (maxPrice !== undefined) {
+    sqlConditions.push(Prisma.sql`pv."price" <= ${maxPrice}`);
+  }
+
+  if (specs && Object.keys(specs).length > 0) {
+    for (const [key, values] of Object.entries(specs)) {
+      if (values.length > 0) {
+        sqlConditions.push(
+          Prisma.sql`pv."attributes"->>${key} IN (${Prisma.join(values)})`,
+        );
+      }
+    }
+  }
+
+  const whereClause =
+    sqlConditions.length > 0
+      ? Prisma.sql`WHERE ${Prisma.join(sqlConditions, ' AND ')}`
+      : Prisma.empty;
+
+  const orderBySql =
+    sort === 'price_asc'
+      ? Prisma.sql`ORDER BY MIN(pv."price") ASC`
+      : Prisma.sql`ORDER BY MIN(pv."price") DESC`;
+
+  const rawQuery = Prisma.sql`
+    SELECT p."id"
+    FROM "Product" p
+    JOIN "ProductVariant" pv ON p."id" = pv."productId"
+    ${whereClause}
+    GROUP BY p."id"
+    ${orderBySql}
+    LIMIT ${limit} OFFSET ${offset}
+  `;
+
+  const countQuery = Prisma.sql`
+    SELECT COUNT(DISTINCT p."id")::int as count
+    FROM "Product" p
+    JOIN "ProductVariant" pv ON p."id" = pv."productId"
+    ${whereClause}
+  `;
+
+  const [idsResult, countResult] = await Promise.all([
+    prisma.$queryRaw<{ id: string }[]>(rawQuery),
+    prisma.$queryRaw<{ count: number }[]>(countQuery),
+  ]);
+
+  const orderedIds = idsResult.map((r) => r.id);
+  const total = countResult[0] ? Number(countResult[0].count) : 0;
+
+  let products: ProductResult[] = [];
+
+  if (orderedIds.length > 0) {
+    const unsortedProducts = await prisma.product.findMany({
+      where: { id: { in: orderedIds } },
+      include: {
+        brand: true,
+        category: true,
+        variants: {
+          take: 1,
+          where: { AND: variantConditions },
+          orderBy: { price: 'asc' },
+        },
+      },
+    });
+
+    const productsMap = new Map(unsortedProducts.map((p) => [p.id, p]));
+    products = orderedIds
+      .map((id) => productsMap.get(id))
+      .filter((p): p is (typeof unsortedProducts)[0] => p !== undefined);
+  }
+
+  return { products, total };
+}
+
+async function fetchProductsWithPrisma(
+  where: Prisma.ProductWhereInput,
+  variantConditions: Prisma.ProductVariantWhereInput[],
+  sort: string,
+  limit: number,
+  offset: number,
+): Promise<{ products: ProductResult[]; total: number }> {
+  let orderBy: Prisma.ProductOrderByWithRelationInput = {};
+  switch (sort) {
+    case 'price_asc':
+      orderBy = { minPrice: 'asc' };
+      break;
+    case 'price_desc':
+      orderBy = { minPrice: 'desc' };
+      break;
+    case 'newest':
+      orderBy = { createdAt: 'desc' };
+      break;
+    case 'rating_desc':
+    default:
+      orderBy = { averageRating: 'desc' };
+      break;
+  }
+
+  const [products, total] = await Promise.all([
+    prisma.product.findMany({
+      where,
+      skip: offset,
+      take: limit,
+      orderBy,
+      include: {
+        brand: true,
+        category: true,
+        variants: {
+          take: 1,
+          where:
+            variantConditions.length > 0
+              ? { AND: variantConditions }
+              : undefined,
+          orderBy: { price: 'asc' },
+        },
+      },
+    }),
+    prisma.product.count({ where }),
+  ]);
+
+  return { products, total };
 }
