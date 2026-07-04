@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { updateBrand, deleteBrand, updateBrandSchema } from '@/entities/brand';
+import { ZodError } from 'zod';
+import { Prisma } from '@/generated/prisma/client';
 
 export async function PUT(
   request: NextRequest,
@@ -12,11 +14,22 @@ export async function PUT(
     const updatedBrand = await updateBrand(id, parsedData);
     return NextResponse.json(updatedBrand);
   } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        { error: 'Validation failed', details: error.issues },
+        { status: 400 },
+      );
+    }
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === 'P2025'
+    ) {
+      return NextResponse.json({ error: 'Brand not found' }, { status: 404 });
+    }
+    console.error('Unexpected error in PUT /api/brands/[id]:', error);
     return NextResponse.json(
-      {
-        error: error instanceof Error ? error.message : 'Internal Server Error',
-      },
-      { status: 400 },
+      { error: 'Internal Server Error' },
+      { status: 500 },
     );
   }
 }
@@ -30,10 +43,15 @@ export async function DELETE(
     await deleteBrand(id);
     return new NextResponse(null, { status: 204 });
   } catch (error) {
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === 'P2025'
+    ) {
+      return NextResponse.json({ error: 'Brand not found' }, { status: 404 });
+    }
+    console.error('Unexpected error in DELETE /api/brands/[id]:', error);
     return NextResponse.json(
-      {
-        error: error instanceof Error ? error.message : 'Internal Server Error',
-      },
+      { error: 'Internal Server Error' },
       { status: 500 },
     );
   }

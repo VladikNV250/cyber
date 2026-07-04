@@ -3,6 +3,7 @@ import {
   createProductVariant,
   createProductVariantSchema,
 } from '@/entities/product';
+import { ZodError } from 'zod';
 
 export async function POST(
   request: NextRequest,
@@ -15,11 +16,19 @@ export async function POST(
     const newVariant = await createProductVariant(productId, parsedData);
     return NextResponse.json(newVariant, { status: 201 });
   } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        { error: 'Validation failed', details: error.issues },
+        { status: 400 },
+      );
+    }
+    console.error(
+      'Unexpected error in POST /api/products/[id]/variants:',
+      error,
+    );
     return NextResponse.json(
-      {
-        error: error instanceof Error ? error.message : 'Internal Server Error',
-      },
-      { status: 400 },
+      { error: 'Internal Server Error' },
+      { status: 500 },
     );
   }
 }

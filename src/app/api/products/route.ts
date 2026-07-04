@@ -5,6 +5,7 @@ import {
   productListQuerySchema,
   createProductSchema,
 } from '@/entities/product';
+import { ZodError } from 'zod';
 
 export async function GET(request: NextRequest) {
   try {
@@ -24,11 +25,15 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(result);
   } catch (error) {
     console.error('Error fetching products:', error);
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        { error: 'Validation failed', details: error.issues },
+        { status: 400 },
+      );
+    }
     return NextResponse.json(
-      {
-        error: error instanceof Error ? error.message : 'Internal Server Error',
-      },
-      { status: 400 },
+      { error: 'Internal Server Error' },
+      { status: 500 },
     );
   }
 }
@@ -40,11 +45,16 @@ export async function POST(request: NextRequest) {
     const newProduct = await createProduct(parsedData);
     return NextResponse.json(newProduct, { status: 201 });
   } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        { error: 'Validation failed', details: error.issues },
+        { status: 400 },
+      );
+    }
+    console.error('Unexpected error in POST /api/products:', error);
     return NextResponse.json(
-      {
-        error: error instanceof Error ? error.message : 'Internal Server Error',
-      },
-      { status: 400 },
+      { error: 'Internal Server Error' },
+      { status: 500 },
     );
   }
 }
