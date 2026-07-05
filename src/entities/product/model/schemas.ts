@@ -18,11 +18,12 @@ export const productListQuerySchema = z.object({
   specs: z
     .string()
     .optional()
-    .transform((val) => {
+    .transform((val, ctx) => {
       if (!val) return undefined;
       try {
         return JSON.parse(val) as Record<string, string[]>;
       } catch {
+        ctx.addIssue({ code: 'custom', message: 'Invalid specs JSON' });
         return undefined;
       }
     }),
