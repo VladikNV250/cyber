@@ -51,11 +51,13 @@ model Product {
   brandId    String
   brand      Brand    @relation(fields: [brandId], references: [id])
   baseSpecs Json?
+  minPrice  Decimal @default(0)
   averageRating Float @default(0.0)
   reviewCount   Int   @default(0)
   variants    ProductVariant[]
   reviews     Review[]
   favoritedBy Favorite[]
+  isActive  Boolean @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -69,7 +71,7 @@ model ProductVariant {
   images     String[]
   allowedShipping ShippingMethod[] @default([NOVA_POST_COURIER, NOVA_POST, MEEST, STORE_PICKUP])
   productId       String
-  product         Product          @relation(fields: [productId], references: [id])
+  product         Product          @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   orderItems OrderItem[]
 }
@@ -82,7 +84,7 @@ model Review {
   userId    String
   user      User    @relation(fields: [userId], references: [id])
   productId String
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 
   @@unique([userId, productId])
@@ -127,7 +129,7 @@ model Favorite {
   userId    String
   user      User    @relation(fields: [userId], references: [id])
   productId String
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@unique([userId, productId])
 }

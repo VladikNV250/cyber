@@ -137,7 +137,11 @@ CREATE TABLE "Address" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_email_key" ON "User"(lower("email"));
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- Additional index for case-insensitive check
+-- Named differently so Prisma doesn't conflict with it
+CREATE UNIQUE INDEX "User_email_lower_key" ON "User"(lower("email"));
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Category_name_key" ON "Category"("name");
