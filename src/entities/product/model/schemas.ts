@@ -5,7 +5,7 @@ export const productListQuerySchema = z.object({
   limit: z.coerce.number().int().min(1).max(100).default(12),
   categoryId: z.uuid().optional(),
   brandIds: z
-    .union([z.string(), z.array(z.string())])
+    .union([z.uuid(), z.array(z.uuid())])
     .transform((val) => (Array.isArray(val) ? val : [val]))
     .optional(),
   minPrice: z.coerce.number().min(0).optional(),
