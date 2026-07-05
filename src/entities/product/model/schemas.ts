@@ -13,6 +13,7 @@ export const productListQuerySchema = z.object({
   sort: z
     .enum(['rating_desc', 'price_asc', 'price_desc', 'newest'])
     .default('rating_desc'),
+  includeHidden: z.coerce.boolean().default(false),
   // We can pass dynamic specs as a JSON string or dot-notation, for simplicity let's assume a JSON string of { key: [values] }
   specs: z
     .string()
@@ -35,6 +36,7 @@ export const createProductSchema = z.object({
   categoryId: z.uuid('Invalid category ID'),
   brandId: z.uuid('Invalid brand ID'),
   baseSpecs: z.record(z.string(), z.any()).optional(),
+  isActive: z.boolean().optional(),
 });
 
 export const updateProductSchema = createProductSchema.partial();

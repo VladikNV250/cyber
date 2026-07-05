@@ -148,9 +148,21 @@ export async function updateProduct(id: string, data: UpdateProductInput) {
 }
 
 export async function deleteProduct(id: string) {
-  return prisma.product.delete({
-    where: { id },
-  });
+  try {
+    return await prisma.product.delete({
+      where: { id },
+    });
+  } catch (error) {
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === 'P2003'
+    ) {
+      throw new Error(
+        'This product appears in the order history and cannot be fully deleted. Please set it to inactive to archive it.',
+      );
+    }
+    throw error;
+  }
 }
 
 export async function createProductVariant(
@@ -247,8 +259,13 @@ function buildSpecsFilter(
 }
 
 function buildPrismaWhereFilters(query: ProductListQuery) {
-  const { categoryId, brandIds, minPrice, maxPrice, specs } = query;
+  const { categoryId, brandIds, minPrice, maxPrice, specs, includeHidden } =
+    query;
   const where: Prisma.ProductWhereInput = {};
+
+  if (!includeHidden) {
+    where.isActive = true;
+  }
 
   if (categoryId) {
     where.categoryId = categoryId;
@@ -289,8 +306,20 @@ async function fetchProductsWithRawSql(
   limit: number,
   offset: number,
 ): Promise<{ products: ProductResult[]; total: number }> {
-  const { categoryId, brandIds, minPrice, maxPrice, sort, specs } = query;
+  const {
+    categoryId,
+    brandIds,
+    minPrice,
+    maxPrice,
+    sort,
+    specs,
+    includeHidden,
+  } = query;
   const sqlConditions: Prisma.Sql[] = [];
+
+  if (!includeHidden) {
+    sqlConditions.push(Prisma.sql`p."isActive" = true`);
+  }
 
   if (categoryId) {
     sqlConditions.push(Prisma.sql`p."categoryId" = ${categoryId}::uuid`);
