@@ -109,6 +109,9 @@ export const metadata: Metadata = {
   description: 'Electronics Ecommerce Platform',
 };
 
+import { Header } from '@/widgets/header';
+import { Footer } from '@/widgets/footer';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -120,7 +123,9 @@ export default function RootLayout({
         className={`min-h-full flex flex-col ${sfPro.className} ${figtree.variable}`}
         suppressHydrationWarning
       >
-        {children}
+        <Header />
+        <main className="flex-1 flex flex-col">{children}</main>
+        <Footer />
       </body>
     </html>
   );
