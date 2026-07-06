@@ -1,4 +1,4 @@
-import { cn } from '@/shared/lib';
+import { cn } from '@/shared/lib/utils';
 import { forwardRef } from 'react';
 
 export type ContainerProps = React.HTMLAttributes<HTMLDivElement>;
