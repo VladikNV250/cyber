@@ -45,7 +45,7 @@ export function Header() {
           {categories.map((category) => (
             <Link
               key={category.name}
-              href="#"
+              href={category.href}
               className="flex items-center gap-2 text-background opacity-50 hover:opacity-100 transition-opacity text-base font-medium h-6 px-12 first:pl-0 last:pr-0"
             >
               {category.icon}

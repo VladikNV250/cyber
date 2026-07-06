@@ -1,5 +1,5 @@
-import { Container } from '@/shared/ui';
-import { Button } from '@/shared/ui';
+import { Container, Button } from '@/shared/ui';
+import Link from 'next/link';
 import Image from 'next/image';
 import banner1 from '@/shared/assets/product-banner-1.png';
 import banner2 from '@/shared/assets/product-banner-2.png';
@@ -46,8 +46,8 @@ export function SaleBannerSection() {
           <p className="text-text-muted-dark text-sm md:text-base mb-10 max-w-lg">
             Commodo fames vitae vitae leo mauris in. Eu consequat.
           </p>
-          <Button variant="outline" color="white">
-            Shop Now
+          <Button variant="outline" color="white" asChild>
+            <Link href="/catalog">Shop Now</Link>
           </Button>
         </div>
       </Container>

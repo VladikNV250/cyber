@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Button } from '@/shared/ui';
 import { Container } from '@/shared/ui';
-import { CategoryCard } from '@/entities/category';
+import { CategoryCard } from '@/entities/category/ui';
 import {
   Smartphone,
   Watch,
@@ -17,18 +17,66 @@ import {
 
 export function CategoriesBrowserSection() {
   const categories = [
-    { title: 'Phones', icon: <Smartphone className="size-10" /> },
-    { title: 'Smart Watches', icon: <Watch className="size-10" /> },
-    { title: 'Cameras', icon: <Camera className="size-10" /> },
-    { title: 'Headphones', icon: <Headphones className="size-10" /> },
-    { title: 'Computers', icon: <Monitor className="size-10" /> },
-    { title: 'Gaming', icon: <Gamepad2 className="size-10" /> },
-    { title: 'Computers ', icon: <Monitor className="size-10" /> },
-    { title: 'Phones ', icon: <Smartphone className="size-10" /> },
-    { title: 'Gaming ', icon: <Gamepad2 className="size-10" /> },
-    { title: 'Smart Watches ', icon: <Watch className="size-10" /> },
-    { title: 'Headphones ', icon: <Headphones className="size-10" /> },
-    { title: 'Cameras ', icon: <Camera className="size-10" /> },
+    {
+      title: 'Phones',
+      icon: <Smartphone className="size-10" />,
+      href: '/catalog/smartphones',
+    },
+    {
+      title: 'Smart Watches',
+      icon: <Watch className="size-10" />,
+      href: '/catalog/watches',
+    },
+    {
+      title: 'Cameras',
+      icon: <Camera className="size-10" />,
+      href: '/catalog/cameras',
+    },
+    {
+      title: 'Headphones',
+      icon: <Headphones className="size-10" />,
+      href: '/catalog/headphones',
+    },
+    {
+      title: 'Computers',
+      icon: <Monitor className="size-10" />,
+      href: '/catalog/computers',
+    },
+    {
+      title: 'Gaming',
+      icon: <Gamepad2 className="size-10" />,
+      href: '/catalog/gaming',
+    },
+    {
+      title: 'Computers ',
+      icon: <Monitor className="size-10" />,
+      href: '/catalog/computers',
+    },
+    {
+      title: 'Phones ',
+      icon: <Smartphone className="size-10" />,
+      href: '/catalog/smartphones',
+    },
+    {
+      title: 'Gaming ',
+      icon: <Gamepad2 className="size-10" />,
+      href: '/catalog/gaming',
+    },
+    {
+      title: 'Smart Watches ',
+      icon: <Watch className="size-10" />,
+      href: '/catalog/watches',
+    },
+    {
+      title: 'Headphones ',
+      icon: <Headphones className="size-10" />,
+      href: '/catalog/headphones',
+    },
+    {
+      title: 'Cameras ',
+      icon: <Camera className="size-10" />,
+      href: '/catalog/cameras',
+    },
   ];
 
   const [startIndex, setStartIndex] = useState(0);
@@ -78,11 +126,12 @@ export function CategoriesBrowserSection() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-8">
-          {visibleCategories.map((category) => (
+          {visibleCategories.map((category, index) => (
             <CategoryCard
-              key={category.title}
+              key={index}
               title={category.title}
               icon={category.icon}
+              href={category.href}
             />
           ))}
         </div>
