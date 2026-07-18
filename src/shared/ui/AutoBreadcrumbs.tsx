@@ -25,7 +25,7 @@ export function AutoBreadcrumbs({
   const segments = pathname.split('/').filter(Boolean);
 
   return (
-    <Breadcrumb className={cn('mb-8', className)}>
+    <Breadcrumb className={className}>
       <BreadcrumbList>
         <BreadcrumbItem>
           {segments.length === 0 ? (

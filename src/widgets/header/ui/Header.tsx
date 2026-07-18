@@ -20,7 +20,7 @@ export function Header() {
             <Input
               type="search"
               placeholder="Search"
-              className="w-full pl-12 border-none rounded-xl"
+              className="w-full pl-12 border-transparent bg-input-bg focus-visible:bg-background rounded-xl"
             />
           </div>
 

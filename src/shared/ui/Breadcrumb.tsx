@@ -26,7 +26,7 @@ const BreadcrumbList = forwardRef<
   <ol
     ref={ref}
     className={cn(
-      'flex flex-wrap items-center gap-1.5 wrap-break-word text-sm text-muted-foreground sm:gap-2.5',
+      'flex flex-wrap items-center gap-4 wrap-break-word text-base text-[#A4A4A4] font-medium sm:gap-4',
       className,
     )}
     {...props}
@@ -40,7 +40,7 @@ const BreadcrumbItem = forwardRef<
 >(({ className, ...props }, ref) => (
   <li
     ref={ref}
-    className={cn('inline-flex items-center gap-1.5', className)}
+    className={cn('inline-flex items-center gap-4', className)}
     {...props}
   />
 ));
@@ -82,7 +82,7 @@ const BreadcrumbPage = forwardRef<
     role="link"
     aria-disabled="true"
     aria-current="page"
-    className={cn('font-normal text-foreground', className)}
+    className={cn('text-foreground', className)}
     {...props}
   />
 ));
@@ -96,10 +96,10 @@ const BreadcrumbSeparator = ({
   <li
     role="presentation"
     aria-hidden="true"
-    className={cn('[&>svg]:w-3.5 [&>svg]:h-3.5', className)}
+    className={cn('[&>svg]:w-6 [&>svg]:h-6 stroke-1', className)}
     {...props}
   >
-    {children ?? <ChevronRight />}
+    {children ?? <ChevronRight className="stroke-1" />}
   </li>
 );
 BreadcrumbSeparator.displayName = 'BreadcrumbSeparator';

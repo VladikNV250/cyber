@@ -10,11 +10,13 @@ export default function CatalogPage({
 }) {
   console.log(params.categorySlug);
   return (
-    <div className="py-10">
+    <div>
       <Container>
-        <AutoBreadcrumbs />
+        <div className="flex flex-col py-10">
+          <AutoBreadcrumbs />
+        </div>
 
-        <div className="flex gap-8 items-start">
+        <div className="flex gap-8 items-start pt-6 pb-8">
           <CatalogFilters />
           <CatalogGrid />
         </div>
