@@ -17,7 +17,7 @@ const PaginationContent = forwardRef<HTMLUListElement, ComponentProps<'ul'>>(
   ({ className, ...props }, ref) => (
     <ul
       ref={ref}
-      className={cn('flex flex-row items-center gap-1', className)}
+      className={cn('flex flex-row items-center gap-2', className)}
       {...props}
     />
   ),
@@ -51,8 +51,8 @@ const PaginationLink = ({
       }),
       'w-9 h-9 rounded-md',
       isActive
-        ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-        : 'text-foreground hover:bg-accent hover:text-accent-foreground',
+        ? 'bg-primary text-primary-foreground hover:bg-primary/85'
+        : 'text-foreground bg-accent hover:bg-accent/60 hover:text-accent-foreground',
       className,
     )}
     {...props}
@@ -67,10 +67,10 @@ const PaginationPrevious = ({
   <PaginationLink
     aria-label="Go to previous page"
     size="icon"
-    className={cn('gap-1 p-0', className)}
+    className={cn('p-0 mr-2 bg-transparent', className)}
     {...props}
   >
-    <ChevronLeft className="h-4 w-4" />
+    <ChevronLeft className="size-6 stroke-1" />
     <span className="sr-only">Previous</span>
   </PaginationLink>
 );
@@ -83,11 +83,11 @@ const PaginationNext = ({
   <PaginationLink
     aria-label="Go to next page"
     size="icon"
-    className={cn('gap-1 p-0', className)}
+    className={cn('p-0 ml-2 bg-transparent', className)}
     {...props}
   >
     <span className="sr-only">Next</span>
-    <ChevronRight className="h-4 w-4" />
+    <ChevronRight className="size-6 stroke-1" />
   </PaginationLink>
 );
 PaginationNext.displayName = 'PaginationNext';
@@ -98,10 +98,13 @@ const PaginationEllipsis = ({
 }: ComponentProps<'span'>) => (
   <span
     aria-hidden
-    className={cn('flex h-9 w-9 items-center justify-center', className)}
+    className={cn(
+      'flex h-9 w-9 items-end justify-center -mb-3 text-[#737373]',
+      className,
+    )}
     {...props}
   >
-    <MoreHorizontal className="h-4 w-4" />
+    <MoreHorizontal className="size-6" />
     <span className="sr-only">More pages</span>
   </span>
 );

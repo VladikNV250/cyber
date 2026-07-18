@@ -45,13 +45,13 @@ export function CatalogGrid() {
   return (
     <div className="flex flex-col flex-1">
       <div className="flex items-center justify-between mb-6">
-        <div className="text-muted-foreground text-sm">
-          Selected Products:{' '}
-          <span className="text-foreground font-semibold text-xl ml-1">85</span>
+        <div className="text-[#6C6C6C] text-base font-medium">
+          Selected Products:
+          <span className="text-foreground font-medium text-xl ml-1.5">85</span>
         </div>
 
         <Select defaultValue="rating">
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-[256px]">
             <SelectValue placeholder="Sort by" />
           </SelectTrigger>
           <SelectContent>
@@ -63,7 +63,7 @@ export function CatalogGrid() {
         </Select>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6 mb-10">
         {mockProducts.map((product) => (
           <ProductCard
             key={product.id}
@@ -73,7 +73,7 @@ export function CatalogGrid() {
         ))}
       </div>
 
-      <Pagination className="mb-20">
+      <Pagination>
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious href="#" />
