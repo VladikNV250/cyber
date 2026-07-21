@@ -5,18 +5,18 @@ export function DiscountProductsSection() {
   const dummyProducts = [
     {
       title: 'Apple iPhone 14 Pro 128GB Gold',
-      price: '$1437',
+      price: 1437,
       isFavorite: false,
     },
-    { title: 'AirPods Max Silver', price: '$549', isFavorite: false },
+    { title: 'AirPods Max Silver', price: 549, isFavorite: false },
     {
       title: 'Apple Watch Series 9 GPS 41mm Starlight Aluminum',
-      price: '$399',
+      price: 399,
       isFavorite: false,
     },
     {
       title: 'Apple iPhone 14 Pro 128GB Silver',
-      price: '$1499',
+      price: 1499,
       isFavorite: false,
     },
   ];
@@ -32,7 +32,7 @@ export function DiscountProductsSection() {
           {dummyProducts.map((p, i) => (
             <ProductCard
               key={i}
-              title={p.title}
+              name={p.title}
               price={p.price}
               isFavorite={p.isFavorite}
             />
