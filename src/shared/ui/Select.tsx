@@ -3,7 +3,7 @@
 import { forwardRef, ComponentRef, ComponentPropsWithoutRef } from 'react';
 import { Select as RadixSelect } from 'radix-ui';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib';
 
 const Select = RadixSelect.Root;
 const SelectGroup = RadixSelect.Group;

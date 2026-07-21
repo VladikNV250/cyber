@@ -2,7 +2,7 @@
 
 import { forwardRef, ComponentRef, ComponentPropsWithoutRef } from 'react';
 import { Slider as RadixSlider } from 'radix-ui';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib';
 
 const Slider = forwardRef<
   ComponentRef<typeof RadixSlider.Root>,

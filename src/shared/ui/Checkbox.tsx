@@ -8,7 +8,7 @@ import {
 } from 'react';
 import { Checkbox as CheckboxPrimitive } from 'radix-ui';
 import { Check } from 'lucide-react';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib';
 
 export const Checkbox = forwardRef<
   ComponentRef<typeof CheckboxPrimitive.Root>,

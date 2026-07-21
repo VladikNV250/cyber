@@ -10,7 +10,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from './Breadcrumb';
-import { cn } from '@/shared/lib/utils';
 
 export interface AutoBreadcrumbsProps {
   className?: string;

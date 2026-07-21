@@ -1,4 +1,4 @@
-import { prisma } from '@/shared/lib/db';
+import { prisma } from '@/shared/api';
 import { CreateBrandInput, UpdateBrandInput } from '../model/schemas';
 
 export async function getBrands() {
