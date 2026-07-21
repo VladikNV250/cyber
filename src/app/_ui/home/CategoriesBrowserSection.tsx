@@ -20,62 +20,32 @@ export function CategoriesBrowserSection() {
     {
       title: 'Phones',
       icon: <Smartphone className="size-10" />,
-      href: '/catalog/smartphones',
+      href: '/catalog/284f2d54-cc31-45c9-b87c-ef6c237158cd/245631bd-f50a-4a5b-b407-30bf071a6388',
     },
     {
       title: 'Smart Watches',
       icon: <Watch className="size-10" />,
-      href: '/catalog/watches',
+      href: '/catalog/15451908-d754-465d-a29b-c65efc56190a',
     },
     {
       title: 'Cameras',
       icon: <Camera className="size-10" />,
-      href: '/catalog/cameras',
+      href: '/catalog/c1353c06-0659-4495-b9c8-32acf7fdb29c',
     },
     {
       title: 'Headphones',
       icon: <Headphones className="size-10" />,
-      href: '/catalog/headphones',
+      href: '/catalog/f950dbec-8c71-4200-b4c4-86742f9b8dc0',
     },
     {
       title: 'Computers',
       icon: <Monitor className="size-10" />,
-      href: '/catalog/computers',
+      href: '/catalog/27d18678-ab56-4dd5-a136-d807509c36e9',
     },
     {
       title: 'Gaming',
       icon: <Gamepad2 className="size-10" />,
-      href: '/catalog/gaming',
-    },
-    {
-      title: 'Computers ',
-      icon: <Monitor className="size-10" />,
-      href: '/catalog/computers',
-    },
-    {
-      title: 'Phones ',
-      icon: <Smartphone className="size-10" />,
-      href: '/catalog/smartphones',
-    },
-    {
-      title: 'Gaming ',
-      icon: <Gamepad2 className="size-10" />,
-      href: '/catalog/gaming',
-    },
-    {
-      title: 'Smart Watches ',
-      icon: <Watch className="size-10" />,
-      href: '/catalog/watches',
-    },
-    {
-      title: 'Headphones ',
-      icon: <Headphones className="size-10" />,
-      href: '/catalog/headphones',
-    },
-    {
-      title: 'Cameras ',
-      icon: <Camera className="size-10" />,
-      href: '/catalog/cameras',
+      href: '/catalog/035ac999-05cb-4dc5-a307-29fa023c4832',
     },
   ];
 
