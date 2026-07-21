@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import localFont from 'next/font/local';
 import { Figtree } from 'next/font/google';
 import './globals.css';
@@ -123,9 +124,11 @@ export default function RootLayout({
         className={`min-h-full flex flex-col ${sfPro.className} ${figtree.variable}`}
         suppressHydrationWarning
       >
-        <Header />
-        <main className="flex-1 flex flex-col">{children}</main>
-        <Footer />
+        <NuqsAdapter>
+          <Header />
+          <main className="flex-1 flex flex-col">{children}</main>
+          <Footer />
+        </NuqsAdapter>
       </body>
     </html>
   );
