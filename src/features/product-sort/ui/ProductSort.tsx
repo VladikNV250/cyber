@@ -7,16 +7,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/ui';
-import { parseAsStringLiteral, useQueryState } from 'nuqs';
+import { useQueryState } from 'nuqs';
 import { DEFAULT_SORTING, SORT_LABELS } from '../config/sortLabels';
-import { PRODUCT_SORT_KEYS, ProductSortKey } from '@/entities/product';
+import { ProductSortKey } from '@/entities/product';
+import { productSortSearchParams } from '../config/searchParams';
 
 export function ProductSort() {
   const [sort, setSort] = useQueryState(
     'sort',
-    parseAsStringLiteral(PRODUCT_SORT_KEYS)
-      .withDefault(DEFAULT_SORTING)
-      .withOptions({ shallow: false }),
+    productSortSearchParams.sort.withOptions({ shallow: false }),
   );
 
   return (

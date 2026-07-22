@@ -1,12 +1,11 @@
-import { parseAsJson, useQueryState } from 'nuqs';
-import { specsQuerySchema } from '../model/schema';
+'use client';
+import { useQueryState } from 'nuqs';
+import { productFilterSearchParams } from '../config/searchParams';
 
 export function useSpecFilter(specName: string) {
   const [querySpecs, setQuerySpecs] = useQueryState(
     'specs',
-    parseAsJson(specsQuerySchema)
-      .withDefault({})
-      .withOptions({ shallow: false }),
+    productFilterSearchParams.specs.withOptions({ shallow: false }),
   );
 
   const toggleSpecOption = (specOption: string, checked: boolean) => {

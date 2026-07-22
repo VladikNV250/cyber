@@ -1,19 +1,24 @@
 import { CatalogFilters } from '@/entities/product';
 import { useDebounceFn } from '@reactuses/core';
-import { parseAsInteger, useQueryState } from 'nuqs';
+import { useQueryState } from 'nuqs';
 import { useState } from 'react';
+import { productFilterSearchParams } from '../config/searchParams';
 
 export function usePriceFilter(bounds: CatalogFilters['priceRange']) {
   const [localRange, setLocalRange] = useState(bounds);
 
   const [, setMinPrice] = useQueryState(
     'minPrice',
-    parseAsInteger.withDefault(bounds.min).withOptions({ shallow: false }),
+    productFilterSearchParams.minPrice
+      .withDefault(bounds.min)
+      .withOptions({ shallow: false }),
   );
 
   const [, setMaxPrice] = useQueryState(
     'maxPrice',
-    parseAsInteger.withDefault(bounds.max).withOptions({ shallow: false }),
+    productFilterSearchParams.maxPrice
+      .withDefault(bounds.max)
+      .withOptions({ shallow: false }),
   );
 
   const { run: updateQueryRange } = useDebounceFn(

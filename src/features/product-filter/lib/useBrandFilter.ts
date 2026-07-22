@@ -1,10 +1,11 @@
-import { parseAsArrayOf, parseAsString, useQueryState } from 'nuqs';
+'use client';
+import { useQueryState } from 'nuqs';
+import { productFilterSearchParams } from '../config/searchParams';
 
 export function useBrandFilter() {
   const [brandIds, setBrandIds] = useQueryState(
     'brandIds',
-    // TODO: create custom parser for uuid
-    parseAsArrayOf(parseAsString)
+    productFilterSearchParams.brandIds
       .withDefault([])
       .withOptions({ shallow: false }),
   );

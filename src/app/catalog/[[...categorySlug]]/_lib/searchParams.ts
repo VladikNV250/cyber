@@ -1,8 +1,7 @@
-import { specsQuerySchema } from '@/features/product-filter';
-import { PRODUCT_SORT_KEYS } from '@/entities/product';
+import { productFilterSearchParams } from '@/features/product-filter';
+import { productSortSearchParams } from '@/features/product-sort';
 import {
   createLoader,
-  parseAsArrayOf,
   parseAsInteger,
   parseAsJson,
   parseAsString,
@@ -11,11 +10,8 @@ import {
 
 export const filterSearchParams = {
   page: parseAsInteger.withDefault(1),
-  minPrice: parseAsInteger,
-  maxPrice: parseAsInteger,
-  brandIds: parseAsArrayOf(parseAsString),
-  sort: parseAsStringLiteral(PRODUCT_SORT_KEYS).withDefault('rating_desc'),
-  specs: parseAsJson(specsQuerySchema).withDefault({}),
+  ...productFilterSearchParams,
+  ...productSortSearchParams,
 };
 
 export const loadSearchParams = createLoader(filterSearchParams);
