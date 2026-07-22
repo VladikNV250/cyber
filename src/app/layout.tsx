@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import localFont from 'next/font/local';
 import { Figtree } from 'next/font/google';
 import './globals.css';
@@ -109,6 +110,9 @@ export const metadata: Metadata = {
   description: 'Electronics Ecommerce Platform',
 };
 
+import { Header } from '@/widgets/header';
+import { Footer } from '@/widgets/footer';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -120,7 +124,11 @@ export default function RootLayout({
         className={`min-h-full flex flex-col ${sfPro.className} ${figtree.variable}`}
         suppressHydrationWarning
       >
-        {children}
+        <NuqsAdapter>
+          <Header />
+          <main className="flex-1 flex flex-col">{children}</main>
+          <Footer />
+        </NuqsAdapter>
       </body>
     </html>
   );

@@ -1,4 +1,5 @@
 import { Button } from '@/shared/ui';
+import Link from 'next/link';
 import Image from 'next/image';
 import popularBanner1 from '@/shared/assets/popular-products-banner-1.png';
 import popularBanner2 from '@/shared/assets/popular-products-banner-2.png';
@@ -31,8 +32,8 @@ export function PopularProductsSection() {
             smartwatches, premium accessories, and more to elevate your
             lifestyle.
           </p>
-          <Button variant="outline" color="black">
-            Shop Now
+          <Button variant="outline" color="black" asChild>
+            <Link href="/catalog">Shop Now</Link>
           </Button>
         </div>
         <div className="relative bg-card text-foreground flex flex-col items-center justify-end gap-4 text-center px-8 py-14 h-auto xl:h-[640px]">
@@ -49,8 +50,8 @@ export function PopularProductsSection() {
             revolutionary M2 chip, and unmatched versatility for professionals
             and creatives.
           </p>
-          <Button variant="outline" color="black" className="z-10">
-            Shop Now
+          <Button variant="outline" color="black" className="z-10" asChild>
+            <Link href="/catalog/tablets">Shop Now</Link>
           </Button>
         </div>
         <div className="relative bg-banner-medium text-foreground flex flex-col items-center justify-end gap-4 text-center px-8 py-14 h-auto xl:h-[640px]">
@@ -66,8 +67,8 @@ export function PopularProductsSection() {
             Experience the next generation of mobile innovation with Galaxy.
             Breathtaking displays, pro-grade cameras, and all-day battery life.
           </p>
-          <Button variant="outline" color="black" className="z-10">
-            Shop Now
+          <Button variant="outline" color="black" className="z-10" asChild>
+            <Link href="/catalog/smartphones">Shop Now</Link>
           </Button>
         </div>
         <div className="relative bg-banner-dark text-primary-foreground flex flex-col items-center justify-end gap-4 text-center px-8 py-14 h-auto xl:h-[640px]">
@@ -83,8 +84,8 @@ export function PopularProductsSection() {
             MacBook Pro redefines power. Experience mind-blowing performance, a
             brilliant Liquid Retina XDR display, and incredible battery life.
           </p>
-          <Button variant="outline" color="white" className="z-10">
-            Shop Now
+          <Button variant="outline" color="white" className="z-10" asChild>
+            <Link href="/catalog/computers">Shop Now</Link>
           </Button>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { prisma } from '@/shared/lib';
+import { prisma } from '@/shared/api';
 import { CreateCategoryInput, UpdateCategoryInput } from '../model/schemas';
 
 export async function getCategories() {

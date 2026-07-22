@@ -1,5 +1,5 @@
-import { Container } from '@/shared/ui';
-import { Button } from '@/shared/ui';
+import { Container, Button } from '@/shared/ui';
+import Link from 'next/link';
 import Image from 'next/image';
 import iphoneImage from '@/shared/assets/iphone-image.png';
 
@@ -17,8 +17,8 @@ export function HeroSection() {
           <p className="text-text-muted text-lg font-medium">
             Created to change everything for the better. For everyone.
           </p>
-          <Button variant="outline" color="white">
-            Shop Now
+          <Button variant="outline" color="white" asChild>
+            <Link href="/catalog/smartphones">Shop Now</Link>
           </Button>
         </div>
 

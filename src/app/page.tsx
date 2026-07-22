@@ -1,5 +1,3 @@
-import { Header } from '@/widgets/header';
-import { Footer } from '@/widgets/footer';
 import {
   CategoriesBrowserSection,
   CategoryBannersSection,
@@ -13,17 +11,13 @@ import {
 export default function Home() {
   return (
     <>
-      <Header />
-      <main className="flex-1">
-        <HeroSection />
-        <CategoryBannersSection />
-        <CategoriesBrowserSection />
-        <ProductTabsSection />
-        <PopularProductsSection />
-        <DiscountProductsSection />
-        <SaleBannerSection />
-      </main>
-      <Footer />
+      <HeroSection />
+      <CategoryBannersSection />
+      <CategoriesBrowserSection />
+      <ProductTabsSection />
+      <PopularProductsSection />
+      <DiscountProductsSection />
+      <SaleBannerSection />
     </>
   );
 }

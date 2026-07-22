@@ -7,44 +7,44 @@ export function ProductTabsSection() {
   const dummyProducts = [
     {
       title: 'Apple iPhone 14 Pro Max 128GB Deep Purple',
-      price: '$900',
+      price: 900,
       isFavorite: false,
       imageUrl: iphoneProductImg,
     },
     {
       title: 'Blackmagic Design Pocket Cinema Camera 6K',
-      price: '$2535',
+      price: 2535,
       isFavorite: false,
     },
     {
       title: 'Apple Watch Series 9 GPS 41mm Starlight Aluminum',
-      price: '$399',
+      price: 399,
       isFavorite: false,
     },
     {
       title: 'AirPods Max Silver',
-      price: '$549',
+      price: 549,
       isFavorite: false,
       imageUrl: iphoneProductImg,
     },
     {
       title: 'Samsung Galaxy Watch6 Classic 47mm Black',
-      price: '$369',
+      price: 369,
       isFavorite: false,
     },
     {
       title: 'Galaxy Z Fold5 Unlocked | 256GB | Phantom Black',
-      price: '$1799',
+      price: 1799,
       isFavorite: true,
     },
     {
       title: 'Galaxy Buds2 Pro True Wireless Earbud Headphones',
-      price: '$229.99',
+      price: 229.99,
       isFavorite: false,
     },
     {
       title: 'Apple iPad 9 10.2" 64GB Wi-Fi Silver',
-      price: '$398',
+      price: 398,
       isFavorite: false,
     },
   ];
@@ -70,7 +70,7 @@ export function ProductTabsSection() {
               {dummyProducts.map((p, i) => (
                 <ProductCard
                   key={i}
-                  title={p.title}
+                  name={p.title}
                   price={p.price}
                   isFavorite={p.isFavorite}
                   imageUrl={p.imageUrl}

@@ -1,5 +1,5 @@
 import { Prisma } from '@/generated/prisma/client';
-import { prisma } from '@/shared/lib';
+import { prisma } from '@/shared/api';
 import {
   ProductListQuery,
   CreateProductInput,

@@ -1,5 +1,6 @@
 import { Button } from '@/shared/ui';
 import Image from 'next/image';
+import Link from 'next/link';
 import playstationImg from '@/shared/assets/playstation.png';
 import macbookImg from '@/shared/assets/macbook-pro.png';
 import airpodsImg from '@/shared/assets/airpods-max.png';
@@ -10,6 +11,9 @@ export function CategoryBannersSection() {
     <section className="w-full overflow-hidden">
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 xl:grid-rows-[328px_272px] w-full h-auto">
         <div className="col-span-1 md:col-span-2 xl:col-span-2 bg-background flex items-center justify-end overflow-hidden border-b border-border xl:border-r relative min-h-[300px] p-12">
+          <Link href="/catalog/gaming" className="absolute inset-0 z-20">
+            <span className="sr-only">Playstation 5</span>
+          </Link>
           <div className="absolute -left-38 top-0 h-full w-auto overflow-hidden">
             <Image
               src={playstationImg}
@@ -37,8 +41,8 @@ export function CategoryBannersSection() {
               The new 15‑inch MacBook Air makes room for more of what you love
               with a spacious Liquid Retina display.
             </p>
-            <Button variant="outline" color="black">
-              Shop Now
+            <Button variant="outline" color="black" asChild>
+              <Link href="/catalog/computers">Shop Now</Link>
             </Button>
           </div>
           <Image
@@ -49,6 +53,9 @@ export function CategoryBannersSection() {
         </div>
 
         <div className="col-span-1 bg-banner-light flex items-center justify-end relative overflow-hidden p-12 border-b md:border-b-0 border-border md:border-r min-h-[250px]">
+          <Link href="/catalog/headphones" className="absolute inset-0 z-20">
+            <span className="sr-only">Apple AirPods Max</span>
+          </Link>
           <div className="absolute -left-35 top-0 h-full w-auto">
             <Image
               src={airpodsImg}
@@ -69,6 +76,9 @@ export function CategoryBannersSection() {
         </div>
 
         <div className="col-span-1 bg-banner-darker flex items-center justify-end relative overflow-hidden p-6 md:p-12 xl:border-r border-border min-h-[250px]">
+          <Link href="/catalog/accessories" className="absolute inset-0 z-20">
+            <span className="sr-only">Apple Vision Pro</span>
+          </Link>
           <div className="absolute -left-44 top-0 h-full w-auto flex items-center">
             <Image
               src={visionProImg}

@@ -1,2 +1,1 @@
-export { cn } from './utils';
-export { prisma } from './db';
+export { cn } from './cn';
