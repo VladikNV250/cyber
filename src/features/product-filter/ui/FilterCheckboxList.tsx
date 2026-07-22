@@ -40,7 +40,7 @@ export function FilterCheckboxList({ items, selectedIds, onToggle }: Props) {
                 <span className="text-[15px] font-medium text-foreground leading-none group-hover:underline underline-offset-4">
                   {item.label}
                 </span>
-                {item.count && (
+                {Boolean(item.count) && (
                   <span className="text-xs text-[#929292] leading-none">
                     {item.count}
                   </span>
