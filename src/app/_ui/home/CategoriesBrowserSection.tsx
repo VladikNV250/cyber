@@ -73,26 +73,28 @@ export function CategoriesBrowserSection() {
           <h2 className="text-2xl font-medium text-foreground tracking-tight">
             Browse By Category
           </h2>
-          <div className="flex items-center gap-6">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handlePrev}
-              disabled={startIndex === 0}
-              className="hover:bg-transparent p-0 h-auto text-foreground hover:opacity-70 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
-            >
-              <ChevronLeft className="size-8 stroke-[1.5]" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleNext}
-              disabled={startIndex >= maxIndex}
-              className="hover:bg-transparent p-0 h-auto text-foreground hover:opacity-70 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
-            >
-              <ChevronRight className="size-8 stroke-[1.5]" />
-            </Button>
-          </div>
+          {categories.length > 6 && (
+            <div className="flex items-center gap-6">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handlePrev}
+                disabled={startIndex === 0}
+                className="hover:bg-transparent p-0 h-auto text-foreground hover:opacity-70 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                <ChevronLeft className="size-8 stroke-[1.5]" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleNext}
+                disabled={startIndex >= maxIndex}
+                className="hover:bg-transparent p-0 h-auto text-foreground hover:opacity-70 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                <ChevronRight className="size-8 stroke-[1.5]" />
+              </Button>
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-8">
