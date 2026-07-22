@@ -32,7 +32,8 @@ export function usePriceFilter(bounds: CatalogFilters['priceRange']) {
 
   const handleMinInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLocalRange((prev) => {
-      const newRange = { ...prev, min: Number(e.target.value) };
+      const min = Number(e.target.value) || bounds.min;
+      const newRange = { ...prev, min };
       updateQueryRange(newRange);
       return newRange;
     });
@@ -40,7 +41,8 @@ export function usePriceFilter(bounds: CatalogFilters['priceRange']) {
 
   const handleMaxInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLocalRange((prev) => {
-      const newRange = { ...prev, max: Number(e.target.value) };
+      const max = Number(e.target.value) || bounds.max;
+      const newRange = { ...prev, max };
       updateQueryRange(newRange);
       return newRange;
     });
