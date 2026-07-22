@@ -19,8 +19,15 @@ const Slider = forwardRef<
     <RadixSlider.Track className="relative h-1 w-full grow overflow-hidden rounded-full bg-[#CECECE]">
       <RadixSlider.Range className="absolute h-full bg-[#414141]" />
     </RadixSlider.Track>
-    <RadixSlider.Thumb className="block h-4 w-4 rounded-full border border-primary bg-primary shadow transition-colors cursor-grab active:cursor-grabbing focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" />
-    <RadixSlider.Thumb className="block h-4 w-4 rounded-full border border-primary bg-primary shadow transition-colors cursor-grab active:cursor-grabbing focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" />
+    {/* TODO: Not every slider is needed two thumbs. Review how we can set up that */}
+    <RadixSlider.Thumb
+      aria-label="Minimum value"
+      className="block h-4 w-4 rounded-full border border-primary bg-primary shadow transition-colors cursor-grab active:cursor-grabbing focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+    />
+    <RadixSlider.Thumb
+      aria-label="Maximum value"
+      className="block h-4 w-4 rounded-full border border-primary bg-primary shadow transition-colors cursor-grab active:cursor-grabbing focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+    />
   </RadixSlider.Root>
 ));
 Slider.displayName = RadixSlider.Root.displayName;
