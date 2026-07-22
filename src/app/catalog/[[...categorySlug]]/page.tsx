@@ -27,7 +27,7 @@ export default async function CatalogPage({
           <AutoBreadcrumbs />
         </div>
         <div className="flex gap-8 items-start pt-6 pb-8">
-          <CatalogFilters filters={filters} />
+          <CatalogFilters key={categoryId} filters={filters} />
 
           <Suspense
             key={JSON.stringify(parsedSearchParams)}
