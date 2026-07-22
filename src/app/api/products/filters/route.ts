@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getProductFilters } from '@/entities/product';
+import { getProductFilters } from '@/entities/product/server';
 
 export async function GET(request: NextRequest) {
   try {

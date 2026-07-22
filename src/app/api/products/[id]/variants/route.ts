@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {
-  createProductVariant,
-  createProductVariantSchema,
-} from '@/entities/product';
+import { createProductVariantSchema } from '@/entities/product';
+import { createProductVariant } from '@/entities/product/server';
 import { ZodError } from 'zod';
 
 export async function POST(
