@@ -1,12 +1,6 @@
 import { productFilterSearchParams } from '@/features/product-filter';
 import { productSortSearchParams } from '@/features/product-sort';
-import {
-  createLoader,
-  parseAsInteger,
-  parseAsJson,
-  parseAsString,
-  parseAsStringLiteral,
-} from 'nuqs/server';
+import { createLoader, parseAsInteger, createSerializer } from 'nuqs/server';
 
 export const filterSearchParams = {
   page: parseAsInteger.withDefault(1),
@@ -15,3 +9,4 @@ export const filterSearchParams = {
 };
 
 export const loadSearchParams = createLoader(filterSearchParams);
+export const serializeSearchParams = createSerializer(filterSearchParams);

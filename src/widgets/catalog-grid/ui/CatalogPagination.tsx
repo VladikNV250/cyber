@@ -9,9 +9,11 @@ import {
   PaginationPrevious,
 } from '@/shared/ui';
 
-type Props = Pick<PaginationMeta, 'page' | 'totalPages'>;
+type Props = Pick<PaginationMeta, 'page' | 'totalPages'> & {
+  buildPageUrl: (page: number) => string;
+};
 
-export function CatalogPagination({ page, totalPages }: Props) {
+export function CatalogPagination({ page, totalPages, buildPageUrl }: Props) {
   if (totalPages <= 0) return null;
 
   let startPage = page === 1 ? 1 : page - 1;
@@ -32,11 +34,11 @@ export function CatalogPagination({ page, totalPages }: Props) {
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious href={page > 1 ? `?page=${page - 1}` : '#'} />
+          <PaginationPrevious href={page > 1 ? buildPageUrl(page - 1) : '#'} />
         </PaginationItem>
         {visiblePages.map((p) => (
           <PaginationItem key={p}>
-            <PaginationLink href={`?page=${p}`} isActive={page === p}>
+            <PaginationLink href={buildPageUrl(p)} isActive={page === p}>
               {p}
             </PaginationLink>
           </PaginationItem>
@@ -53,7 +55,7 @@ export function CatalogPagination({ page, totalPages }: Props) {
           visiblePages[visiblePages.length - 1] < totalPages && (
             <PaginationItem>
               <PaginationLink
-                href={`?page=${totalPages}`}
+                href={buildPageUrl(totalPages)}
                 isActive={page === totalPages}
               >
                 {totalPages}
@@ -63,7 +65,7 @@ export function CatalogPagination({ page, totalPages }: Props) {
 
         <PaginationItem>
           <PaginationNext
-            href={page < totalPages ? `?page=${page + 1}` : '#'}
+            href={page < totalPages ? buildPageUrl(page + 1) : '#'}
           />
         </PaginationItem>
       </PaginationContent>

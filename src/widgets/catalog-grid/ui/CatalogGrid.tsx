@@ -7,9 +7,10 @@ import { CatalogGridEmpty } from './CatalogGridEmpty';
 interface Props {
   products: CatalogProduct[];
   metadata: PaginationMeta;
+  buildPageUrl: (page: number) => string;
 }
 
-export function CatalogGrid({ products, metadata }: Props) {
+export function CatalogGrid({ products, metadata, buildPageUrl }: Props) {
   const { page, total, totalPages } = metadata;
 
   return (
@@ -31,7 +32,11 @@ export function CatalogGrid({ products, metadata }: Props) {
       )}
 
       {totalPages > 1 && (
-        <CatalogPagination page={page} totalPages={totalPages} />
+        <CatalogPagination
+          page={page}
+          totalPages={totalPages}
+          buildPageUrl={buildPageUrl}
+        />
       )}
     </div>
   );

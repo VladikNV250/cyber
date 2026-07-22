@@ -4,6 +4,8 @@ import { DEFAULT_FILTERS } from '../_config/filters';
 import { CatalogGrid } from '@/widgets/catalog-grid';
 import { mapToCatalogProduct } from '@/entities/product';
 
+import { serializeSearchParams } from '../_lib/searchParams';
+
 export async function CatalogGridFetcher({
   searchParams,
   categoryId,
@@ -23,10 +25,15 @@ export async function CatalogGridFetcher({
     specs: specs ?? undefined,
   });
 
+  const buildPageUrl = (p: number) => {
+    return '?' + serializeSearchParams({ ...searchParams, page: p });
+  };
+
   return (
     <CatalogGrid
       products={data.products.map(mapToCatalogProduct)}
       metadata={data.metadata}
+      buildPageUrl={buildPageUrl}
     />
   );
 }
