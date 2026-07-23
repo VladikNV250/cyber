@@ -13,8 +13,7 @@ import {
 import { useState } from 'react';
 
 import { CategoryCard } from '@/entities/category';
-import { Button } from '@/shared/ui';
-import { Container } from '@/shared/ui';
+import { Button, Container } from '@/shared/ui';
 
 export function CategoriesBrowserSection() {
   const categories = [
