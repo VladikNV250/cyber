@@ -1,10 +1,13 @@
-import { Button } from '@/shared/ui';
 import Image from 'next/image';
 import Link from 'next/link';
-import playstationImg from '@/shared/assets/playstation.png';
-import macbookImg from '@/shared/assets/macbook-pro.png';
-import airpodsImg from '@/shared/assets/airpods-max.png';
-import visionProImg from '@/shared/assets/apple-vision-pro.png';
+
+import {
+  airpodsImg,
+  macbookImg,
+  playstationImg,
+  visionProImg,
+} from '@/shared/assets';
+import { Button } from '@/shared/ui';
 
 export function CategoryBannersSection() {
   return (
@@ -18,7 +21,7 @@ export function CategoryBannersSection() {
             <Image
               src={playstationImg}
               alt="Playstation 5"
-              className="h-[343px] w-[513px] max-w-none"
+              className="h-85.75 w-128.25 max-w-none"
             />
           </div>
           <div className="flex flex-col justify-between gap-4 text-left z-10">
@@ -48,7 +51,7 @@ export function CategoryBannersSection() {
           <Image
             src={macbookImg}
             alt="Macbook"
-            className="absolute w-[829px] h-[502px] max-w-none -right-134"
+            className="absolute w-207.25 h-125.5 max-w-none -right-134"
           />
         </div>
 
@@ -60,7 +63,7 @@ export function CategoryBannersSection() {
             <Image
               src={airpodsImg}
               alt="Apple AirPods Max"
-              className="w-[245px] h-[272px] max-w-none"
+              className="w-61.25 h-68 max-w-none"
             />
           </div>
           <div className="flex flex-col justify-center gap-4 z-10 relative">
@@ -69,7 +72,7 @@ export function CategoryBannersSection() {
               <br />
               AirPods <span className="font-medium">Max</span>
             </h2>
-            <p className="text-text-muted text-sm font-medium max-w-[160px]">
+            <p className="text-text-muted text-sm font-medium max-w-40">
               Computational audio. Listen, it&apos;s powerful.
             </p>
           </div>
@@ -83,7 +86,7 @@ export function CategoryBannersSection() {
             <Image
               src={visionProImg}
               alt="Apple Vision Pro"
-              className="w-[312px] h-[190px] max-w-none"
+              className="w-78 h-47.5 max-w-none"
             />
           </div>
           <div className="w-auto flex flex-col justify-center gap-4 z-10 relative">
@@ -92,7 +95,7 @@ export function CategoryBannersSection() {
               <br />
               Vision <span className="font-medium">Pro</span>
             </h2>
-            <p className="text-text-muted text-sm font-medium max-w-[160px]">
+            <p className="text-text-muted text-sm font-medium max-w-40">
               An immersive way to experience entertainment.
             </p>
           </div>

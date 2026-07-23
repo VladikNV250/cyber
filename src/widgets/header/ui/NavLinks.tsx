@@ -2,8 +2,10 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { navLinks } from '../config';
+
 import { cn } from '@/shared/lib';
+
+import { navLinks } from '../config/links';
 
 export function NavLinks() {
   const pathname = usePathname();

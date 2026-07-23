@@ -1,8 +1,9 @@
 'use client';
 
-import { forwardRef, ComponentPropsWithoutRef, ComponentRef } from 'react';
-import { Accordion as AccordionPrimitive } from 'radix-ui';
 import { ChevronDown } from 'lucide-react';
+import { Accordion as AccordionPrimitive } from 'radix-ui';
+import { ComponentPropsWithoutRef, ComponentRef, forwardRef } from 'react';
+
 import { cn } from '@/shared/lib';
 
 const Accordion = AccordionPrimitive.Root;

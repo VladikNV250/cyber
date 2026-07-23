@@ -1,14 +1,15 @@
 'use client';
 
-import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
+import Link from 'next/link';
 import { Slot as SlotPrimitive } from 'radix-ui';
 import {
   ComponentProps,
   ComponentPropsWithoutRef,
-  forwardRef,
   ReactNode,
+  forwardRef,
 } from 'react';
+
 import { cn } from '@/shared/lib';
 
 const Breadcrumb = forwardRef<

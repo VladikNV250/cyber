@@ -1,5 +1,6 @@
-import Image, { StaticImageData } from 'next/image';
 import { Heart, Image as ImageIcon } from 'lucide-react';
+import Image, { StaticImageData } from 'next/image';
+
 import { Button } from '@/shared/ui';
 
 export interface ProductCardProps {

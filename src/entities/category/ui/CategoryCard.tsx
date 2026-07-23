@@ -10,7 +10,7 @@ export function CategoryCard({ title, icon, href }: CategoryCardProps) {
   return (
     <Link
       href={href}
-      className="flex w-[160px] h-[128px] cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl bg-banner-light transition-colors hover:bg-border"
+      className="flex w-40 h-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl bg-banner-light transition-colors hover:bg-border"
     >
       <div className="text-foreground">{icon}</div>
       <span className="text-foreground text-base font-medium">{title}</span>

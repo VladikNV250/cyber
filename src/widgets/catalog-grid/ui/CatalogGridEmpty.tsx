@@ -1,6 +1,7 @@
 import { SearchX } from 'lucide-react';
-import { Button } from '@/shared/ui';
 import Link from 'next/link';
+
+import { Button } from '@/shared/ui';
 
 export function CatalogGridEmpty() {
   return (

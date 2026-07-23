@@ -1,12 +1,13 @@
-import { Accordion } from '@/shared/ui';
 import type { CatalogFilters as CatalogFiltersType } from '@/entities/product';
 import {
   BrandFilter,
   PriceFilter,
   SpecFilter,
 } from '@/features/product-filter';
-import { CatalogAccordionItem } from './CatalogAccordionItem';
+import { Accordion } from '@/shared/ui';
+
 import { FILTER_ACCORDION_KEYS } from '../config/constants';
+import { CatalogAccordionItem } from './CatalogAccordionItem';
 
 interface Props {
   filters: CatalogFiltersType;

@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {
-  productListQuerySchema,
-  createProductSchema,
-} from '@/entities/product';
-import { getProducts, createProduct } from '@/entities/product/server';
 import { ZodError } from 'zod';
+
+import {
+  createProductSchema,
+  productListQuerySchema,
+} from '@/entities/product';
+import { createProduct, getProducts } from '@/entities/product/server';
 
 export async function GET(request: NextRequest) {
   try {

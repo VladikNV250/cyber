@@ -1,11 +1,8 @@
-import { Container, Button } from '@/shared/ui';
-import Link from 'next/link';
 import Image from 'next/image';
-import banner1 from '@/shared/assets/product-banner-1.png';
-import banner2 from '@/shared/assets/product-banner-2.png';
-import banner3 from '@/shared/assets/product-banner-3.png';
-import banner4 from '@/shared/assets/product-banner-4.png';
-import banner5 from '@/shared/assets/product-banner-5.png';
+import Link from 'next/link';
+
+import { banner1, banner2, banner3, banner4, banner5 } from '@/shared/assets';
+import { Button, Container } from '@/shared/ui';
 
 export function SaleBannerSection() {
   return (
@@ -14,27 +11,27 @@ export function SaleBannerSection() {
         <Image
           src={banner1}
           alt=""
-          className="absolute bottom-3.5 -left-18 w-[418px] z-40"
+          className="absolute bottom-3.5 -left-18 w-104.5 z-40"
         />
         <Image
           src={banner2}
           alt=""
-          className="absolute top-1 left-10 w-[237px] z-50"
+          className="absolute top-1 left-10 w-59.25 z-50"
         />
         <Image
           src={banner3}
           alt=""
-          className="absolute -top-16 left-56 w-[337px] z-30"
+          className="absolute -top-16 left-56 w-84.25 z-30"
         />
         <Image
           src={banner4}
           alt=""
-          className="absolute top-1 -right-6 -rotate-31 w-[120px] z-10"
+          className="absolute top-1 -right-6 -rotate-31 w-30 z-10"
         />
         <Image
           src={banner5}
           alt=""
-          className="absolute -bottom-30 -right-2 w-[404px] z-20"
+          className="absolute -bottom-30 -right-2 w-101 z-20"
         />
       </div>
 

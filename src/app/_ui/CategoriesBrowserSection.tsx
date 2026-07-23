@@ -1,19 +1,19 @@
 'use client';
 
-import { useState } from 'react';
-import { Button } from '@/shared/ui';
-import { Container } from '@/shared/ui';
-import { CategoryCard } from '@/entities/category/ui';
 import {
-  Smartphone,
-  Watch,
   Camera,
-  Headphones,
-  Monitor,
-  Gamepad2,
   ChevronLeft,
   ChevronRight,
+  Gamepad2,
+  Headphones,
+  Monitor,
+  Smartphone,
+  Watch,
 } from 'lucide-react';
+import { useState } from 'react';
+
+import { CategoryCard } from '@/entities/category';
+import { Button, Container } from '@/shared/ui';
 
 export function CategoriesBrowserSection() {
   const categories = [

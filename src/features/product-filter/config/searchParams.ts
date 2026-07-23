@@ -4,6 +4,7 @@ import {
   parseAsJson,
   parseAsString,
 } from 'nuqs/server';
+
 import { specsQuerySchema } from '../model/schema';
 
 export const productFilterSearchParams = {

@@ -1,10 +1,12 @@
+import { SearchParams } from 'nuqs/server';
+import { Suspense } from 'react';
+
 import { getProductFilters } from '@/entities/product/server';
 import { AutoBreadcrumbs, Container } from '@/shared/ui';
 import { CatalogFilters } from '@/widgets/catalog-filters';
 import { CatalogGridSkeleton } from '@/widgets/catalog-grid';
-import { SearchParams } from 'nuqs/server';
+
 import { loadSearchParams } from './_lib/searchParams';
-import { Suspense } from 'react';
 import { CatalogGridFetcher } from './_ui/CatalogGridFetcher';
 
 export default async function CatalogPage({

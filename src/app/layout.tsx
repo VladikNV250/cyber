@@ -1,7 +1,11 @@
 import type { Metadata } from 'next';
-import { NuqsAdapter } from 'nuqs/adapters/next/app';
-import localFont from 'next/font/local';
 import { Figtree } from 'next/font/google';
+import localFont from 'next/font/local';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
+
+import { Footer } from '@/widgets/footer';
+import { Header } from '@/widgets/header';
+
 import './globals.css';
 
 const figtree = Figtree({
@@ -109,9 +113,6 @@ export const metadata: Metadata = {
   title: 'Cyber Store',
   description: 'Electronics Ecommerce Platform',
 };
-
-import { Header } from '@/widgets/header';
-import { Footer } from '@/widgets/footer';
 
 export default function RootLayout({
   children,

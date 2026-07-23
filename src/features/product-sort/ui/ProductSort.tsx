@@ -1,5 +1,8 @@
 'use client';
 
+import { useQueryState } from 'nuqs';
+
+import { ProductSortKey } from '@/entities/product';
 import {
   Select,
   SelectContent,
@@ -7,10 +10,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/ui';
-import { useQueryState } from 'nuqs';
-import { DEFAULT_SORTING, SORT_LABELS } from '../config/sortLabels';
-import { ProductSortKey } from '@/entities/product';
+
 import { productSortSearchParams } from '../config/searchParams';
+import { DEFAULT_SORTING, SORT_LABELS } from '../config/sortLabels';
 
 export function ProductSort() {
   const [sort, setSort] = useQueryState(

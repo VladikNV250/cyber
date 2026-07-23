@@ -1,8 +1,9 @@
 'use client';
-import { FilterCheckboxList } from './FilterCheckboxList';
 import { CatalogFilters } from '@/entities/product';
-import { mapBrandToFilterItems } from '../model/mapBrandToFilterItem';
+
 import { useBrandFilter } from '../lib/useBrandFilter';
+import { mapBrandToFilterItems } from '../model/mapBrandToFilterItem';
+import { FilterCheckboxList } from './FilterCheckboxList';
 
 interface Props {
   brands: CatalogFilters['brands'];

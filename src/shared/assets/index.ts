@@ -1,0 +1,17 @@
+export { default as logoWhite } from './logo-white.png';
+export { default as logoBlack } from './logo-black.png';
+export { default as playstationImg } from './playstation.png';
+export { default as macbookImg } from './macbook-pro.png';
+export { default as airpodsImg } from './airpods-max.png';
+export { default as visionProImg } from './apple-vision-pro.png';
+export { default as iphoneImage } from './iphone-image.png';
+export { default as popularBanner1 } from './popular-products-banner-1.png';
+export { default as popularBanner2 } from './popular-products-banner-2.png';
+export { default as ipadProBanner } from './ipad-pro-banner.png';
+export { default as samsungGalaxyBanner } from './samsung-galaxy-banner.png';
+export { default as iphoneProductImg } from './iphone-product.png';
+export { default as banner1 } from './product-banner-1.png';
+export { default as banner2 } from './product-banner-2.png';
+export { default as banner3 } from './product-banner-3.png';
+export { default as banner4 } from './product-banner-4.png';
+export { default as banner5 } from './product-banner-5.png';

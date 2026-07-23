@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+
 import { updateProductVariantSchema } from '@/entities/product';
 import {
-  updateProductVariant,
   deleteProductVariant,
+  updateProductVariant,
 } from '@/entities/product/server';
 
 export async function PUT(

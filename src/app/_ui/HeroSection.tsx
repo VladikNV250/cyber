@@ -1,7 +1,8 @@
-import { Container, Button } from '@/shared/ui';
-import Link from 'next/link';
 import Image from 'next/image';
-import iphoneImage from '@/shared/assets/iphone-image.png';
+import Link from 'next/link';
+
+import { iphoneImage } from '@/shared/assets';
+import { Button, Container } from '@/shared/ui';
 
 export function HeroSection() {
   return (
@@ -22,8 +23,8 @@ export function HeroSection() {
           </Button>
         </div>
 
-        <div className="flex-1 w-full flex justify-center md:justify-end relative h-[400px] md:h-[632px]">
-          <div className="absolute bottom-0 w-[80%] md:w-[400px] h-full flex items-end justify-center">
+        <div className="flex-1 w-full flex justify-center md:justify-end relative h-100 md:h-158">
+          <div className="absolute bottom-0 w-[80%] md:w-100 h-full flex items-end justify-center">
             <Image
               src={iphoneImage}
               alt="iPhone 14 Pro"

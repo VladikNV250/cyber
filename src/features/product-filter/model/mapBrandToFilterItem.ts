@@ -1,4 +1,5 @@
 import { CatalogFilters } from '@/entities/product';
+
 import { FilterItem } from './types';
 
 export function mapBrandToFilterItems(

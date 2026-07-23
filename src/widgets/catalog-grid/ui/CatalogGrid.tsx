@@ -1,8 +1,9 @@
-import { CatalogPagination } from './CatalogPagination';
 import { CatalogProduct, ProductCard } from '@/entities/product';
 import { PaginationMeta } from '@/shared/model';
-import { CatalogGridHeader } from './CatalogGridHeader';
+
 import { CatalogGridEmpty } from './CatalogGridEmpty';
+import { CatalogGridHeader } from './CatalogGridHeader';
+import { CatalogPagination } from './CatalogPagination';
 
 interface Props {
   products: CatalogProduct[];

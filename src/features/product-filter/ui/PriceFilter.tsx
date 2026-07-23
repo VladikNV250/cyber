@@ -1,7 +1,8 @@
 'use client';
-import { Input, Slider } from '@/shared/ui';
-import { usePriceFilter } from '../lib/usePriceFilter';
 import { CatalogFilters } from '@/entities/product';
+import { Input, Slider } from '@/shared/ui';
+
+import { usePriceFilter } from '../lib/usePriceFilter';
 
 interface Props {
   bounds: CatalogFilters['priceRange'];

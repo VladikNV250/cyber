@@ -1,5 +1,6 @@
 'use client';
 import { useQueryState } from 'nuqs';
+
 import { productFilterSearchParams } from '../config/searchParams';
 
 export function useSpecFilter(specName: string) {
