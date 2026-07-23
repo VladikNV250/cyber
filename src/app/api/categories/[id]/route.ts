@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {
-  updateCategory,
-  deleteCategory,
-  updateCategorySchema,
-} from '@/entities/category';
+import { updateCategory, deleteCategory } from '@/entities/category/server';
+import { updateCategorySchema } from '@/entities/category';
 
 export async function PUT(
   request: NextRequest,

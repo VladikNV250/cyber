@@ -1,11 +1,13 @@
 import { Button } from '@/shared/ui';
 import Link from 'next/link';
 import Image from 'next/image';
-import popularBanner1 from '@/shared/assets/popular-products-banner-1.png';
-import popularBanner2 from '@/shared/assets/popular-products-banner-2.png';
-import ipadProBanner from '@/shared/assets/ipad-pro-banner.png';
-import samsungGalaxyBanner from '@/shared/assets/samsung-galaxy-banner.png';
-import macbookProBanner from '@/shared/assets/macbook-pro.png';
+import {
+  ipadProBanner,
+  macbookImg,
+  popularBanner1,
+  popularBanner2,
+  samsungGalaxyBanner,
+} from '@/shared/assets';
 
 export function PopularProductsSection() {
   return (
@@ -16,12 +18,12 @@ export function PopularProductsSection() {
             <Image
               src={popularBanner1}
               alt="Popular Products"
-              className="absolute -top-14 left-2 rotate-30 w-[280px] aspect-369/347"
+              className="absolute -top-14 left-2 rotate-30 w-70 aspect-369/347"
             />
             <Image
               src={popularBanner2}
               alt="Popular Products"
-              className="absolute top-11 right-1 -rotate-120 w-[214px] aspect-214/244"
+              className="absolute top-11 right-1 -rotate-120 w-53.5 aspect-214/244"
             />
           </div>
           <h3 className="text-4xl text-foreground font-light">
@@ -41,7 +43,7 @@ export function PopularProductsSection() {
             <Image
               src={ipadProBanner}
               alt="Ipad Pro"
-              className="absolute -top-13 -right-11 w-[371px] aspect-371/390"
+              className="absolute -top-13 -right-11 w-92.75 aspect-371/390"
             />
           </div>
           <h3 className="text-4xl font-light z-10">Ipad Pro</h3>
@@ -74,9 +76,9 @@ export function PopularProductsSection() {
         <div className="relative bg-banner-dark text-primary-foreground flex flex-col items-center justify-end gap-4 text-center px-8 py-14 h-auto xl:h-[640px]">
           <div className="absolute w-full h-full top-0 overflow-hidden">
             <Image
-              src={macbookProBanner}
+              src={macbookImg}
               alt="Macbook Pro"
-              className="absolute top-8 -right-64 w-[537px] max-w-none"
+              className="absolute top-8 -right-64 w-134.25 max-w-none"
             />
           </div>
           <h3 className="text-4xl font-light z-10">Macbook Pro</h3>

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { updateBrand, deleteBrand, updateBrandSchema } from '@/entities/brand';
+import { updateBrand, deleteBrand } from '@/entities/brand/server';
+import { updateBrandSchema } from '@/entities/brand';
 import { ZodError } from 'zod';
 import { Prisma } from '@/generated/prisma/client';
 

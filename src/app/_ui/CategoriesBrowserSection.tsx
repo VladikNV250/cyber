@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Button } from '@/shared/ui';
 import { Container } from '@/shared/ui';
-import { CategoryCard } from '@/entities/category/ui';
+import { CategoryCard } from '@/entities/category';
 import {
   Smartphone,
   Watch,

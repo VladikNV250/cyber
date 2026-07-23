@@ -1,10 +1,10 @@
 import { Search, Heart, ShoppingCart, User } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import logoBlack from '@/shared/assets/logo-black.png';
-import { categories } from '../config';
 import { Button, Container, Input } from '@/shared/ui';
 import { NavLinks } from './NavLinks';
+import { categories } from '../config/categories';
+import { logoBlack } from '@/shared/assets';
 
 export function Header() {
   return (
@@ -42,14 +42,14 @@ export function Header() {
 
       <div className="w-full bg-background-header hidden md:block py-3">
         <Container className="flex items-center justify-between divide-x divide-white/20">
-          {categories.map((category) => (
+          {categories.map(({ name, Icon, href }) => (
             <Link
-              key={category.name}
-              href={category.href}
+              key={name}
+              href={href}
               className="flex items-center gap-2 text-background opacity-50 hover:opacity-100 transition-opacity text-base font-medium h-6 px-12 first:pl-0 last:pr-0"
             >
-              {category.icon}
-              {category.name}
+              {<Icon className="size-6" />}
+              {name}
             </Link>
           ))}
         </Container>

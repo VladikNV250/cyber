@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {
-  createCategory,
-  getCategories,
-  createCategorySchema,
-} from '@/entities/category';
+import { createCategory, getCategories } from '@/entities/category/server';
+import { createCategorySchema } from '@/entities/category';
 import { ZodError } from 'zod';
 
 export async function GET() {

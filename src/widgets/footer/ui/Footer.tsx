@@ -1,8 +1,8 @@
 import { Container } from '@/shared/ui';
 import Link from 'next/link';
 import Image from 'next/image';
-import logoWhite from '@/shared/assets/logo-white.png';
-import { SERVICES_LINKS, ASSISTANCE_LINKS } from '../config';
+import { ASSISTANCE_LINKS, SERVICES_LINKS } from '../config/links';
+import { logoWhite } from '@/shared/assets';
 
 export function Footer() {
   return (

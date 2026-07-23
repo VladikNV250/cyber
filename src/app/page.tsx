@@ -1,12 +1,10 @@
-import {
-  CategoriesBrowserSection,
-  CategoryBannersSection,
-  DiscountProductsSection,
-  HeroSection,
-  PopularProductsSection,
-  ProductTabsSection,
-  SaleBannerSection,
-} from './_ui/home';
+import { CategoryBannersSection } from './_ui/CategoryBannersSection';
+import { CategoriesBrowserSection } from './_ui/CategoriesBrowserSection';
+import { DiscountProductsSection } from './_ui/DiscountProductsSection';
+import { HeroSection } from './_ui/HeroSection';
+import { PopularProductsSection } from './_ui/PopularProductsSection';
+import { ProductTabsSection } from './_ui/ProductTabsSection';
+import { SaleBannerSection } from './_ui/SaleBannerSection';
 
 export default function Home() {
   return (
