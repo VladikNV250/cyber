@@ -1,7 +1,8 @@
-import { Container, Button } from '@/shared/ui';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
+
 import { iphoneImage } from '@/shared/assets';
+import { Button, Container } from '@/shared/ui';
 
 export function HeroSection() {
   return (

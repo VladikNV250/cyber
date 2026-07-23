@@ -1,8 +1,9 @@
 'use client';
 import { CatalogFilters } from '@/entities/product';
-import { FilterCheckboxList } from './FilterCheckboxList';
-import { mapSpecToFilterItems } from '../model/mapSpecToFilterItems';
+
 import { useSpecFilter } from '../lib/useSpecFilter';
+import { mapSpecToFilterItems } from '../model/mapSpecToFilterItems';
+import { FilterCheckboxList } from './FilterCheckboxList';
 
 interface Props {
   spec: CatalogFilters['specs'][number];

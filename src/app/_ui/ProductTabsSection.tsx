@@ -1,7 +1,7 @@
-import { Container } from '@/shared/ui';
 import { ProductCard } from '@/entities/product';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/shared/ui';
 import { iphoneProductImg } from '@/shared/assets';
+import { Container } from '@/shared/ui';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui';
 
 export function ProductTabsSection() {
   const dummyProducts = [

@@ -1,8 +1,9 @@
 'use client';
 
-import { forwardRef, ComponentRef, ComponentPropsWithoutRef } from 'react';
-import { Select as RadixSelect } from 'radix-ui';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react';
+import { Select as RadixSelect } from 'radix-ui';
+import { ComponentPropsWithoutRef, ComponentRef, forwardRef } from 'react';
+
 import { cn } from '@/shared/lib';
 
 const Select = RadixSelect.Root;

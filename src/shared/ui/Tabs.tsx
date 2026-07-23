@@ -1,8 +1,9 @@
 'use client';
 
 import { Tabs as TabsPrimitive } from 'radix-ui';
-import { cn } from '@/shared/lib';
 import { ComponentPropsWithoutRef, ComponentRef, forwardRef } from 'react';
+
+import { cn } from '@/shared/lib';
 
 const Tabs = TabsPrimitive.Root;
 

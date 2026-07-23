@@ -2,7 +2,9 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
 import { cn } from '@/shared/lib';
+
 import { navLinks } from '../config/links';
 
 export function NavLinks() {

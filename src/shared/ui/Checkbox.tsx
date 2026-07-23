@@ -1,13 +1,14 @@
 'use client';
 
+import { Check } from 'lucide-react';
+import { Checkbox as CheckboxPrimitive } from 'radix-ui';
 import {
-  forwardRef,
-  ComponentRef,
   ComponentPropsWithoutRef,
+  ComponentRef,
+  forwardRef,
   useId,
 } from 'react';
-import { Checkbox as CheckboxPrimitive } from 'radix-ui';
-import { Check } from 'lucide-react';
+
 import { cn } from '@/shared/lib';
 
 export const Checkbox = forwardRef<

@@ -1,5 +1,6 @@
-import { AccordionContent, AccordionItem, AccordionTrigger } from '@/shared/ui';
 import { ReactNode } from 'react';
+
+import { AccordionContent, AccordionItem, AccordionTrigger } from '@/shared/ui';
 
 interface Props {
   value: string;

@@ -1,5 +1,5 @@
-import { CategoryBannersSection } from './_ui/CategoryBannersSection';
 import { CategoriesBrowserSection } from './_ui/CategoriesBrowserSection';
+import { CategoryBannersSection } from './_ui/CategoryBannersSection';
 import { DiscountProductsSection } from './_ui/DiscountProductsSection';
 import { HeroSection } from './_ui/HeroSection';
 import { PopularProductsSection } from './_ui/PopularProductsSection';

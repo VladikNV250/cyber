@@ -1,7 +1,8 @@
 'use client';
 
-import { forwardRef, ComponentRef, ComponentPropsWithoutRef } from 'react';
 import { Slider as RadixSlider } from 'radix-ui';
+import { ComponentPropsWithoutRef, ComponentRef, forwardRef } from 'react';
+
 import { cn } from '@/shared/lib';
 
 const Slider = forwardRef<

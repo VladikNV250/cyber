@@ -1,10 +1,11 @@
 import { Prisma } from '@/generated/prisma/client';
 import { prisma } from '@/shared/api';
+
 import {
-  ProductListQuery,
   CreateProductInput,
-  UpdateProductInput,
   CreateProductVariantInput,
+  ProductListQuery,
+  UpdateProductInput,
   UpdateProductVariantInput,
 } from '../model/schemas';
 

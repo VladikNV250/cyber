@@ -1,6 +1,6 @@
-import { Button } from '@/shared/ui';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
+
 import {
   ipadProBanner,
   macbookImg,
@@ -8,6 +8,7 @@ import {
   popularBanner2,
   samsungGalaxyBanner,
 } from '@/shared/assets';
+import { Button } from '@/shared/ui';
 
 export function PopularProductsSection() {
   return (

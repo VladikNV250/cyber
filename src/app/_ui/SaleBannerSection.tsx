@@ -1,7 +1,8 @@
-import { Container, Button } from '@/shared/ui';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
+
 import { banner1, banner2, banner3, banner4, banner5 } from '@/shared/assets';
+import { Button, Container } from '@/shared/ui';
 
 export function SaleBannerSection() {
   return (

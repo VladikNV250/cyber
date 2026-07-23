@@ -1,3 +1,6 @@
+import Image from 'next/image';
+import Link from 'next/link';
+
 import {
   airpodsImg,
   macbookImg,
@@ -5,8 +8,6 @@ import {
   visionProImg,
 } from '@/shared/assets';
 import { Button } from '@/shared/ui';
-import Image from 'next/image';
-import Link from 'next/link';
 
 export function CategoryBannersSection() {
   return (

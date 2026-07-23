@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getBrands, createBrand } from '@/entities/brand/server';
-import { createBrandSchema } from '@/entities/brand';
 import { ZodError } from 'zod';
+
+import { createBrandSchema } from '@/entities/brand';
+import { createBrand, getBrands } from '@/entities/brand/server';
 
 export async function GET() {
   try {

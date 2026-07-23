@@ -1,7 +1,9 @@
-import { CatalogFilters } from '@/entities/product';
 import { useDebounceFn } from '@reactuses/core';
 import { useQueryState } from 'nuqs';
 import { useState } from 'react';
+
+import { CatalogFilters } from '@/entities/product';
+
 import { productFilterSearchParams } from '../config/searchParams';
 
 export function usePriceFilter(bounds: CatalogFilters['priceRange']) {

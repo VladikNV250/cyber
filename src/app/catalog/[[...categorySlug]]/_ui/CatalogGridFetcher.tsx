@@ -1,9 +1,9 @@
-import { getProducts } from '@/entities/product/server';
-import { loadSearchParams } from '../_lib/searchParams';
-import { DEFAULT_FILTERS } from '../_config/filters';
-import { CatalogGrid } from '@/widgets/catalog-grid';
 import { mapToCatalogProduct } from '@/entities/product';
+import { getProducts } from '@/entities/product/server';
+import { CatalogGrid } from '@/widgets/catalog-grid';
 
+import { DEFAULT_FILTERS } from '../_config/filters';
+import { loadSearchParams } from '../_lib/searchParams';
 import { serializeSearchParams } from '../_lib/searchParams';
 
 export async function CatalogGridFetcher({

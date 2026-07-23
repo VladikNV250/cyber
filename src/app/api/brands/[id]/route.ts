@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { updateBrand, deleteBrand } from '@/entities/brand/server';
-import { updateBrandSchema } from '@/entities/brand';
 import { ZodError } from 'zod';
+
+import { updateBrandSchema } from '@/entities/brand';
+import { deleteBrand, updateBrand } from '@/entities/brand/server';
 import { Prisma } from '@/generated/prisma/client';
 
 export async function PUT(

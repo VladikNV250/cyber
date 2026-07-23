@@ -1,5 +1,5 @@
-import { Container } from '@/shared/ui';
 import { ProductCard } from '@/entities/product';
+import { Container } from '@/shared/ui';
 
 export function DiscountProductsSection() {
   const dummyProducts = [

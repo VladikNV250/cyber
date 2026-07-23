@@ -1,10 +1,12 @@
-import { Search, Heart, ShoppingCart, User } from 'lucide-react';
-import Link from 'next/link';
+import { Heart, Search, ShoppingCart, User } from 'lucide-react';
 import Image from 'next/image';
-import { Button, Container, Input } from '@/shared/ui';
-import { NavLinks } from './NavLinks';
-import { categories } from '../config/categories';
+import Link from 'next/link';
+
 import { logoBlack } from '@/shared/assets';
+import { Button, Container, Input } from '@/shared/ui';
+
+import { categories } from '../config/categories';
+import { NavLinks } from './NavLinks';
 
 export function Header() {
   return (

@@ -1,8 +1,10 @@
 'use client';
-import { Checkbox, Input } from '@/shared/ui';
 import { useDebounce } from '@reactuses/core';
 import { Search } from 'lucide-react';
 import { useMemo, useState } from 'react';
+
+import { Checkbox, Input } from '@/shared/ui';
+
 import { FilterItem } from '../model/types';
 
 interface Props {
