@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(uuid())
+  id       String  @id @default(uuid()) @db.Uuid
   email    String  @unique
   password String
   name     String?
@@ -27,9 +27,9 @@ enum Role {
 }
 
 model Category {
-  id       String     @id @default(uuid())
+  id       String     @id @default(uuid()) @db.Uuid
   name     String     @unique
-  parentId String?
+  parentId String?    @db.Uuid
   parent   Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
   children Category[] @relation("CategoryHierarchy")
 
@@ -37,18 +37,18 @@ model Category {
 }
 
 model Brand {
-  id       String    @id @default(uuid())
+  id       String    @id @default(uuid()) @db.Uuid
   name     String    @unique
   products Product[]
 }
 
 model Product {
-  id          String @id @default(uuid())
+  id          String @id @default(uuid()) @db.Uuid
   name        String
   description String @db.Text
-  categoryId String
+  categoryId String @db.Uuid
   category   Category @relation(fields: [categoryId], references: [id])
-  brandId    String
+  brandId    String @db.Uuid
   brand      Brand    @relation(fields: [brandId], references: [id])
   baseSpecs Json?
   minPrice  Decimal @default(0)
@@ -63,27 +63,27 @@ model Product {
 }
 
 model ProductVariant {
-  id    String  @id @default(uuid())
+  id    String  @id @default(uuid()) @db.Uuid
   sku   String  @unique
   price Decimal
   stock Int     @default(0)
   attributes Json
   images     String[]
   allowedShipping ShippingMethod[] @default([NOVA_POST_COURIER, NOVA_POST, MEEST, STORE_PICKUP])
-  productId       String
+  productId       String @db.Uuid
   product         Product          @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   orderItems OrderItem[]
 }
 
 model Review {
-  id      String   @id @default(uuid())
+  id      String   @id @default(uuid()) @db.Uuid
   rating  Int
   comment String?  @db.Text
   images  String[]
-  userId    String
+  userId    String @db.Uuid
   user      User    @relation(fields: [userId], references: [id])
-  productId String
+  productId String @db.Uuid
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 
@@ -91,10 +91,10 @@ model Review {
 }
 
 model Order {
-  id          String      @id @default(uuid())
+  id          String      @id @default(uuid()) @db.Uuid
   totalAmount Decimal
   status      OrderStatus @default(PENDING)
-  userId String
+  userId String @db.Uuid
   user   User   @relation(fields: [userId], references: [id])
   items OrderItem[]
   shippingMethod ShippingMethod
@@ -106,12 +106,12 @@ model Order {
 }
 
 model OrderItem {
-  id              String  @id @default(uuid())
+  id              String  @id @default(uuid()) @db.Uuid
   quantity        Int
   priceAtPurchase Decimal
-  orderId          String
+  orderId          String @db.Uuid
   order            Order          @relation(fields: [orderId], references: [id])
-  productVariantId String
+  productVariantId String @db.Uuid
   variant          ProductVariant @relation(fields: [productVariantId], references: [id])
 }
 
@@ -125,17 +125,17 @@ enum OrderStatus {
 }
 
 model Favorite {
-  id        String  @id @default(uuid())
-  userId    String
+  id        String  @id @default(uuid()) @db.Uuid
+  userId    String @db.Uuid
   user      User    @relation(fields: [userId], references: [id])
-  productId String
+  productId String @db.Uuid
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@unique([userId, productId])
 }
 
 model Address {
-  id            String  @id @default(uuid())
+  id            String  @id @default(uuid()) @db.Uuid
   title         String?
   recipientName String
   phone         String
@@ -143,7 +143,7 @@ model Address {
   street         String?
   deliveryBranch String?
   isDefault Boolean @default(false)
-  userId String
+  userId String @db.Uuid
   user   User   @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
