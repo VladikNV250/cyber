@@ -1,3 +1,29 @@
+
+-- Remediation: Delete rows with invalid UUIDs in primary or foreign keys
+-- This prevents the ALTER COLUMN ... TYPE UUID from failing
+DELETE FROM "Address" WHERE "id" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+DELETE FROM "Address" WHERE "userId" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+DELETE FROM "Brand" WHERE "id" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+DELETE FROM "Category" WHERE "id" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+DELETE FROM "Category" WHERE "parentId" IS NOT NULL AND "parentId" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+DELETE FROM "Favorite" WHERE "id" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+DELETE FROM "Favorite" WHERE "userId" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+DELETE FROM "Favorite" WHERE "productId" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+DELETE FROM "Order" WHERE "id" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+DELETE FROM "Order" WHERE "userId" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+DELETE FROM "OrderItem" WHERE "id" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+DELETE FROM "OrderItem" WHERE "orderId" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+DELETE FROM "OrderItem" WHERE "productVariantId" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+DELETE FROM "Product" WHERE "id" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+DELETE FROM "Product" WHERE "categoryId" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+DELETE FROM "Product" WHERE "brandId" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+DELETE FROM "ProductVariant" WHERE "id" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+DELETE FROM "ProductVariant" WHERE "productId" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+DELETE FROM "Review" WHERE "id" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+DELETE FROM "Review" WHERE "userId" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+DELETE FROM "Review" WHERE "productId" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+DELETE FROM "User" WHERE "id" !~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+
 -- DropForeignKey
 ALTER TABLE "Address" DROP CONSTRAINT "Address_userId_fkey";
 
@@ -36,93 +62,67 @@ ALTER TABLE "Review" DROP CONSTRAINT "Review_userId_fkey";
 
 -- AlterTable
 ALTER TABLE "Address" DROP CONSTRAINT "Address_pkey",
-DROP COLUMN "id",
-ADD COLUMN     "id" UUID NOT NULL,
-DROP COLUMN "userId",
-ADD COLUMN     "userId" UUID NOT NULL,
+ALTER COLUMN "id" TYPE UUID USING "id"::uuid,
+ALTER COLUMN "userId" TYPE UUID USING "userId"::uuid,
 ADD CONSTRAINT "Address_pkey" PRIMARY KEY ("id");
 
 -- AlterTable
 ALTER TABLE "Brand" DROP CONSTRAINT "Brand_pkey",
-DROP COLUMN "id",
-ADD COLUMN     "id" UUID NOT NULL,
+ALTER COLUMN "id" TYPE UUID USING "id"::uuid,
 ADD CONSTRAINT "Brand_pkey" PRIMARY KEY ("id");
 
 -- AlterTable
 ALTER TABLE "Category" DROP CONSTRAINT "Category_pkey",
-DROP COLUMN "id",
-ADD COLUMN     "id" UUID NOT NULL,
-DROP COLUMN "parentId",
-ADD COLUMN     "parentId" UUID,
+ALTER COLUMN "id" TYPE UUID USING "id"::uuid,
+ALTER COLUMN "parentId" TYPE UUID USING "parentId"::uuid,
 ADD CONSTRAINT "Category_pkey" PRIMARY KEY ("id");
 
 -- AlterTable
 ALTER TABLE "Favorite" DROP CONSTRAINT "Favorite_pkey",
-DROP COLUMN "id",
-ADD COLUMN     "id" UUID NOT NULL,
-DROP COLUMN "userId",
-ADD COLUMN     "userId" UUID NOT NULL,
-DROP COLUMN "productId",
-ADD COLUMN     "productId" UUID NOT NULL,
+ALTER COLUMN "id" TYPE UUID USING "id"::uuid,
+ALTER COLUMN "userId" TYPE UUID USING "userId"::uuid,
+ALTER COLUMN "productId" TYPE UUID USING "productId"::uuid,
 ADD CONSTRAINT "Favorite_pkey" PRIMARY KEY ("id");
 
 -- AlterTable
 ALTER TABLE "Order" DROP CONSTRAINT "Order_pkey",
-DROP COLUMN "id",
-ADD COLUMN     "id" UUID NOT NULL,
-DROP COLUMN "userId",
-ADD COLUMN     "userId" UUID NOT NULL,
+ALTER COLUMN "id" TYPE UUID USING "id"::uuid,
+ALTER COLUMN "userId" TYPE UUID USING "userId"::uuid,
 ADD CONSTRAINT "Order_pkey" PRIMARY KEY ("id");
 
 -- AlterTable
 ALTER TABLE "OrderItem" DROP CONSTRAINT "OrderItem_pkey",
-DROP COLUMN "id",
-ADD COLUMN     "id" UUID NOT NULL,
-DROP COLUMN "orderId",
-ADD COLUMN     "orderId" UUID NOT NULL,
-DROP COLUMN "productVariantId",
-ADD COLUMN     "productVariantId" UUID NOT NULL,
+ALTER COLUMN "id" TYPE UUID USING "id"::uuid,
+ALTER COLUMN "orderId" TYPE UUID USING "orderId"::uuid,
+ALTER COLUMN "productVariantId" TYPE UUID USING "productVariantId"::uuid,
 ADD CONSTRAINT "OrderItem_pkey" PRIMARY KEY ("id");
 
 -- AlterTable
 ALTER TABLE "Product" DROP CONSTRAINT "Product_pkey",
-DROP COLUMN "id",
-ADD COLUMN     "id" UUID NOT NULL,
-DROP COLUMN "categoryId",
-ADD COLUMN     "categoryId" UUID NOT NULL,
-DROP COLUMN "brandId",
-ADD COLUMN     "brandId" UUID NOT NULL,
+ALTER COLUMN "id" TYPE UUID USING "id"::uuid,
+ALTER COLUMN "categoryId" TYPE UUID USING "categoryId"::uuid,
+ALTER COLUMN "brandId" TYPE UUID USING "brandId"::uuid,
 ADD CONSTRAINT "Product_pkey" PRIMARY KEY ("id");
 
 -- AlterTable
 ALTER TABLE "ProductVariant" DROP CONSTRAINT "ProductVariant_pkey",
-DROP COLUMN "id",
-ADD COLUMN     "id" UUID NOT NULL,
-DROP COLUMN "productId",
-ADD COLUMN     "productId" UUID NOT NULL,
+ALTER COLUMN "id" TYPE UUID USING "id"::uuid,
+ALTER COLUMN "productId" TYPE UUID USING "productId"::uuid,
 ADD CONSTRAINT "ProductVariant_pkey" PRIMARY KEY ("id");
 
 -- AlterTable
 ALTER TABLE "Review" DROP CONSTRAINT "Review_pkey",
-DROP COLUMN "id",
-ADD COLUMN     "id" UUID NOT NULL,
-DROP COLUMN "userId",
-ADD COLUMN     "userId" UUID NOT NULL,
-DROP COLUMN "productId",
-ADD COLUMN     "productId" UUID NOT NULL,
+ALTER COLUMN "id" TYPE UUID USING "id"::uuid,
+ALTER COLUMN "userId" TYPE UUID USING "userId"::uuid,
+ALTER COLUMN "productId" TYPE UUID USING "productId"::uuid,
 ADD CONSTRAINT "Review_pkey" PRIMARY KEY ("id");
 
 -- AlterTable
 ALTER TABLE "User" DROP CONSTRAINT "User_pkey",
-DROP COLUMN "id",
-ADD COLUMN     "id" UUID NOT NULL,
+ALTER COLUMN "id" TYPE UUID USING "id"::uuid,
 ADD CONSTRAINT "User_pkey" PRIMARY KEY ("id");
 
--- CreateIndex
-CREATE UNIQUE INDEX "Favorite_userId_productId_key" ON "Favorite"("userId", "productId");
 
--- CreateIndex
-CREATE UNIQUE INDEX "Review_userId_productId_key" ON "Review"("userId", "productId");
 
 -- AddForeignKey
 ALTER TABLE "Category" ADD CONSTRAINT "Category_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "Category"("id") ON DELETE SET NULL ON UPDATE CASCADE;
