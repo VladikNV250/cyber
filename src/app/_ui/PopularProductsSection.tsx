@@ -27,15 +27,15 @@ export function PopularProductsSection() {
               className="absolute top-11 right-1 -rotate-120 w-53.5 aspect-214/244"
             />
           </div>
-          <h3 className="text-4xl text-foreground font-light">
+          <h3 className="text-4xl text-foreground font-light z-10">
             Popular Products
           </h3>
-          <p className="text-sm text-text-muted font-medium max-w-sm">
+          <p className="text-sm text-text-muted font-medium max-w-sm z-10">
             Discover our most sought-after tech gadgets, featuring cutting-edge
             smartwatches, premium accessories, and more to elevate your
             lifestyle.
           </p>
-          <Button variant="outline" color="black" asChild>
+          <Button variant="outline" color="black" className="z-10" asChild>
             <Link href="/catalog">Shop Now</Link>
           </Button>
         </div>
