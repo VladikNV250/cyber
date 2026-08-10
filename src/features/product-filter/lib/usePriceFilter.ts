@@ -36,8 +36,8 @@ export function usePriceFilter(bounds: CatalogFilters['priceRange']) {
     if (isNaN(min)) min = bounds.min;
     if (isNaN(max)) max = bounds.max;
 
-    min = Math.max(bounds.min, min);
-    max = Math.min(bounds.max, max);
+    min = Math.max(bounds.min, Math.min(bounds.max, min));
+    max = Math.max(bounds.min, Math.min(bounds.max, max));
 
     if (min > max) {
       min = max;

@@ -104,6 +104,20 @@ describe('usePriceFilter', () => {
     expect(mockSetMaxPrice).toHaveBeenCalledWith(1000);
   });
 
+  it('clamps max value below bounds.min to bounds.min on debounce', () => {
+    const { result } = renderHook(() => usePriceFilter(defaultBounds));
+
+    act(() => {
+      result.current.handleMaxInputChange({
+        target: { value: '-500' },
+      } as React.ChangeEvent<HTMLInputElement>);
+    });
+
+    expect(result.current.localRange).toEqual({ min: 0, max: '-500' });
+    // URL max gets clamped to 0
+    expect(mockSetMaxPrice).toHaveBeenCalledWith(0);
+  });
+
   it('handles min > max edge case by capping min to max', () => {
     const { result } = renderHook(() => usePriceFilter({ min: 0, max: 1000 }));
 
