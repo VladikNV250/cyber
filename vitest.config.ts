@@ -1,4 +1,5 @@
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
+import react from '@vitejs/plugin-react';
 import { playwright } from '@vitest/browser-playwright';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -11,8 +12,17 @@ const dirname =
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
+  plugins: [react()],
   test: {
+    environment: 'jsdom',
+    setupFiles: ['./vitest.setup.ts'],
     projects: [
+      {
+        name: 'unit',
+        test: {
+          include: ['src/**/*.test.{ts,tsx}'],
+        },
+      },
       {
         extends: true,
         plugins: [
