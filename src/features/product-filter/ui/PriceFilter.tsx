@@ -11,9 +11,11 @@ interface Props {
 export function PriceFilter({ bounds }: Props) {
   const {
     localRange,
+    sliderValue,
     handleSliderChange,
     handleMinInputChange,
     handleMaxInputChange,
+    handleBlur,
   } = usePriceFilter(bounds);
 
   return (
@@ -44,6 +46,7 @@ export function PriceFilter({ bounds }: Props) {
             className="w-full bg-background border-border text-foreground font-medium text-sm text-left p-2 rounded-[3px]"
             aria-label="Minimum price"
             onChange={handleMinInputChange}
+            onBlur={handleBlur}
           />
           <div className="w-5 h-px shrink-0 bg-[#E7E7E7]" />
           <Input
@@ -55,12 +58,13 @@ export function PriceFilter({ bounds }: Props) {
             className="w-full bg-background border-border text-foreground font-medium text-sm text-right p-2 rounded-[3px]"
             aria-label="Maximum price"
             onChange={handleMaxInputChange}
+            onBlur={handleBlur}
           />
         </div>
       </div>
 
       <Slider
-        value={[localRange.min, localRange.max]}
+        value={sliderValue}
         onValueChange={handleSliderChange}
         max={bounds.max}
         min={bounds.min}
