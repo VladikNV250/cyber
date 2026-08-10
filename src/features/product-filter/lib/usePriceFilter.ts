@@ -7,7 +7,10 @@ import { CatalogFilters } from '@/entities/product';
 import { productFilterSearchParams } from '../config/searchParams';
 
 export function usePriceFilter(bounds: CatalogFilters['priceRange']) {
-  const [localRange, setLocalRange] = useState(bounds);
+  const [localRange, setLocalRange] = useState<{
+    min: number | string;
+    max: number | string;
+  }>(bounds);
 
   const [, setMinPrice] = useQueryState(
     'minPrice',
@@ -23,10 +26,31 @@ export function usePriceFilter(bounds: CatalogFilters['priceRange']) {
       .withOptions({ shallow: false }),
   );
 
+  const validateAndClamp = (
+    minVal: number | string,
+    maxVal: number | string,
+  ) => {
+    let min = minVal === '' ? bounds.min : Number(minVal);
+    let max = maxVal === '' ? bounds.max : Number(maxVal);
+
+    if (isNaN(min)) min = bounds.min;
+    if (isNaN(max)) max = bounds.max;
+
+    min = Math.max(bounds.min, Math.min(bounds.max, min));
+    max = Math.max(bounds.min, Math.min(bounds.max, max));
+
+    if (min > max) {
+      min = max;
+    }
+
+    return { min, max };
+  };
+
   const { run: updateQueryRange } = useDebounceFn(
-    (newRange: CatalogFilters['priceRange']) => {
-      setMinPrice(newRange.min);
-      setMaxPrice(newRange.max);
+    (newRange: { min: number | string; max: number | string }) => {
+      const { min, max } = validateAndClamp(newRange.min, newRange.max);
+      setMinPrice(min);
+      setMaxPrice(max);
     },
     400,
   );
@@ -38,27 +62,44 @@ export function usePriceFilter(bounds: CatalogFilters['priceRange']) {
   };
 
   const handleMinInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
     setLocalRange((prev) => {
-      const min = Number(e.target.value) || bounds.min;
-      const newRange = { ...prev, min };
+      const newRange = { ...prev, min: val };
       updateQueryRange(newRange);
       return newRange;
     });
   };
 
   const handleMaxInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
     setLocalRange((prev) => {
-      const max = Number(e.target.value) || bounds.max;
-      const newRange = { ...prev, max };
+      const newRange = { ...prev, max: val };
       updateQueryRange(newRange);
       return newRange;
     });
   };
 
+  const handleBlur = () => {
+    setLocalRange((prev) => {
+      const { min, max } = validateAndClamp(prev.min, prev.max);
+      const newRange = { min, max };
+      setMinPrice(min);
+      setMaxPrice(max);
+      return newRange;
+    });
+  };
+
+  const validSliderValue = validateAndClamp(localRange.min, localRange.max);
+
   return {
     localRange,
+    sliderValue: [validSliderValue.min, validSliderValue.max] as [
+      number,
+      number,
+    ],
     handleSliderChange,
     handleMinInputChange,
     handleMaxInputChange,
+    handleBlur,
   };
 }
