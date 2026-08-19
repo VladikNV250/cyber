@@ -288,6 +288,7 @@ export async function getProductById(id: string) {
 }
 
 export async function getRelatedProducts(productId: string, limit: number = 4) {
+  const safeLimit = Math.min(Math.max(1, limit), 20);
   // To ensure atomicity and performance, we use a single nested Prisma query.
   // This fetches the target product, navigates up to its Category, and then
   // fetches other active products within that same category (excluding the target itself).
@@ -301,7 +302,7 @@ export async function getRelatedProducts(productId: string, limit: number = 4) {
               id: { not: productId },
               isActive: true,
             },
-            take: limit,
+            take: safeLimit,
             orderBy: { averageRating: 'desc' },
             include: {
               brand: true,

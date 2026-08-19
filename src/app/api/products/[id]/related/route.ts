@@ -9,14 +9,23 @@ export async function GET(
   try {
     const id = (await params).id;
     const searchParams = request.nextUrl.searchParams;
-    const limit = searchParams.has('limit')
-      ? parseInt(searchParams.get('limit') as string, 10)
-      : 4;
+    let limit = 4;
 
-    const relatedProducts = await getRelatedProducts(
-      id,
-      isNaN(limit) ? 4 : limit,
-    );
+    if (searchParams.has('limit')) {
+      const parsedLimit = parseInt(searchParams.get('limit') as string, 10);
+      if (isNaN(parsedLimit) || parsedLimit <= 0 || parsedLimit > 20) {
+        return NextResponse.json(
+          {
+            error:
+              'Invalid limit parameter. Must be a positive integer between 1 and 20.',
+          },
+          { status: 400 },
+        );
+      }
+      limit = parsedLimit;
+    }
+
+    const relatedProducts = await getRelatedProducts(id, limit);
     return NextResponse.json(relatedProducts);
   } catch (error) {
     console.error('Error fetching related products:', error);
