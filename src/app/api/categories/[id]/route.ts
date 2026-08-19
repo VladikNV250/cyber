@@ -14,12 +14,8 @@ export async function PUT(
     const updatedCategory = await updateCategory(id, parsedData);
     return NextResponse.json(updatedCategory);
   } catch (error) {
-    return NextResponse.json(
-      {
-        error: error instanceof Error ? error.message : 'Internal Server Error',
-      },
-      { status: 400 },
-    );
+    console.error('Error updating category:', error);
+    return NextResponse.json({ error: 'Bad Request' }, { status: 400 });
   }
 }
 
@@ -32,10 +28,9 @@ export async function DELETE(
     await deleteCategory(id);
     return new NextResponse(null, { status: 204 });
   } catch (error) {
+    console.error('Error deleting category:', error);
     return NextResponse.json(
-      {
-        error: error instanceof Error ? error.message : 'Internal Server Error',
-      },
+      { error: 'Internal Server Error' },
       { status: 500 },
     );
   }
