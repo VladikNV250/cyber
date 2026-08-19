@@ -1,7 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { updateProductSchema } from '@/entities/product';
-import { deleteProduct, updateProduct } from '@/entities/product/server';
+import {
+  deleteProduct,
+  getProductById,
+  updateProduct,
+} from '@/entities/product/server';
+
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  try {
+    const id = (await params).id;
+    const product = await getProductById(id);
+
+    if (!product) {
+      return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+    }
+
+    return NextResponse.json(product);
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error: error instanceof Error ? error.message : 'Internal Server Error',
+      },
+      { status: 500 },
+    );
+  }
+}
 
 export async function PUT(
   request: NextRequest,
