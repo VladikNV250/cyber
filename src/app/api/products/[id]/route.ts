@@ -6,6 +6,7 @@ import {
   getProductById,
   updateProduct,
 } from '@/entities/product/server';
+import { uuidSchema } from '@/shared/model';
 
 export async function GET(
   request: NextRequest,
@@ -13,6 +14,12 @@ export async function GET(
 ) {
   try {
     const id = (await params).id;
+    if (!uuidSchema.safeParse(id).success) {
+      return NextResponse.json(
+        { error: 'Invalid product ID format' },
+        { status: 400 },
+      );
+    }
     const product = await getProductById(id);
 
     if (!product) {
@@ -35,6 +42,12 @@ export async function PUT(
 ) {
   try {
     const id = (await params).id;
+    if (!uuidSchema.safeParse(id).success) {
+      return NextResponse.json(
+        { error: 'Invalid product ID format' },
+        { status: 400 },
+      );
+    }
     const body = await request.json();
     const parsedData = updateProductSchema.parse(body);
     const updatedProduct = await updateProduct(id, parsedData);
@@ -51,6 +64,12 @@ export async function DELETE(
 ) {
   try {
     const id = (await params).id;
+    if (!uuidSchema.safeParse(id).success) {
+      return NextResponse.json(
+        { error: 'Invalid product ID format' },
+        { status: 400 },
+      );
+    }
     await deleteProduct(id);
     return new NextResponse(null, { status: 204 });
   } catch (error) {

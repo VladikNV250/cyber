@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { getRelatedProducts } from '@/entities/product/server';
+import { uuidSchema } from '@/shared/model';
 
 export async function GET(
   request: NextRequest,
@@ -8,6 +9,12 @@ export async function GET(
 ) {
   try {
     const id = (await params).id;
+    if (!uuidSchema.safeParse(id).success) {
+      return NextResponse.json(
+        { error: 'Invalid product ID format' },
+        { status: 400 },
+      );
+    }
     const searchParams = request.nextUrl.searchParams;
     let limit = 4;
 
