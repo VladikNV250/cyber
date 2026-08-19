@@ -249,6 +249,78 @@ async function updateProductMinPrice(
   });
 }
 
+export async function getProductById(id: string) {
+  const product = await prisma.product.findUnique({
+    where: { id },
+    include: {
+      brand: true,
+      category: true,
+      variants: true,
+    },
+  });
+
+  if (!product) {
+    return null;
+  }
+
+  const availableOptions: Record<string, string[]> = {};
+
+  for (const variant of product.variants) {
+    if (variant.attributes && typeof variant.attributes === 'object') {
+      for (const [key, value] of Object.entries(
+        variant.attributes as Record<string, unknown>,
+      )) {
+        if (!availableOptions[key]) {
+          availableOptions[key] = [];
+        }
+        const strValue = String(value);
+        if (!availableOptions[key].includes(strValue)) {
+          availableOptions[key].push(strValue);
+        }
+      }
+    }
+  }
+
+  return {
+    ...product,
+    availableOptions,
+  };
+}
+
+export async function getRelatedProducts(productId: string, limit: number = 4) {
+  const safeLimit = Math.min(Math.max(1, limit), 20);
+  // To ensure atomicity and performance, we use a single nested Prisma query.
+  // This fetches the target product, navigates up to its Category, and then
+  // fetches other active products within that same category (excluding the target itself).
+  const productWithRelated = await prisma.product.findUnique({
+    where: { id: productId },
+    select: {
+      category: {
+        select: {
+          products: {
+            where: {
+              id: { not: productId },
+              isActive: true,
+            },
+            take: safeLimit,
+            orderBy: { averageRating: 'desc' },
+            include: {
+              brand: true,
+              category: true,
+              variants: {
+                take: 1,
+                orderBy: { price: 'asc' },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return productWithRelated?.category?.products || [];
+}
+
 // Handle dynamic specs via JSON path on variants attributes or product baseSpecs
 // Assuming 'specs' is { "memory": ["128GB", "256GB"], "color": ["Red"] }
 // To be safe and simple, we check variant attributes

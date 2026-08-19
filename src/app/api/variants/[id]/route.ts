@@ -17,12 +17,8 @@ export async function PUT(
     const updatedVariant = await updateProductVariant(id, parsedData);
     return NextResponse.json(updatedVariant);
   } catch (error) {
-    return NextResponse.json(
-      {
-        error: error instanceof Error ? error.message : 'Internal Server Error',
-      },
-      { status: 400 },
-    );
+    console.error('Error updating variant:', error);
+    return NextResponse.json({ error: 'Bad Request' }, { status: 400 });
   }
 }
 
@@ -35,10 +31,9 @@ export async function DELETE(
     await deleteProductVariant(id);
     return new NextResponse(null, { status: 204 });
   } catch (error) {
+    console.error('Error deleting variant:', error);
     return NextResponse.json(
-      {
-        error: error instanceof Error ? error.message : 'Internal Server Error',
-      },
+      { error: 'Internal Server Error' },
       { status: 500 },
     );
   }
