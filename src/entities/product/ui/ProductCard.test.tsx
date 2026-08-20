@@ -63,4 +63,20 @@ describe('ProductCard', () => {
     expect(img).toHaveAttribute('src');
     // next/image might transform the src, so we just check it exists
   });
+
+  it('renders navigation links when id is provided', () => {
+    render(<ProductCard {...mockProps} id="12345" />);
+
+    // We expect the links (image link and title link) to point to /products/12345
+    const links = screen.getAllByRole('link');
+    expect(links.length).toBeGreaterThan(0);
+    expect(links[0]).toHaveAttribute('href', '/products/12345');
+  });
+
+  it('does not render navigation links when id is not provided', () => {
+    render(<ProductCard {...mockProps} />);
+
+    const links = screen.queryAllByRole('link');
+    expect(links).toHaveLength(0);
+  });
 });

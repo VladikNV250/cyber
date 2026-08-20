@@ -1,9 +1,14 @@
-import { Heart, Image as ImageIcon } from 'lucide-react';
-import Image, { StaticImageData } from 'next/image';
+import { Heart } from 'lucide-react';
+import { StaticImageData } from 'next/image';
 
 import { Button } from '@/shared/ui';
 
+import { ConditionalLink } from './ConditionalLink';
+import { ProductCardImage } from './ProductCardImage';
+import { ProductCardTitle } from './ProductCardTitle';
+
 export interface ProductCardProps {
+  id?: string;
   name: string;
   price: number;
   imageUrl?: StaticImageData;
@@ -11,6 +16,7 @@ export interface ProductCardProps {
 }
 
 export function ProductCard({
+  id,
   name: title,
   price,
   imageUrl,
@@ -26,31 +32,21 @@ export function ProductCard({
       <Button
         variant="ghost"
         size="icon"
-        className={`absolute right-4 top-4 hover:bg-transparent p-0 h-auto transition-colors ${isFavorite ? 'text-red-500' : 'text-muted-foreground hover:text-red-500'}`}
+        className={`absolute right-4 top-4 hover:bg-transparent p-0 h-auto transition-colors z-10 ${isFavorite ? 'text-red-500' : 'text-muted-foreground hover:text-red-500'}`}
       >
         <Heart className="size-8" fill={isFavorite ? 'currentColor' : 'none'} />
       </Button>
 
       <div className="flex-1 flex items-center justify-center w-full mt-4 mb-4 relative min-h-40">
-        {imageUrl ? (
-          <Image
-            src={imageUrl}
-            alt={title}
-            width={160}
-            height={160}
-            className="object-contain size-40"
-          />
-        ) : (
-          <div className="h-40 w-40 bg-muted/50 rounded-md flex items-center justify-center text-muted-foreground">
-            <ImageIcon className="w-12 h-12 opacity-20" />
-          </div>
-        )}
+        <ConditionalLink id={id}>
+          <ProductCardImage imageUrl={imageUrl} alt={title} />
+        </ConditionalLink>
       </div>
 
       <div className="mt-auto flex flex-col items-center w-full gap-4">
-        <h3 className="text-base font-medium text-center line-clamp-2 min-h-12 text-foreground">
-          {title}
-        </h3>
+        <ConditionalLink id={id} className="hover:underline">
+          <ProductCardTitle title={title} />
+        </ConditionalLink>
         <p className="text-2xl font-semibold text-foreground">
           {uahFormatter.format(price)} ₴
         </p>
