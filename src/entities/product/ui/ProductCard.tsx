@@ -11,7 +11,7 @@ export interface ProductCardProps {
   id?: string;
   name: string;
   price: number;
-  imageUrl?: StaticImageData;
+  imageUrl?: string | StaticImageData;
   isFavorite?: boolean;
 }
 

@@ -2,7 +2,7 @@ import { ImageIcon } from 'lucide-react';
 import Image, { StaticImageData } from 'next/image';
 
 interface Props {
-  imageUrl?: StaticImageData;
+  imageUrl?: string | StaticImageData;
   alt: string;
 }
 
