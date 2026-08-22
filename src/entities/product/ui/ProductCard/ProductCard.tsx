@@ -1,6 +1,7 @@
 import { Heart } from 'lucide-react';
 import { StaticImageData } from 'next/image';
 
+import { formatPrice } from '@/shared/lib';
 import { Button } from '@/shared/ui';
 
 import { ConditionalLink } from './ConditionalLink';
@@ -22,11 +23,6 @@ export function ProductCard({
   imageUrl,
   isFavorite = false,
 }: ProductCardProps) {
-  const uahFormatter = new Intl.NumberFormat('uk-UA', {
-    style: 'decimal',
-    minimumFractionDigits: 0,
-  });
-
   return (
     <div className="group relative flex flex-col items-center justify-between rounded-lg bg-card px-4 py-6  transition-shadow hover:shadow-md h-108">
       <Button
@@ -48,7 +44,7 @@ export function ProductCard({
           <ProductCardTitle title={title} />
         </ConditionalLink>
         <p className="text-2xl font-semibold text-foreground">
-          {uahFormatter.format(price)} ₴
+          {formatPrice(price)}
         </p>
         <Button className="mt-2" variant="default" size="lg">
           Buy Now
