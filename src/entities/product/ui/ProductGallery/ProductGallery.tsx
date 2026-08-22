@@ -22,7 +22,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
             key={i}
             onClick={() => setActiveImage(img)}
             className={`w-full aspect-square relative rounded-md border-2 overflow-hidden transition-colors ${
-              activeImage === img || (!activeImage && i === 0)
+              mainImage === img
                 ? 'border-primary'
                 : 'border-transparent hover:border-gray-200'
             }`}

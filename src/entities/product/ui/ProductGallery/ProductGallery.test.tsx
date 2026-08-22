@@ -36,4 +36,27 @@ describe('ProductGallery', () => {
     const mainImage = screen.getByAltText(productName);
     expect(mainImage.getAttribute('src')).toContain('img2');
   });
+
+  it('synchronizes highlighted thumbnail when images prop changes and activeImage is no longer present', () => {
+    const { rerender } = render(
+      <ProductGallery images={mockImages} productName={productName} />,
+    );
+
+    // Click third thumbnail so activeImage becomes '/img3.png'
+    const thirdThumbnail = screen.getByAltText(`${productName} - image 3`);
+    fireEvent.click(thirdThumbnail);
+
+    // Re-render with new images that don't include '/img3.png'
+    const newImages = ['/new1.png', '/new2.png'];
+    rerender(<ProductGallery images={newImages} productName={productName} />);
+
+    // The main image should fall back to '/new1.png'
+    const mainImage = screen.getByAltText(productName);
+    expect(mainImage.getAttribute('src')).toContain('new1');
+
+    // The first thumbnail button should have 'border-primary' class
+    const firstThumbnailImage = screen.getByAltText(`${productName} - image 1`);
+    const firstThumbnailButton = firstThumbnailImage.closest('button');
+    expect(firstThumbnailButton).toHaveClass('border-primary');
+  });
 });
