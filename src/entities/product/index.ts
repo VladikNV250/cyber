@@ -1,4 +1,6 @@
-export { ProductCard } from './ui/ProductCard';
+export { ProductCard } from './ui/ProductCard/ProductCard';
+export { ProductSpecItem } from './ui/ProductSpecItem/ProductSpecItem';
+export { ProductGallery } from './ui/ProductGallery/ProductGallery';
 
 export {
   PRODUCT_SORT_KEYS,
