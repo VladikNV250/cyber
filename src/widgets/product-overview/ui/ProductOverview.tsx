@@ -77,8 +77,16 @@ export function ProductOverview({ product }: Props) {
           <Button variant="outline" color="black" className="flex-1">
             Add to Wishlist
           </Button>
-          <Button color="black" className="flex-1" disabled={!activeVariant}>
-            {activeVariant ? 'Add to Cart' : 'Unavailable'}
+          <Button
+            color="black"
+            className="flex-1"
+            disabled={!activeVariant || activeVariant.stock <= 0}
+          >
+            {!activeVariant
+              ? 'Unavailable'
+              : activeVariant.stock <= 0
+                ? 'Out of Stock'
+                : 'Add to Cart'}
           </Button>
         </div>
 
@@ -97,8 +105,18 @@ export function ProductOverview({ product }: Props) {
               <Store className="size-6 text-[#797979] stroke-2" />
             </div>
             <div className="flex flex-col text-sm font-medium">
-              <span className="text-gray-400">In Stock</span>
-              <span className="text-black">Today</span>
+              <span className="text-gray-400">
+                {activeVariant?.stock
+                  ? activeVariant.stock > 0
+                    ? 'In Stock'
+                    : 'Out of Stock'
+                  : 'Out of Stock'}
+              </span>
+              <span className="text-black">
+                {activeVariant?.stock && activeVariant.stock > 0
+                  ? 'Today'
+                  : 'Unavailable'}
+              </span>
             </div>
           </div>
           <div className="flex items-center gap-4">
