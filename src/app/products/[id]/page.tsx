@@ -4,9 +4,9 @@ import { notFound } from 'next/navigation';
 import { getProductById } from '@/entities/product/server';
 import { uuidSchema } from '@/shared/model';
 import { AutoBreadcrumbs, Container } from '@/shared/ui';
+import { ProductOverview } from '@/widgets/product-overview';
 
 import { ProductDetails } from './_ui/ProductDetails';
-import { ProductOverview } from './_ui/ProductOverview';
 import { RelatedProducts } from './_ui/RelatedProducts';
 
 type Props = {
@@ -44,24 +44,16 @@ export default async function ProductPage({ params }: Props) {
     notFound();
   }
 
-  const product = await getProductById(id);
+  const productData = await getProductById(id);
 
-  if (!product) {
+  if (!productData) {
     notFound();
   }
 
-  // Map for AutoBreadcrumbs to show friendly names instead of UUID
   const breadcrumbLabels = {
     products: 'Catalog',
-    [id]: product.name,
+    [id]: productData.name,
   };
-
-  // We cast it to the type expected by the children to avoid Prisma strict type mismatch on JSON properties
-  // And we stringify/parse to strip Prisma Decimal and Date objects which cannot be passed to Client Components.
-  const serializedProduct = JSON.parse(JSON.stringify(product));
-
-  type ProductType = Parameters<typeof ProductOverview>[0]['product'];
-  const productData = serializedProduct as unknown as ProductType;
 
   return (
     <div className="flex flex-col flex-1 bg-white">
@@ -72,16 +64,10 @@ export default async function ProductPage({ params }: Props) {
         <ProductOverview product={productData} />
       </Container>
 
-      <ProductDetails
-        product={
-          productData as unknown as Parameters<
-            typeof ProductDetails
-          >[0]['product']
-        }
-      />
+      <ProductDetails product={productData} />
 
       <Container>
-        <RelatedProducts productId={product.id} />
+        <RelatedProducts productId={productData.id} />
       </Container>
     </div>
   );

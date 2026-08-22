@@ -7,6 +7,7 @@ import {
   ProductListQuery,
   UpdateProductInput,
   UpdateProductVariantInput,
+  productDetailsSchema,
 } from '../model/schemas';
 
 export type ProductResult = Prisma.ProductGetPayload<{
@@ -281,10 +282,12 @@ export async function getProductById(id: string) {
     }
   }
 
-  return {
+  const data = {
     ...product,
     availableOptions,
   };
+
+  return productDetailsSchema.parse(data);
 }
 
 export async function getRelatedProducts(productId: string, limit: number = 4) {

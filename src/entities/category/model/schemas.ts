@@ -1,11 +1,20 @@
 import { z } from 'zod';
 
-export const createCategorySchema = z.object({
+export const categorySchema = z.object({
+  id: z.uuid(),
   name: z.string().min(1, 'Name is required'),
-  parentId: z.uuid().optional().nullable(),
+  parentId: z.uuid().nullable(),
 });
+
+export const createCategorySchema = categorySchema
+  .pick({
+    name: true,
+    parentId: true,
+  })
+  .partial({ parentId: true });
 
 export const updateCategorySchema = createCategorySchema.partial();
 
+export type Category = z.infer<typeof categorySchema>;
 export type CreateCategoryInput = z.infer<typeof createCategorySchema>;
 export type UpdateCategoryInput = z.infer<typeof updateCategorySchema>;

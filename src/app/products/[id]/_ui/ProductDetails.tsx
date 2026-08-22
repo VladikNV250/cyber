@@ -1,10 +1,8 @@
-'use client';
-
-import type { Prisma } from '@/generated/prisma/client';
+import type { ProductDetails as ProductDetailsType } from '@/entities/product';
 import { Container } from '@/shared/ui';
 
 interface Props {
-  product: Prisma.ProductGetPayload<Prisma.ProductDefaultArgs>;
+  product: ProductDetailsType;
 }
 
 export function ProductDetails({ product }: Props) {

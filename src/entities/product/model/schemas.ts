@@ -1,5 +1,24 @@
 import { z } from 'zod';
 
+import { brandSchema } from '@/entities/brand';
+import { categorySchema } from '@/entities/category';
+import type { Prisma } from '@/generated/prisma/client';
+
+const jsonLiteralSchema = z.union([
+  z.string(),
+  z.number(),
+  z.boolean(),
+  z.null(),
+]);
+
+export const jsonSchema: z.ZodType<Prisma.JsonValue> = z.lazy(() =>
+  z.union([
+    jsonLiteralSchema,
+    z.array(jsonSchema),
+    z.record(z.string(), jsonSchema) as unknown as z.ZodType<Prisma.JsonObject>,
+  ]),
+);
+
 export const PRODUCT_SORT_KEYS = [
   'rating_desc',
   'price_asc',
@@ -37,39 +56,65 @@ export const productListQuerySchema = z.object({
 
 export type ProductListQuery = z.infer<typeof productListQuerySchema>;
 
-export const createProductSchema = z.object({
+export const productSchema = z.object({
+  id: z.uuid(),
   name: z.string().min(1, 'Name is required'),
   description: z.string().min(1, 'Description is required'),
-  categoryId: z.uuid('Invalid category ID'),
+  categoryId: z.string().uuid('Invalid category ID'),
   brandId: z.uuid('Invalid brand ID'),
-  baseSpecs: z.record(z.string(), z.any()).optional(),
-  isActive: z.boolean().optional(),
+  baseSpecs: jsonSchema.nullable(),
+  isActive: z.boolean(),
+  minPrice: z.coerce.number(),
+  averageRating: z.coerce.number(),
+  reviewCount: z.coerce.number(),
+  createdAt: z.union([z.string(), z.date()]),
+  updatedAt: z.union([z.string(), z.date()]),
 });
 
-export const updateProductSchema = createProductSchema.partial();
-
-export const createProductVariantSchema = z.object({
+export const productVariantSchema = z.object({
+  id: z.uuid(),
+  productId: z.uuid(),
   sku: z.string().min(1, 'SKU is required'),
   price: z.coerce.number().min(0, 'Price must be positive'),
   stock: z.coerce.number().int().min(0, 'Stock must be non-negative'),
-  attributes: z.record(z.string(), z.any()),
-  images: z.array(z.url()).default([]),
-  allowedShipping: z
-    .array(
-      z.enum([
-        'STORE_PICKUP',
-        'NOVA_POST_COURIER',
-        'NOVA_POST',
-        'MEEST',
-        'UKRPOSHTA',
-        'NOVA_POST_POSTOMAT',
-      ]),
-    )
-    .optional(),
+  attributes: jsonSchema,
+  images: z.array(z.string()),
+  allowedShipping: z.array(
+    z.enum([
+      'STORE_PICKUP',
+      'NOVA_POST_COURIER',
+      'NOVA_POST',
+      'MEEST',
+      'UKRPOSHTA',
+      'NOVA_POST_POSTOMAT',
+    ]),
+  ),
 });
+
+export const createProductSchema = productSchema
+  .pick({
+    name: true,
+    description: true,
+    categoryId: true,
+    brandId: true,
+    baseSpecs: true,
+    isActive: true,
+  })
+  .partial({ baseSpecs: true, isActive: true });
+
+export const updateProductSchema = createProductSchema.partial();
+
+export const createProductVariantSchema = productVariantSchema
+  .omit({
+    id: true,
+    productId: true,
+  })
+  .partial({ allowedShipping: true });
 
 export const updateProductVariantSchema = createProductVariantSchema.partial();
 
+export type Product = z.infer<typeof productSchema>;
+export type ProductVariant = z.infer<typeof productVariantSchema>;
 export type CreateProductInput = z.infer<typeof createProductSchema>;
 export type UpdateProductInput = z.infer<typeof updateProductSchema>;
 export type CreateProductVariantInput = z.infer<
@@ -109,3 +154,12 @@ export const catalogFiltersDataSchema = z.object({
 
 export type CatalogProduct = z.infer<typeof catalogProductSchema>;
 export type CatalogFilters = z.infer<typeof catalogFiltersDataSchema>;
+
+export const productDetailsSchema = productSchema.extend({
+  availableOptions: z.record(z.string(), z.array(z.string())),
+  category: categorySchema,
+  brand: brandSchema,
+  variants: z.array(productVariantSchema),
+});
+
+export type ProductDetails = z.infer<typeof productDetailsSchema>;
