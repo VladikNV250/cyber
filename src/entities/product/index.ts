@@ -1,4 +1,7 @@
-export { ProductCard } from './ui/ProductCard';
+export { ProductCard } from './ui/ProductCard/ProductCard';
+export { ProductSpecItem } from './ui/ProductSpecItem/ProductSpecItem';
+export { ProductGallery } from './ui/ProductGallery/ProductGallery';
+export { ProductGrid } from './ui/ProductGrid/ProductGrid';
 
 export {
   PRODUCT_SORT_KEYS,
@@ -7,6 +10,11 @@ export {
   updateProductSchema,
   createProductVariantSchema,
   productListQuerySchema,
+  productDetailsSchema,
+  productSchema,
+  productVariantSchema,
+  productSummarySchema,
+  catalogFiltersDataSchema,
 } from './model/schemas';
 export type {
   ProductSortKey,
@@ -16,6 +24,9 @@ export type {
   CreateProductVariantInput,
   UpdateProductVariantInput,
   CatalogFilters,
-  CatalogProduct,
+  ProductSummary,
+  ProductDetails,
+  Product,
+  ProductVariant,
 } from './model/schemas';
-export { mapToCatalogProduct } from './model/mappers/mapToCatalogProduct';
+export { mapToProductSummary } from './model/mappers/mapToProductSummary';

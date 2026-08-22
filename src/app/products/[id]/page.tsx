@@ -3,6 +3,11 @@ import { notFound } from 'next/navigation';
 
 import { getProductById } from '@/entities/product/server';
 import { uuidSchema } from '@/shared/model';
+import { AutoBreadcrumbs, Container } from '@/shared/ui';
+import { ProductOverview } from '@/widgets/product-overview';
+
+import { ProductDetails } from './_ui/ProductDetails';
+import { RelatedProducts } from './_ui/RelatedProducts';
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -39,18 +44,31 @@ export default async function ProductPage({ params }: Props) {
     notFound();
   }
 
-  const product = await getProductById(id);
+  const productData = await getProductById(id);
 
-  if (!product) {
+  if (!productData) {
     notFound();
   }
 
+  const breadcrumbLabels = {
+    products: 'Catalog',
+    [id]: productData.name,
+  };
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
-      {product.description && (
-        <p className="text-gray-600 mb-8">{product.description}</p>
-      )}
+    <div className="flex flex-col flex-1 bg-white">
+      <Container>
+        <div className="py-10">
+          <AutoBreadcrumbs labels={breadcrumbLabels} />
+        </div>
+        <ProductOverview product={productData} />
+      </Container>
+
+      <ProductDetails product={productData} />
+
+      <Container>
+        <RelatedProducts productId={productData.id} />
+      </Container>
     </div>
   );
 }

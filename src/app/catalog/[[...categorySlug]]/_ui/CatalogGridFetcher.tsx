@@ -1,4 +1,4 @@
-import { mapToCatalogProduct } from '@/entities/product';
+import { mapToProductSummary } from '@/entities/product';
 import { getProducts } from '@/entities/product/server';
 import { CatalogGrid } from '@/widgets/catalog-grid';
 
@@ -31,7 +31,7 @@ export async function CatalogGridFetcher({
 
   return (
     <CatalogGrid
-      products={data.products.map(mapToCatalogProduct)}
+      products={data.products.map(mapToProductSummary)}
       metadata={data.metadata}
       buildPageUrl={buildPageUrl}
     />
