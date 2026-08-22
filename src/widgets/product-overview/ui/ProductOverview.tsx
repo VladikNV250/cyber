@@ -41,10 +41,16 @@ export function ProductOverview({ product }: Props) {
       <div className="flex flex-col">
         <h1 className="text-4xl font-bold mb-6">{product.name}</h1>
 
-        <div className="flex items-end gap-4 mb-4">
-          <span className="text-3xl font-medium tracking-wide">
-            {formatPrice(price)}
-          </span>
+        <div className="flex items-end gap-4 mb-4 h-9">
+          {activeVariant ? (
+            <span className="text-3xl font-medium tracking-wide">
+              {formatPrice(price)}
+            </span>
+          ) : (
+            <span className="text-xl font-medium text-red-500 flex items-center h-full">
+              Selected combination is not available
+            </span>
+          )}
         </div>
 
         <ProductOptions
@@ -71,8 +77,8 @@ export function ProductOverview({ product }: Props) {
           <Button variant="outline" color="black" className="flex-1">
             Add to Wishlist
           </Button>
-          <Button color="black" className="flex-1">
-            Add to Cart
+          <Button color="black" className="flex-1" disabled={!activeVariant}>
+            {activeVariant ? 'Add to Cart' : 'Unavailable'}
           </Button>
         </div>
 

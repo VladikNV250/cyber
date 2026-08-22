@@ -8,7 +8,7 @@ export function useProductVariantState(
     const p: Record<string, ReturnType<typeof parseAsStringEnum>> = {};
     for (const [key, values] of Object.entries(availableOptions)) {
       if (values.length > 0) {
-        p[key] = parseAsStringEnum([...values]).withDefault(values[0]);
+        p[key] = parseAsStringEnum([...values]);
       }
     }
     return p;

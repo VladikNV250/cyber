@@ -14,6 +14,6 @@ export function findActiveVariant(
       return Object.entries(selectedOptions).every(
         ([key, val]) => !val || attrs[key] === val,
       );
-    }) || variants[0]
+    }) || null
   );
 }

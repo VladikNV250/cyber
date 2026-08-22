@@ -33,10 +33,10 @@ describe('findActiveVariant', () => {
     expect(variant?.id).toBe('v2');
   });
 
-  it('falls back to the first variant if no exact match is found', () => {
+  it('returns null if no exact match is found', () => {
     const selectedOptions = { color: 'Red', storage: '512GB' };
     const variant = findActiveVariant(mockVariants, selectedOptions);
-    expect(variant?.id).toBe('v1');
+    expect(variant).toBeNull();
   });
 
   it('ignores null values in selectedOptions and matches partially', () => {
