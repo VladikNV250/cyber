@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { CatalogProduct } from '@/entities/product';
+import { ProductSummary } from '@/entities/product';
 
 import { CatalogGrid } from './CatalogGrid';
 
@@ -31,9 +31,13 @@ vi.mock('./CatalogPagination', () => ({
 }));
 
 vi.mock('@/entities/product', () => ({
-  ProductCard: ({ name, price }: { name: string; price: number }) => (
-    <div data-testid="product-card">
-      {name} - {price}
+  ProductGrid: ({ products }: { products: ProductSummary[] }) => (
+    <div>
+      {products.map((p) => (
+        <div key={p.id} data-testid="product-card">
+          {p.name} - {p.price}
+        </div>
+      ))}
     </div>
   ),
 }));
@@ -48,9 +52,9 @@ describe('CatalogGrid', () => {
     totalPages: 1,
   };
 
-  const products: CatalogProduct[] = [
-    { id: '1', name: 'Phone 1', minPrice: 1000 } as CatalogProduct,
-    { id: '2', name: 'Phone 2', minPrice: 2000 } as CatalogProduct,
+  const products: ProductSummary[] = [
+    { id: '1', name: 'Phone 1', price: 1000 } as ProductSummary,
+    { id: '2', name: 'Phone 2', price: 2000 } as ProductSummary,
   ];
 
   it('renders the header with total count', () => {

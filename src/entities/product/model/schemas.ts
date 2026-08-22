@@ -108,10 +108,11 @@ export type UpdateProductVariantInput = z.infer<
   typeof updateProductVariantSchema
 >;
 
-export const catalogProductSchema = z.object({
+export const productSummarySchema = z.object({
   id: z.uuid(),
   name: z.string().min(2),
-  minPrice: z.coerce.number().min(0),
+  price: z.coerce.number().min(0),
+  imageUrl: z.string().optional(),
 });
 
 export const catalogFiltersDataSchema = z.object({
@@ -136,7 +137,7 @@ export const catalogFiltersDataSchema = z.object({
   ),
 });
 
-export type CatalogProduct = z.infer<typeof catalogProductSchema>;
+export type ProductSummary = z.infer<typeof productSummarySchema>;
 export type CatalogFilters = z.infer<typeof catalogFiltersDataSchema>;
 
 export const productDetailsSchema = productSchema.extend({
