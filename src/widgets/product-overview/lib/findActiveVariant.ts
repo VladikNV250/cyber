@@ -10,7 +10,7 @@ export function findActiveVariant(
 
   return (
     variants.find((variant) => {
-      const attrs = (variant.attributes as Record<string, string>) || {};
+      const attrs = variant.attributes || {};
       return Object.entries(selectedOptions).every(
         ([key, val]) => !val || attrs[key] === val,
       );

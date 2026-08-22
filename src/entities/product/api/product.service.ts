@@ -267,10 +267,12 @@ export async function getProductById(id: string) {
   const availableOptions: Record<string, string[]> = {};
 
   for (const variant of product.variants) {
-    if (variant.attributes && typeof variant.attributes === 'object') {
-      for (const [key, value] of Object.entries(
-        variant.attributes as Record<string, unknown>,
-      )) {
+    if (
+      variant.attributes &&
+      typeof variant.attributes === 'object' &&
+      !Array.isArray(variant.attributes)
+    ) {
+      for (const [key, value] of Object.entries(variant.attributes)) {
         if (!availableOptions[key]) {
           availableOptions[key] = [];
         }

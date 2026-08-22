@@ -54,7 +54,7 @@ export function ProductOverview({ product }: Props) {
         />
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-          {Object.entries((product.baseSpecs as Record<string, string>) || {})
+          {Object.entries(product.baseSpecs || {})
             .slice(0, 6)
             .map(([key, value]) => (
               <ProductSpecItem key={key} specKey={key} specValue={value} />

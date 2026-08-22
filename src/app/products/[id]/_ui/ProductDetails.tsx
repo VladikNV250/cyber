@@ -6,9 +6,7 @@ interface Props {
 }
 
 export function ProductDetails({ product }: Props) {
-  const specs = Object.entries(
-    (product.baseSpecs as Record<string, string>) || {},
-  );
+  const specs = Object.entries(product.baseSpecs || {});
 
   return (
     <div className="bg-gray-50 py-20">

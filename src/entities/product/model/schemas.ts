@@ -2,22 +2,6 @@ import { z } from 'zod';
 
 import { brandSchema } from '@/entities/brand';
 import { categorySchema } from '@/entities/category';
-import type { Prisma } from '@/generated/prisma/client';
-
-const jsonLiteralSchema = z.union([
-  z.string(),
-  z.number(),
-  z.boolean(),
-  z.null(),
-]);
-
-export const jsonSchema: z.ZodType<Prisma.JsonValue> = z.lazy(() =>
-  z.union([
-    jsonLiteralSchema,
-    z.array(jsonSchema),
-    z.record(z.string(), jsonSchema) as unknown as z.ZodType<Prisma.JsonObject>,
-  ]),
-);
 
 export const PRODUCT_SORT_KEYS = [
   'rating_desc',
@@ -62,7 +46,7 @@ export const productSchema = z.object({
   description: z.string().min(1, 'Description is required'),
   categoryId: z.string().uuid('Invalid category ID'),
   brandId: z.uuid('Invalid brand ID'),
-  baseSpecs: jsonSchema.nullable(),
+  baseSpecs: z.record(z.string(), z.string()).nullable(),
   isActive: z.boolean(),
   minPrice: z.coerce.number(),
   averageRating: z.coerce.number(),
@@ -77,7 +61,7 @@ export const productVariantSchema = z.object({
   sku: z.string().min(1, 'SKU is required'),
   price: z.coerce.number().min(0, 'Price must be positive'),
   stock: z.coerce.number().int().min(0, 'Stock must be non-negative'),
-  attributes: jsonSchema,
+  attributes: z.record(z.string(), z.string()),
   images: z.array(z.string()),
   allowedShipping: z.array(
     z.enum([
