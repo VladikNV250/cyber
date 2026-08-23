@@ -1,7 +1,7 @@
 import { persist } from 'zustand/middleware';
 import { createStore } from 'zustand/vanilla';
 
-import type { CartState } from './schemas';
+import { type CartState, cartItemSchema } from './schemas';
 
 export const createCartStore = (initState: Partial<CartState> = {}) => {
   return createStore<CartState>()(
@@ -16,22 +16,39 @@ export const createCartStore = (initState: Partial<CartState> = {}) => {
             );
 
             if (existingItem) {
+              ``;
+              const newQuantity =
+                existingItem.quantity + (newItem.quantity || 1);
+              const parseResult =
+                cartItemSchema.shape.quantity.safeParse(newQuantity);
+
+              if (!parseResult.success) {
+                return state;
+              }
+
               return {
                 items: state.items.map((item) =>
                   item.variantId === newItem.variantId
                     ? {
                         ...item,
-                        quantity: item.quantity + (newItem.quantity || 1),
+                        quantity: parseResult.data,
                       }
                     : item,
                 ),
               };
             }
 
+            const parseResult = cartItemSchema.shape.quantity.safeParse(
+              newItem.quantity || 1,
+            );
+            if (!parseResult.success) {
+              return state;
+            }
+
             return {
               items: [
                 ...state.items,
-                { ...newItem, quantity: newItem.quantity || 1 },
+                { ...newItem, quantity: parseResult.data },
               ],
             };
           }),
@@ -42,13 +59,21 @@ export const createCartStore = (initState: Partial<CartState> = {}) => {
           })),
 
         updateQuantity: (variantId, quantity) =>
-          set((state) => ({
-            items: state.items.map((item) =>
-              item.variantId === variantId
-                ? { ...item, quantity: Math.max(1, quantity) }
-                : item,
-            ),
-          })),
+          set((state) => {
+            const parseResult =
+              cartItemSchema.shape.quantity.safeParse(quantity);
+            if (!parseResult.success) {
+              return state;
+            }
+
+            return {
+              items: state.items.map((item) =>
+                item.variantId === variantId
+                  ? { ...item, quantity: parseResult.data }
+                  : item,
+              ),
+            };
+          }),
 
         clearCart: () => set({ items: [] }),
         ...initState,
