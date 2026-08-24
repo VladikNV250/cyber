@@ -50,7 +50,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   decorators: [
     (Story) => (
-      <CartStoreProvider initialState={{ items: mockItems }}>
+      <CartStoreProvider initialState={{ items: mockItems }} skipHydration>
         <Story />
       </CartStoreProvider>
     ),
@@ -60,7 +60,7 @@ export const Default: Story = {
 export const Empty: Story = {
   decorators: [
     (Story) => (
-      <CartStoreProvider initialState={{ items: [] }}>
+      <CartStoreProvider initialState={{ items: [] }} skipHydration>
         <Story />
       </CartStoreProvider>
     ),

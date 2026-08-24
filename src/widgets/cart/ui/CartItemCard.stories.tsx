@@ -13,7 +13,7 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <CartStoreProvider>
+      <CartStoreProvider skipHydration>
         <Story />
       </CartStoreProvider>
     ),
