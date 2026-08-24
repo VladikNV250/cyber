@@ -34,7 +34,7 @@ export function Header() {
               <Heart className="size-7" />
             </Button>
             <Button variant="ghost" size="icon" asChild className="relative">
-              <Link href="/cart">
+              <Link href="/cart" aria-label="Shopping cart">
                 <ShoppingCart className="size-7" />
                 <TotalItemsBadge />
               </Link>
