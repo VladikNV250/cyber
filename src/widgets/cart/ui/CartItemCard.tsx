@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 import { useCartStore } from '@/entities/cart';
 import type { CartItem } from '@/entities/cart/model/schemas';
-import { QuantitySelector } from '@/shared/ui';
+import { Button, QuantitySelector } from '@/shared/ui';
 
 interface CartItemCardProps {
   item: CartItem;
@@ -53,12 +53,15 @@ export function CartItemCard({ item }: CartItemCardProps) {
           </span>
         </div>
 
-        <button
+        <Button
+          aria-label={`Remove ${item.name} from cart`}
+          variant="ghost"
+          size="icon"
           onClick={() => removeItem(item.variantId)}
-          className="p-2 ml-4 hover:bg-gray-100 rounded-md text-[#A7A7A7] hover:text-black transition-colors"
+          className="ml-4 text-[#A7A7A7] hover:text-black transition-colors"
         >
-          <X className="w-6 h-6" />
-        </button>
+          <X className="size-6" />
+        </Button>
       </div>
     </div>
   );
