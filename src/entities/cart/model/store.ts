@@ -3,7 +3,10 @@ import { createStore } from 'zustand/vanilla';
 
 import { type CartState, cartItemSchema } from './schemas';
 
-export const createCartStore = (initState: Partial<CartState> = {}) => {
+export const createCartStore = (
+  initState: Partial<CartState> = {},
+  skipHydration: boolean = false,
+) => {
   return createStore<CartState>()(
     persist(
       (set) => ({
@@ -16,7 +19,6 @@ export const createCartStore = (initState: Partial<CartState> = {}) => {
             );
 
             if (existingItem) {
-              ``;
               const newQuantity =
                 existingItem.quantity + (newItem.quantity || 1);
               const parseResult =
@@ -80,6 +82,7 @@ export const createCartStore = (initState: Partial<CartState> = {}) => {
       }),
       {
         name: 'cart-storage',
+        skipHydration,
       },
     ),
   );

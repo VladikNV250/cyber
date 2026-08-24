@@ -2,6 +2,7 @@ import { Heart, Search, ShoppingCart, User } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { TotalItemsBadge } from '@/entities/cart';
 import { logoBlack } from '@/shared/assets';
 import { Button, Container, Input } from '@/shared/ui';
 
@@ -32,8 +33,11 @@ export function Header() {
             <Button variant="ghost" size="icon">
               <Heart className="size-7" />
             </Button>
-            <Button variant="ghost" size="icon">
-              <ShoppingCart className="size-7" />
+            <Button variant="ghost" size="icon" asChild className="relative">
+              <Link href="/cart" aria-label="Shopping cart">
+                <ShoppingCart className="size-7" />
+                <TotalItemsBadge />
+              </Link>
             </Button>
             <Button variant="ghost" size="icon">
               <User className="size-7" />

@@ -10,10 +10,16 @@ export const CartStoreContext = createContext<CartStore | undefined>(undefined);
 
 export interface CartStoreProviderProps {
   children: ReactNode;
+  initialState?: Partial<CartState>;
+  skipHydration?: boolean;
 }
 
-export const CartStoreProvider = ({ children }: CartStoreProviderProps) => {
-  const [store] = useState(() => createCartStore());
+export const CartStoreProvider = ({
+  children,
+  initialState,
+  skipHydration,
+}: CartStoreProviderProps) => {
+  const [store] = useState(() => createCartStore(initialState, skipHydration));
 
   return (
     <CartStoreContext.Provider value={store}>

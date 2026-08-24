@@ -36,3 +36,7 @@ export {
   BreadcrumbSeparator,
 } from './Breadcrumb';
 export { AutoBreadcrumbs } from './AutoBreadcrumbs';
+export {
+  QuantitySelector,
+  type QuantitySelectorProps,
+} from './QuantitySelector';
