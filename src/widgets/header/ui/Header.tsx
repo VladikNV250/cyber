@@ -32,8 +32,10 @@ export function Header() {
             <Button variant="ghost" size="icon">
               <Heart className="size-7" />
             </Button>
-            <Button variant="ghost" size="icon">
-              <ShoppingCart className="size-7" />
+            <Button variant="ghost" size="icon" asChild>
+              <Link href="/cart">
+                <ShoppingCart className="size-7" />
+              </Link>
             </Button>
             <Button variant="ghost" size="icon">
               <User className="size-7" />

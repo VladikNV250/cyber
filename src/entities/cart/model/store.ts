@@ -16,7 +16,6 @@ export const createCartStore = (initState: Partial<CartState> = {}) => {
             );
 
             if (existingItem) {
-              ``;
               const newQuantity =
                 existingItem.quantity + (newItem.quantity || 1);
               const parseResult =
