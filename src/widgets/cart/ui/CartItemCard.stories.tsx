@@ -1,9 +1,27 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
-import { CartStoreProvider } from '@/entities/cart/model/provider';
+import {
+  CartStoreProvider,
+  useCartStore,
+} from '@/entities/cart/model/provider';
+import type { CartItem } from '@/entities/cart/model/schemas';
 import { iphoneProductImg } from '@/shared/assets';
 
 import { CartItemCard } from './CartItemCard';
+
+const InteractiveWrapper = ({ item }: { item: CartItem }) => {
+  const storeItem = useCartStore((state) =>
+    state.items.find((i) => i.variantId === item.variantId),
+  );
+
+  if (!storeItem) {
+    return (
+      <div className="p-4 text-gray-500 text-sm">Item removed from cart</div>
+    );
+  }
+
+  return <CartItemCard item={storeItem} />;
+};
 
 const meta = {
   title: 'Widgets/Cart/CartItemCard',
@@ -11,9 +29,13 @@ const meta = {
   parameters: {
     layout: 'padded',
   },
+  render: (args) => <InteractiveWrapper item={args.item} />,
   decorators: [
-    (Story) => (
-      <CartStoreProvider skipHydration>
+    (Story, context) => (
+      <CartStoreProvider
+        skipHydration
+        initialState={{ items: [context.args.item as CartItem] }}
+      >
         <Story />
       </CartStoreProvider>
     ),
