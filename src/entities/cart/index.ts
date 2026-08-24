@@ -6,3 +6,5 @@ export {
   selectCartTotalPrice,
 } from './model/selectors';
 export { CartStoreProvider, useCartStore } from './model/provider';
+
+export { TotalItemsBadge } from './ui/TotalItemsBadge';
