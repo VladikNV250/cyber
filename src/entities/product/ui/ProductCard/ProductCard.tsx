@@ -1,6 +1,7 @@
 import { Heart } from 'lucide-react';
 import { StaticImageData } from 'next/image';
 
+import { BuyNowButton } from '@/features/cart-actions';
 import { formatPrice } from '@/shared/lib';
 import { Button } from '@/shared/ui';
 
@@ -46,9 +47,13 @@ export function ProductCard({
         <p className="text-2xl font-semibold text-foreground">
           {formatPrice(price)}
         </p>
-        <Button className="mt-2" variant="default" size="lg">
-          Buy Now
-        </Button>
+        <BuyNowButton
+          className="mt-2"
+          productId={id || ''}
+          name={title}
+          price={price}
+          imageUrl={imageUrl}
+        />
       </div>
     </div>
   );
