@@ -28,6 +28,11 @@ export const Default: Story = {
     name: 'Apple iPhone 14 Pro Max 128GB Deep Purple',
     price: 45000,
     imageUrl: IphoneImage,
+    actionSlot: (
+      <button className="mt-2 text-white bg-black px-16 py-3 rounded-lg text-sm font-medium w-full">
+        Buy Now
+      </button>
+    ),
   },
 };
 
@@ -37,6 +42,11 @@ export const Favorite: Story = {
     price: 45000,
     imageUrl: IphoneImage,
     isFavorite: true,
+    actionSlot: (
+      <button className="mt-2 text-white bg-black px-16 py-3 rounded-lg text-sm font-medium w-full">
+        Buy Now
+      </button>
+    ),
   },
 };
 
@@ -44,6 +54,11 @@ export const MissingImageFallback: Story = {
   args: {
     name: 'Sony PlayStation 5 Digital Edition',
     price: 18500,
+    actionSlot: (
+      <button className="mt-2 text-white bg-black px-16 py-3 rounded-lg text-sm font-medium w-full">
+        Buy Now
+      </button>
+    ),
   },
 };
 
@@ -52,5 +67,10 @@ export const LongTextHandling: Story = {
     name: 'Asus ROG Strix G16 G614JI-N3143W Eclipse Gray / 16" IPS WUXGA 165Hz / Intel Core i7-13650HX / RAM 16GB / SSD 1TB / nVidia GeForce RTX 4070 8GB',
     price: 72999,
     imageUrl: IphoneImage,
+    actionSlot: (
+      <button className="mt-2 text-white bg-black px-16 py-3 rounded-lg text-sm font-medium w-full">
+        Buy Now
+      </button>
+    ),
   },
 };

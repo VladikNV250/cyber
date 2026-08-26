@@ -1,7 +1,6 @@
 export { ProductCard } from './ui/ProductCard/ProductCard';
 export { ProductSpecItem } from './ui/ProductSpecItem/ProductSpecItem';
 export { ProductGallery } from './ui/ProductGallery/ProductGallery';
-export { ProductGrid } from './ui/ProductGrid/ProductGrid';
 
 export {
   PRODUCT_SORT_KEYS,

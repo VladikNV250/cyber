@@ -8,6 +8,7 @@ import {
   ProductGallery,
   ProductSpecItem,
 } from '@/entities/product';
+import { AddToCartButton } from '@/features/cart-actions';
 import { formatPrice } from '@/shared/lib';
 import { Button } from '@/shared/ui';
 
@@ -77,17 +78,25 @@ export function ProductOverview({ product }: Props) {
           <Button variant="outline" color="black" className="flex-1">
             Add to Wishlist
           </Button>
-          <Button
-            color="black"
+          <AddToCartButton
             className="flex-1"
-            disabled={!activeVariant || activeVariant.stock <= 0}
-          >
-            {!activeVariant
-              ? 'Unavailable'
-              : activeVariant.stock <= 0
-                ? 'Out of Stock'
-                : 'Add to Cart'}
-          </Button>
+            product={
+              activeVariant
+                ? {
+                    productId: product.id,
+                    name: product.name,
+                    variantId: activeVariant.id,
+                    price: Number(activeVariant.price),
+                    stock: activeVariant.stock,
+                    imageUrl: activeVariant.images?.[0],
+                    attributes: activeVariant.attributes as Record<
+                      string,
+                      string
+                    >,
+                  }
+                : null
+            }
+          />
         </div>
 
         <div className="flex items-center justify-between gap-8">

@@ -1,4 +1,5 @@
-import { ProductGrid, ProductSummary } from '@/entities/product';
+import { ProductCard, ProductSummary } from '@/entities/product';
+import { BuyNowButton } from '@/features/cart-actions';
 import { PaginationMeta } from '@/shared/model';
 
 import { CatalogGridEmpty } from './CatalogGridEmpty';
@@ -21,7 +22,32 @@ export function CatalogGrid({ products, metadata, buildPageUrl }: Props) {
       {products.length === 0 ? (
         <CatalogGridEmpty />
       ) : (
-        <ProductGrid products={products} columns={3} className="mb-10" />
+        <div
+          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6 mb-10`}
+        >
+          {products.map((product) => (
+            <ProductCard
+              key={product.id}
+              id={product.id}
+              name={product.name}
+              price={product.price}
+              imageUrl={product.imageUrl}
+              actionSlot={
+                <BuyNowButton
+                  product={{
+                    price: product.price,
+                    name: product.name,
+                    productId: product.id,
+                    variantId: '',
+                    attributes: {},
+                    imageUrl: undefined,
+                    stock: 1,
+                  }}
+                />
+              }
+            />
+          ))}
+        </div>
       )}
 
       {totalPages > 1 && (

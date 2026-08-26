@@ -1,4 +1,5 @@
 import { ProductCard } from '@/entities/product';
+import { BuyNowButton } from '@/features/cart-actions';
 import { iphoneProductImg } from '@/shared/assets';
 import { Container } from '@/shared/ui';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui';
@@ -74,6 +75,7 @@ export function ProductTabsSection() {
                   price={p.price}
                   isFavorite={p.isFavorite}
                   imageUrl={p.imageUrl}
+                  actionSlot={<BuyNowButton className="mt-2" product={null} />}
                 />
               ))}
             </div>

@@ -1,4 +1,5 @@
 import { ProductCard } from '@/entities/product';
+import { BuyNowButton } from '@/features/cart-actions';
 import { Container } from '@/shared/ui';
 
 export function DiscountProductsSection() {
@@ -35,6 +36,7 @@ export function DiscountProductsSection() {
               name={p.title}
               price={p.price}
               isFavorite={p.isFavorite}
+              actionSlot={<BuyNowButton className="mt-2" product={null} />}
             />
           ))}
         </div>
