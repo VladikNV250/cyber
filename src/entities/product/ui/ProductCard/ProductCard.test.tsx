@@ -16,6 +16,7 @@ describe('ProductCard', () => {
     id: 'prod-123',
     name: 'Apple iPhone 14 Pro Max 128Gb Deep Purple',
     price: 47999,
+    actionSlot: <div data-testid="action-slot">Buy</div>,
   };
 
   const renderComponent = (ui: React.ReactElement) => {
@@ -32,11 +33,6 @@ describe('ProductCard', () => {
     // using a regex to ignore non-breaking spaces vs regular spaces
     const priceElement = screen.getByText(/47\s*999 ₴/i);
     expect(priceElement).toBeInTheDocument();
-
-    // Check Buy button
-    expect(
-      screen.getByRole('button', { name: /buy now/i }),
-    ).toBeInTheDocument();
   });
 
   it('renders favorite button inactive by default', () => {

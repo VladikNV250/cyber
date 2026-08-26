@@ -30,17 +30,17 @@ vi.mock('./CatalogPagination', () => ({
   ),
 }));
 
-vi.mock('@/entities/product', () => ({
-  ProductGrid: ({ products }: { products: ProductSummary[] }) => (
-    <div>
-      {products.map((p) => (
-        <div key={p.id} data-testid="product-card">
-          {p.name} - {p.price}
-        </div>
-      ))}
-    </div>
-  ),
-}));
+vi.mock('@/entities/product', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/entities/product')>();
+  return {
+    ...actual,
+    ProductCard: ({ name, price }: { name: string; price: number }) => (
+      <div data-testid="product-card">
+        {name} - {price}
+      </div>
+    ),
+  };
+});
 
 describe('CatalogGrid', () => {
   const buildPageUrl = vi.fn();
