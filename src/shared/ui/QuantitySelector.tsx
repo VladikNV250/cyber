@@ -16,7 +16,7 @@ export function QuantitySelector({
   max,
 }: QuantitySelectorProps) {
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-2">
       <button
         onClick={onDecrease}
         disabled={value <= min}

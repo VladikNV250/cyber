@@ -26,7 +26,7 @@ export function CartItemCard({ item }: CartItemCardProps) {
   const totalProductPrice = item.price * item.quantity;
 
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center gap-4 py-14 border-b border-[#EBEBEB]">
+    <div className="w-full flex flex-col sm:flex-row sm:items-center gap-4 py-14 border-b border-[#EBEBEB]">
       <div className="size-22.5 shrink-0 relative">
         <Image
           src={item.image || '/images/placeholder.png'}
@@ -35,12 +35,14 @@ export function CartItemCard({ item }: CartItemCardProps) {
           className="object-contain"
         />
       </div>
-      <div className="flex-1">
-        <h3 className="font-medium text-base line-clamp-2 mb-2">{item.name}</h3>
-        <p className="text-sm text-[#A7A7A7]">#{item.variantId}</p>
+      <div className="flex-1 min-w-0">
+        <h3 className="font-medium text-base line-clamp-2 mb-2 pr-4">
+          {item.name}
+        </h3>
+        <p className="text-sm text-[#A7A7A7] truncate">#{item.variantId}</p>
       </div>
 
-      <div className="flex items-center gap-6 mt-4 sm:mt-0">
+      <div className="flex items-center shrink-0 gap-6 mt-4 sm:mt-0 ml-auto">
         <QuantitySelector
           value={item.quantity}
           onDecrease={handleDecrease}

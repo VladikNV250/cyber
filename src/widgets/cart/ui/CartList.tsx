@@ -19,7 +19,7 @@ export function CartList() {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="w-full flex flex-col">
       {items.map((item) => (
         <CartItemCard key={item.variantId} item={item} />
       ))}
