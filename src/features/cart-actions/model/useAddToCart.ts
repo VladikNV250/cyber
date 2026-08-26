@@ -1,29 +1,35 @@
 import { useCartStore } from '@/entities/cart';
-import type { ProductDetails, ProductVariant } from '@/entities/product';
 
-export function useAddToCart(
-  product: Pick<ProductDetails, 'id' | 'name'>,
-  activeVariant: ProductVariant | null | undefined,
-) {
+import type { CartActionPayload } from './types';
+
+export function useAddToCart(product: CartActionPayload | null) {
   const addItem = useCartStore((state) => state.addItem);
 
-  const handleAddToCart = () => {
-    if (activeVariant && activeVariant.stock > 0) {
+  const isAvailable = product ? !!product.variantId : false;
+  const isOutOfStock = product
+    ? product.stock !== undefined && product.stock <= 0
+    : false;
+
+  const addToCart = () => {
+    if (product && isAvailable && !isOutOfStock) {
       addItem({
-        variantId: activeVariant.id,
-        productId: product.id,
+        variantId: product.variantId!,
+        productId: product.productId,
         name: product.name,
-        price: Number(activeVariant.price),
-        image: activeVariant.images?.[0],
+        price: product.price,
+        image:
+          typeof product.imageUrl === 'string'
+            ? product.imageUrl
+            : product.imageUrl?.src,
         quantity: 1,
-        attributes: activeVariant.attributes as Record<string, string>,
+        attributes: product.attributes || {},
       });
     }
   };
 
   return {
-    handleAddToCart,
-    isAvailable: !!activeVariant,
-    isOutOfStock: activeVariant ? activeVariant.stock <= 0 : false,
+    addToCart,
+    isAvailable,
+    isOutOfStock,
   };
 }

@@ -49,10 +49,18 @@ export function ProductCard({
         </p>
         <BuyNowButton
           className="mt-2"
-          productId={id || ''}
-          name={title}
-          price={price}
-          imageUrl={imageUrl}
+          product={
+            id
+              ? {
+                  productId: id,
+                  variantId: id,
+                  name: title,
+                  price: price,
+                  imageUrl:
+                    typeof imageUrl === 'string' ? imageUrl : imageUrl?.src,
+                }
+              : null
+          }
         />
       </div>
     </div>

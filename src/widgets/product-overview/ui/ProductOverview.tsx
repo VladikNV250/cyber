@@ -79,9 +79,23 @@ export function ProductOverview({ product }: Props) {
             Add to Wishlist
           </Button>
           <AddToCartButton
-            product={product}
-            activeVariant={activeVariant}
             className="flex-1"
+            product={
+              activeVariant
+                ? {
+                    productId: product.id,
+                    name: product.name,
+                    variantId: activeVariant.id,
+                    price: Number(activeVariant.price),
+                    stock: activeVariant.stock,
+                    imageUrl: activeVariant.images?.[0],
+                    attributes: activeVariant.attributes as Record<
+                      string,
+                      string
+                    >,
+                  }
+                : null
+            }
           />
         </div>
 

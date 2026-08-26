@@ -1,16 +1,29 @@
 import { render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+
+import { CartStoreProvider } from '@/entities/cart/model/provider';
 
 import { ProductCard } from './ProductCard';
 
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+  }),
+}));
+
 describe('ProductCard', () => {
   const mockProps = {
+    id: 'prod-123',
     name: 'Apple iPhone 14 Pro Max 128Gb Deep Purple',
     price: 47999,
   };
 
+  const renderComponent = (ui: React.ReactElement) => {
+    return render(<CartStoreProvider skipHydration>{ui}</CartStoreProvider>);
+  };
+
   it('renders product details correctly', () => {
-    render(<ProductCard {...mockProps} />);
+    renderComponent(<ProductCard {...mockProps} />);
 
     // Check title
     expect(screen.getByText(mockProps.name)).toBeInTheDocument();
@@ -27,7 +40,7 @@ describe('ProductCard', () => {
   });
 
   it('renders favorite button inactive by default', () => {
-    render(<ProductCard {...mockProps} />);
+    renderComponent(<ProductCard {...mockProps} />);
 
     // Button has no aria-label currently, it's just an icon. We can select it by role
     // and check its class name. Actually better to use a querySelector if needed.
@@ -36,14 +49,14 @@ describe('ProductCard', () => {
   });
 
   it('renders favorite button active when isFavorite is true', () => {
-    render(<ProductCard {...mockProps} isFavorite={true} />);
+    renderComponent(<ProductCard {...mockProps} isFavorite={true} />);
 
     const icon = document.querySelector('svg');
     expect(icon).toHaveAttribute('fill', 'currentColor');
   });
 
   it('renders placeholder image when no imageUrl is provided', () => {
-    render(<ProductCard {...mockProps} />);
+    renderComponent(<ProductCard {...mockProps} />);
 
     // The placeholder doesn't have an img tag, it uses a div with lucide-react ImageIcon
     const img = screen.queryByRole('img');
@@ -56,7 +69,7 @@ describe('ProductCard', () => {
       height: 100,
       width: 100,
     } as import('next/image').StaticImageData;
-    render(<ProductCard {...mockProps} imageUrl={imageUrl} />);
+    renderComponent(<ProductCard {...mockProps} imageUrl={imageUrl} />);
 
     const img = screen.getByRole('img', { name: mockProps.name });
     expect(img).toBeInTheDocument();
@@ -65,7 +78,7 @@ describe('ProductCard', () => {
   });
 
   it('renders navigation links when id is provided', () => {
-    render(<ProductCard {...mockProps} id="12345" />);
+    renderComponent(<ProductCard {...mockProps} id="12345" />);
 
     // We expect the links (image link and title link) to point to /products/12345
     const links = screen.getAllByRole('link');
@@ -74,7 +87,7 @@ describe('ProductCard', () => {
   });
 
   it('does not render navigation links when id is not provided', () => {
-    render(<ProductCard {...mockProps} />);
+    renderComponent(<ProductCard {...mockProps} id={undefined} />);
 
     const links = screen.queryAllByRole('link');
     expect(links).toHaveLength(0);

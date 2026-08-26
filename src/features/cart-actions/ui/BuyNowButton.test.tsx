@@ -15,15 +15,16 @@ vi.mock('next/navigation', () => ({
 
 describe('BuyNowButton', () => {
   const defaultProps = {
-    productId: 'p-1',
+    productId: 'prod-123',
+    variantId: 'prod-123',
     name: 'Test Product',
-    price: 99,
+    price: 99.99,
   };
 
   it('renders correctly', () => {
     render(
       <CartStoreProvider skipHydration>
-        <BuyNowButton {...defaultProps} />
+        <BuyNowButton product={defaultProps} />
       </CartStoreProvider>,
     );
 
@@ -35,7 +36,7 @@ describe('BuyNowButton', () => {
   it('calls router.push and adds item when clicked', () => {
     render(
       <CartStoreProvider skipHydration>
-        <BuyNowButton {...defaultProps} />
+        <BuyNowButton product={defaultProps} />
       </CartStoreProvider>,
     );
 

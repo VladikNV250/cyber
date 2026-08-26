@@ -1,45 +1,42 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 import { CartStoreProvider } from '@/entities/cart/model/provider';
-import type { ProductDetails, ProductVariant } from '@/entities/product';
 
+import type { CartActionPayload } from '../model/types';
 import { AddToCartButton } from './AddToCartButton';
 
 describe('AddToCartButton', () => {
-  const mockProduct = {
-    id: 'p-1',
-    name: 'Test Product',
-  } as ProductDetails;
-
-  const mockVariant = {
-    id: 'v-1',
+  const baseProps = {
     productId: 'p-1',
+    name: 'Test Product',
+  };
+
+  const variantProps = {
+    variantId: 'v-1',
     price: 100,
     stock: 5,
     attributes: {},
-    images: [],
-    sku: 'SKU',
-    allowedShipping: [],
-  } as ProductVariant;
+    imageUrl: '/test.jpg',
+  };
 
-  const renderComponent = (activeVariant: ProductVariant | null) => {
+  const renderComponent = (props: CartActionPayload | null) => {
     return render(
       <CartStoreProvider skipHydration>
-        <AddToCartButton product={mockProduct} activeVariant={activeVariant} />
+        <AddToCartButton product={props} />
       </CartStoreProvider>,
     );
   };
 
   it('renders correctly and is enabled when variant is available and in stock', () => {
-    renderComponent(mockVariant);
+    renderComponent({ ...baseProps, ...variantProps } as CartActionPayload);
 
     const button = screen.getByRole('button', { name: /add to cart/i });
     expect(button).toBeInTheDocument();
     expect(button).not.toBeDisabled();
   });
 
-  it('is disabled and shows "Unavailable" when variant is null', () => {
+  it('is disabled and shows "Unavailable" when product is missing', () => {
     renderComponent(null);
 
     const button = screen.getByRole('button', { name: /unavailable/i });
@@ -48,7 +45,11 @@ describe('AddToCartButton', () => {
   });
 
   it('is disabled and shows "Out of Stock" when variant stock is 0', () => {
-    renderComponent({ ...mockVariant, stock: 0 });
+    renderComponent({
+      ...baseProps,
+      ...variantProps,
+      stock: 0,
+    } as CartActionPayload);
 
     const button = screen.getByRole('button', { name: /out of stock/i });
     expect(button).toBeInTheDocument();
