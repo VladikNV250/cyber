@@ -5,6 +5,7 @@ import {
   selectCartTotalPrice,
   useCartStore,
 } from '@/entities/cart';
+import { formatPrice } from '@/shared/lib';
 import { Button } from '@/shared/ui';
 
 export function CartSummary() {
@@ -18,7 +19,7 @@ export function CartSummary() {
       <div className="flex justify-between items-center mb-8">
         <span className="font-semibold text-lg text-black">Total</span>
         <span className="font-bold text-2xl text-black">
-          ${items.length > 0 ? total : 0}
+          {formatPrice(items.length > 0 ? total : 0)}
         </span>
       </div>
 

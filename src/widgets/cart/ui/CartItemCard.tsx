@@ -3,6 +3,7 @@ import Image from 'next/image';
 
 import { useCartStore } from '@/entities/cart';
 import type { CartItem } from '@/entities/cart/model/schemas';
+import { formatPrice } from '@/shared/lib';
 import { Button, QuantitySelector } from '@/shared/ui';
 
 interface CartItemCardProps {
@@ -51,7 +52,7 @@ export function CartItemCard({ item }: CartItemCardProps) {
 
         <div className="w-24 text-right">
           <span className="text-lg font-medium text-foreground">
-            ${totalProductPrice}
+            {formatPrice(totalProductPrice)}
           </span>
         </div>
 
