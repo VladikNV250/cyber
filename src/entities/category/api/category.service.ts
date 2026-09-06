@@ -1,34 +1,45 @@
+import { z } from 'zod';
+
 import { prisma } from '@/shared/api';
 
-import { CreateCategoryInput, UpdateCategoryInput } from '../model/schemas';
+import {
+  CreateCategoryInput,
+  UpdateCategoryInput,
+  categorySchema,
+  categoryWithRelationsSchema,
+} from '../model/schemas';
 
 export async function getCategories() {
-  return prisma.category.findMany({
+  const categories = await prisma.category.findMany({
     include: {
       children: true,
       parent: true,
     },
   });
+  return z.array(categoryWithRelationsSchema).parse(categories);
 }
 
 export async function createCategory(data: CreateCategoryInput) {
-  return prisma.category.create({
+  const category = await prisma.category.create({
     data: {
       name: data.name,
       parentId: data.parentId || null,
     },
   });
+  return categorySchema.parse(category);
 }
 
 export async function updateCategory(id: string, data: UpdateCategoryInput) {
-  return prisma.category.update({
+  const category = await prisma.category.update({
     where: { id },
     data,
   });
+  return categorySchema.parse(category);
 }
 
 export async function deleteCategory(id: string) {
-  return prisma.category.delete({
+  const category = await prisma.category.delete({
     where: { id },
   });
+  return categorySchema.parse(category);
 }

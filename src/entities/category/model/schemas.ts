@@ -15,6 +15,12 @@ export const createCategorySchema = categorySchema
 
 export const updateCategorySchema = createCategorySchema.partial();
 
+export const categoryWithRelationsSchema = categorySchema.extend({
+  children: z.array(categorySchema).optional(),
+  parent: categorySchema.nullable().optional(),
+});
+
 export type Category = z.infer<typeof categorySchema>;
+export type CategoryWithRelations = z.infer<typeof categoryWithRelationsSchema>;
 export type CreateCategoryInput = z.infer<typeof createCategorySchema>;
 export type UpdateCategoryInput = z.infer<typeof updateCategorySchema>;

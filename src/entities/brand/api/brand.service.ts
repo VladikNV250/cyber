@@ -1,30 +1,40 @@
+import { z } from 'zod';
+
 import { prisma } from '@/shared/api';
 
-import { CreateBrandInput, UpdateBrandInput } from '../model/schemas';
+import {
+  CreateBrandInput,
+  UpdateBrandInput,
+  brandSchema,
+} from '../model/schemas';
 
 export async function getBrands() {
-  return prisma.brand.findMany({
+  const brands = await prisma.brand.findMany({
     orderBy: { name: 'asc' },
   });
+  return z.array(brandSchema).parse(brands);
 }
 
 export async function createBrand(data: CreateBrandInput) {
-  return prisma.brand.create({
+  const brand = await prisma.brand.create({
     data: {
       name: data.name,
     },
   });
+  return brandSchema.parse(brand);
 }
 
 export async function updateBrand(id: string, data: UpdateBrandInput) {
-  return prisma.brand.update({
+  const brand = await prisma.brand.update({
     where: { id },
     data,
   });
+  return brandSchema.parse(brand);
 }
 
 export async function deleteBrand(id: string) {
-  return prisma.brand.delete({
+  const brand = await prisma.brand.delete({
     where: { id },
   });
+  return brandSchema.parse(brand);
 }
