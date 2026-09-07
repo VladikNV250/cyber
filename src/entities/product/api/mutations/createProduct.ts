@@ -10,7 +10,11 @@ export async function createProduct(data: CreateProductInput) {
       description: data.description,
       categoryId: data.categoryId,
       brandId: data.brandId,
-      baseSpecs: (data.baseSpecs || {}) as Prisma.InputJsonValue,
+      baseSpecs:
+        data.baseSpecs === null
+          ? Prisma.DbNull
+          : (data.baseSpecs as Prisma.InputJsonValue | undefined),
+      isActive: data.isActive,
     },
   });
 }

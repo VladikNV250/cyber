@@ -8,9 +8,10 @@ export async function updateProduct(id: string, data: UpdateProductInput) {
     where: { id },
     data: {
       ...data,
-      baseSpecs: (data.baseSpecs ?? undefined) as
-        | Prisma.InputJsonValue
-        | undefined,
+      baseSpecs:
+        data.baseSpecs === null
+          ? Prisma.DbNull
+          : (data.baseSpecs as Prisma.InputJsonValue | undefined),
     },
   });
 }
