@@ -3,6 +3,7 @@ import { Figtree } from 'next/font/google';
 import localFont from 'next/font/local';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
+import { SWRProvider } from '@/app/_providers';
 import { CartStoreProvider } from '@/entities/cart';
 import { Footer } from '@/widgets/footer';
 import { Header } from '@/widgets/header';
@@ -127,11 +128,13 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <NuqsAdapter>
-          <CartStoreProvider>
-            <Header />
-            <main className="flex-1 flex flex-col">{children}</main>
-            <Footer />
-          </CartStoreProvider>
+          <SWRProvider>
+            <CartStoreProvider>
+              <Header />
+              <main className="flex-1 flex flex-col">{children}</main>
+              <Footer />
+            </CartStoreProvider>
+          </SWRProvider>
         </NuqsAdapter>
       </body>
     </html>

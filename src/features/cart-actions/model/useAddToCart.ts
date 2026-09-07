@@ -15,14 +15,15 @@ export function useAddToCart(product: CartActionPayload | null) {
       addItem({
         variantId: product.variantId!,
         productId: product.productId,
-        name: product.name,
-        price: product.price,
-        image:
-          typeof product.imageUrl === 'string'
-            ? product.imageUrl
-            : product.imageUrl?.src,
         quantity: 1,
-        attributes: product.attributes || {},
+        snapshot: {
+          name: product.name,
+          price: product.price,
+          image:
+            typeof product.imageUrl === 'string'
+              ? product.imageUrl
+              : product.imageUrl?.src,
+        },
       });
     }
   };

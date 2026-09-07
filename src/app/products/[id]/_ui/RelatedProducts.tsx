@@ -36,7 +36,6 @@ export async function RelatedProducts({ productId }: Props) {
                           name: product.name,
                           productId: product.id,
                           variantId: product.variants[0].id,
-                          attributes: product.variants[0].attributes,
                           imageUrl: product.variants[0].images[0],
                           stock: product.variants[0].stock,
                         }

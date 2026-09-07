@@ -20,7 +20,7 @@ export async function getProductsByIds(variantIds: string[]) {
 
   return variants.map((v) =>
     productSummarySchema.parse({
-      id: v.productId,
+      id: v.id,
       name: v.product.name,
       price: v.price,
       imageUrl: v.images[0] || undefined,

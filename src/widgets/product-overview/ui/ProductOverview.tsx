@@ -89,10 +89,6 @@ export function ProductOverview({ product }: Props) {
                     price: Number(activeVariant.price),
                     stock: activeVariant.stock,
                     imageUrl: activeVariant.images?.[0],
-                    attributes: activeVariant.attributes as Record<
-                      string,
-                      string
-                    >,
                   }
                 : null
             }
