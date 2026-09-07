@@ -1,13 +1,13 @@
 'use client';
 
-import { selectCartItems, useCartStore } from '@/entities/cart';
+import { useCart } from '@/features/cart-actions';
 
 import { CartItemCard } from './CartItemCard';
 
 export function CartList() {
-  const items = useCartStore(selectCartItems);
+  const { cartItems } = useCart();
 
-  if (items.length === 0) {
+  if (cartItems.length === 0) {
     return (
       <div className="py-20 text-center">
         <h2 className="text-2xl font-semibold mb-4">Your cart is empty</h2>
@@ -20,7 +20,7 @@ export function CartList() {
 
   return (
     <div className="w-full flex flex-col">
-      {items.map((item) => (
+      {cartItems.map((item) => (
         <CartItemCard key={item.variantId} item={item} />
       ))}
     </div>

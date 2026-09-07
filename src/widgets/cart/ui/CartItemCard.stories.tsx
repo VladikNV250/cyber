@@ -1,18 +1,29 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
+import type { CartItem } from '@/entities/cart';
 import {
   CartStoreProvider,
   useCartStore,
 } from '@/entities/cart/model/provider';
-import type { CartItem } from '@/entities/cart/model/schemas';
 import { iphoneProductImg } from '@/shared/assets';
 
 import { CartItemCard } from './CartItemCard';
 
+const mockCartRecord = {
+  v1: {
+    variantId: 'v1',
+    productId: 'p1',
+    quantity: 1,
+    snapshot: {
+      name: 'Apple iPhone 14 Pro Max 128Gb Deep Purple',
+      price: 1399,
+      image: iphoneProductImg.src,
+    },
+  },
+};
+
 const InteractiveWrapper = ({ item }: { item: CartItem }) => {
-  const storeItem = useCartStore((state) =>
-    state.items.find((i) => i.variantId === item.variantId),
-  );
+  const storeItem = useCartStore((state) => state.items[item.variantId]);
 
   if (!storeItem) {
     return (
@@ -20,7 +31,14 @@ const InteractiveWrapper = ({ item }: { item: CartItem }) => {
     );
   }
 
-  return <CartItemCard item={storeItem} />;
+  return (
+    <CartItemCard
+      item={{
+        ...item,
+        quantity: storeItem.quantity,
+      }}
+    />
+  );
 };
 
 const meta = {
@@ -31,11 +49,8 @@ const meta = {
   },
   render: (args) => <InteractiveWrapper item={args.item} />,
   decorators: [
-    (Story, context) => (
-      <CartStoreProvider
-        skipHydration
-        initialState={{ items: [context.args.item as CartItem] }}
-      >
+    (Story) => (
+      <CartStoreProvider skipHydration initialState={{ items: mockCartRecord }}>
         <Story />
       </CartStoreProvider>
     ),
@@ -46,15 +61,15 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const mockItem = {
+const mockItem: CartItem = {
   variantId: 'v1',
   productId: 'p1',
-  name: 'Apple iPhone 14 Pro Max 128Gb Deep Purple',
-  price: 1399,
-  image: iphoneProductImg.src,
-
   quantity: 1,
-  attributes: {},
+  snapshot: {
+    name: 'Apple iPhone 14 Pro Max 128Gb Deep Purple',
+    price: 1399,
+    image: iphoneProductImg.src,
+  },
 };
 
 export const Default: Story = {

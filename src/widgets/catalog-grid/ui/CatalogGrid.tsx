@@ -39,7 +39,6 @@ export function CatalogGrid({ products, metadata, buildPageUrl }: Props) {
                     name: product.name,
                     productId: product.id,
                     variantId: '',
-                    attributes: {},
                     imageUrl: undefined,
                     stock: 1,
                   }}

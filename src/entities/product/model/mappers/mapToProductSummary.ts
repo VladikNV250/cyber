@@ -1,7 +1,9 @@
-import { ProductResult } from '../../api/product.service';
-import { ProductSummary, productSummarySchema } from '../schemas';
+import { ProductSummary, productSummarySchema } from '../schemas/core';
+import { ProductWithRelations } from '../schemas/details';
 
-export function mapToProductSummary(productDTO: ProductResult): ProductSummary {
+export function mapToProductSummary(
+  productDTO: ProductWithRelations,
+): ProductSummary {
   return productSummarySchema.parse({
     id: productDTO.id,
     name: productDTO.name,

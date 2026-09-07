@@ -28,17 +28,14 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const mockItems = [
-  {
+const mockItems = {
+  v1: {
     variantId: 'v1',
     productId: 'p1',
-    name: 'Mock Item',
-    price: 100,
-    image: '',
     quantity: 3,
-    attributes: {},
+    snapshot: { name: 'Mock Item', price: 100 },
   },
-];
+};
 
 export const Default: Story = {
   decorators: [
@@ -54,9 +51,7 @@ export const MoreThanNineItems: Story = {
   decorators: [
     (Story) => (
       <CartStoreProvider
-        initialState={{
-          items: [{ ...mockItems[0], quantity: 12 }],
-        }}
+        initialState={{ items: { v1: { ...mockItems.v1, quantity: 12 } } }}
         skipHydration
       >
         <Story />
@@ -69,9 +64,7 @@ export const MoreThanNinetyNineItems: Story = {
   decorators: [
     (Story) => (
       <CartStoreProvider
-        initialState={{
-          items: [{ ...mockItems[0], quantity: 105 }],
-        }}
+        initialState={{ items: { v1: { ...mockItems.v1, quantity: 105 } } }}
         skipHydration
       >
         <Story />
@@ -83,7 +76,7 @@ export const MoreThanNinetyNineItems: Story = {
 export const Empty: Story = {
   decorators: [
     (Story) => (
-      <CartStoreProvider initialState={{ items: [] }} skipHydration>
+      <CartStoreProvider initialState={{ items: {} }} skipHydration>
         <Story />
       </CartStoreProvider>
     ),

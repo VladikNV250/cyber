@@ -5,17 +5,18 @@ import { iphoneProductImg } from '@/shared/assets';
 
 import { CartSummary } from './CartSummary';
 
-const mockItems = [
-  {
+const mockItems = {
+  v1: {
     variantId: 'v1',
     productId: 'p1',
-    name: 'Apple iPhone 14 Pro Max',
-    price: 1399,
-    image: iphoneProductImg.src,
     quantity: 1,
-    attributes: {},
+    snapshot: {
+      name: 'Apple iPhone 14 Pro Max',
+      price: 1399,
+      image: iphoneProductImg.src,
+    },
   },
-];
+};
 
 const meta = {
   title: 'Widgets/Cart/CartSummary',
@@ -49,7 +50,7 @@ export const Default: Story = {
 export const Empty: Story = {
   decorators: [
     (Story) => (
-      <CartStoreProvider initialState={{ items: [] }} skipHydration>
+      <CartStoreProvider initialState={{ items: {} }} skipHydration>
         <Story />
       </CartStoreProvider>
     ),

@@ -1,8 +1,10 @@
+import { produce } from 'immer';
 import { persist } from 'zustand/middleware';
 import { createStore } from 'zustand/vanilla';
 
 import { type CartState, cartItemSchema } from './schemas';
 
+// TODO: What about to use immer on all store?
 export const createCartStore = (
   initState: Partial<CartState> = {},
   skipHydration: boolean = false,
@@ -10,74 +12,66 @@ export const createCartStore = (
   return createStore<CartState>()(
     persist(
       (set) => ({
-        items: [],
+        items: {},
 
         addItem: (newItem) =>
           set((state) => {
-            const existingItem = state.items.find(
-              (item) => item.variantId === newItem.variantId,
-            );
+            const existing = state.items[newItem.variantId];
+            const newQuantity =
+              (existing?.quantity ?? 0) + (newItem.quantity ?? 1);
 
-            if (existingItem) {
-              const newQuantity =
-                existingItem.quantity + (newItem.quantity || 1);
-              const parseResult =
-                cartItemSchema.shape.quantity.safeParse(newQuantity);
-
-              if (!parseResult.success) {
-                return state;
-              }
-
-              return {
-                items: state.items.map((item) =>
-                  item.variantId === newItem.variantId
-                    ? {
-                        ...item,
-                        quantity: parseResult.data,
-                      }
-                    : item,
-                ),
-              };
-            }
-
-            const parseResult = cartItemSchema.shape.quantity.safeParse(
-              newItem.quantity || 1,
-            );
-            if (!parseResult.success) {
-              return state;
-            }
+            const parseResult =
+              cartItemSchema.shape.quantity.safeParse(newQuantity);
+            if (!parseResult.success) return state;
 
             return {
-              items: [
+              items: {
                 ...state.items,
-                { ...newItem, quantity: parseResult.data },
-              ],
+                [newItem.variantId]: {
+                  ...newItem,
+                  quantity: parseResult.data,
+                },
+              },
             };
           }),
 
         removeItem: (variantId) =>
-          set((state) => ({
-            items: state.items.filter((item) => item.variantId !== variantId),
-          })),
+          set(
+            produce((state) => {
+              delete state.items[variantId];
+            }),
+          ),
 
         updateQuantity: (variantId, quantity) =>
           set((state) => {
+            const existing = state.items[variantId];
+            if (!existing) return state;
+
             const parseResult =
               cartItemSchema.shape.quantity.safeParse(quantity);
-            if (!parseResult.success) {
-              return state;
-            }
+            if (!parseResult.success) return state;
 
             return {
-              items: state.items.map((item) =>
-                item.variantId === variantId
-                  ? { ...item, quantity: parseResult.data }
-                  : item,
-              ),
+              items: {
+                ...state.items,
+                [variantId]: { ...existing, quantity: parseResult.data },
+              },
             };
           }),
 
-        clearCart: () => set({ items: [] }),
+        updateSnapshot: (variantId, snapshot) =>
+          set((state) => {
+            const existing = state.items[variantId];
+            if (!existing) return state;
+            return {
+              items: {
+                ...state.items,
+                [variantId]: { ...existing, snapshot },
+              },
+            };
+          }),
+
+        clearCart: () => set({ items: {} }),
         ...initState,
       }),
       {

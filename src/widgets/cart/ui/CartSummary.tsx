@@ -1,16 +1,11 @@
 'use client';
 
-import {
-  selectCartItems,
-  selectCartTotalPrice,
-  useCartStore,
-} from '@/entities/cart';
+import { useCart } from '@/features/cart-actions';
 import { formatPrice } from '@/shared/lib';
 import { Button } from '@/shared/ui';
 
 export function CartSummary() {
-  const items = useCartStore(selectCartItems);
-  const total = useCartStore(selectCartTotalPrice);
+  const { cartItems, total } = useCart();
 
   return (
     <div className="border border-[#EBEBEB] rounded-2xl p-6 sm:p-8">
@@ -19,11 +14,11 @@ export function CartSummary() {
       <div className="flex justify-between items-center mb-8">
         <span className="font-semibold text-lg text-black">Total</span>
         <span className="font-bold text-2xl text-black">
-          {formatPrice(items.length > 0 ? total : 0)}
+          {formatPrice(cartItems.length > 0 ? total : 0)}
         </span>
       </div>
 
-      <Button className="w-full" size="lg" disabled={items.length === 0}>
+      <Button className="w-full" size="lg" disabled={cartItems.length === 0}>
         Checkout
       </Button>
     </div>

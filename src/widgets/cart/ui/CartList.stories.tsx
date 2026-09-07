@@ -5,35 +5,38 @@ import { airpodsImg, iphoneProductImg } from '@/shared/assets';
 
 import { CartList } from './CartList';
 
-const mockItems = [
-  {
+const mockItems = {
+  '25139526913984': {
     variantId: '25139526913984',
     productId: 'p1',
-    name: 'Apple iPhone 14 Pro Max 128Gb Deep Purple',
-    price: 1399,
-    image: iphoneProductImg.src,
     quantity: 1,
-    attributes: {},
+    snapshot: {
+      name: 'Apple iPhone 14 Pro Max 128Gb Deep Purple',
+      price: 1399,
+      image: iphoneProductImg.src,
+    },
   },
-  {
+  '53459358345': {
     variantId: '53459358345',
     productId: 'p2',
-    name: 'AirPods Max Silver',
-    price: 549,
-    image: airpodsImg.src,
     quantity: 1,
-    attributes: {},
+    snapshot: {
+      name: 'AirPods Max Silver',
+      price: 549,
+      image: airpodsImg.src,
+    },
   },
-  {
+  '63632324': {
     variantId: '63632324',
     productId: 'p3',
-    name: 'Apple Watch Series 9 GPS 41mm Starlight Aluminium',
-    price: 399,
-    image: iphoneProductImg.src, // Using iphone as fallback since watch image might not exist
     quantity: 1,
-    attributes: {},
+    snapshot: {
+      name: 'Apple Watch Series 9 GPS 41mm Starlight Aluminium',
+      price: 399,
+      image: iphoneProductImg.src,
+    },
   },
-];
+};
 
 const meta = {
   title: 'Widgets/Cart/CartList',
@@ -60,7 +63,7 @@ export const Default: Story = {
 export const Empty: Story = {
   decorators: [
     (Story) => (
-      <CartStoreProvider initialState={{ items: [] }} skipHydration>
+      <CartStoreProvider initialState={{ items: {} }} skipHydration>
         <Story />
       </CartStoreProvider>
     ),

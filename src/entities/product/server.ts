@@ -1,12 +1,11 @@
-export {
-  getProducts,
-  getProductById,
-  getRelatedProducts,
-  getProductFilters,
-  createProduct,
-  updateProduct,
-  deleteProduct,
-  createProductVariant,
-  updateProductVariant,
-  deleteProductVariant,
-} from './api/product.service';
+export { getProductById } from './api/queries/getProductById';
+export { getProductFilters } from './api/queries/getProductFilters';
+export { getProducts } from './api/queries/getProducts';
+export { getProductsByIds } from './api/queries/getProductsByIds';
+export { getRelatedProducts } from './api/queries/getRelatedProducts';
+export { createProduct } from './api/mutations/createProduct';
+export { createProductVariant } from './api/mutations/createProductVariant';
+export { deleteProduct } from './api/mutations/deleteProduct';
+export { deleteProductVariant } from './api/mutations/deleteProductVariant';
+export { updateProduct } from './api/mutations/updateProduct';
+export { updateProductVariant } from './api/mutations/updateProductVariant';

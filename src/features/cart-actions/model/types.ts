@@ -7,5 +7,4 @@ export interface CartActionPayload {
   variantId: string;
   stock?: number;
   imageUrl?: string | StaticImageData;
-  attributes?: Record<string, string>;
 }
