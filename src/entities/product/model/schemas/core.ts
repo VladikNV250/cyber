@@ -37,7 +37,7 @@ export const productVariantSchema = z.object({
 
 export const productSummarySchema = z.object({
   id: z.uuid(),
-  name: z.string().min(2),
+  name: productSchema.shape.name,
   price: z.coerce.number().min(0),
   imageUrl: z.string().optional(),
 });
