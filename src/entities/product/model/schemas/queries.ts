@@ -20,7 +20,7 @@ export const productListQuerySchema = z.object({
   minPrice: z.coerce.number().min(0).optional(),
   maxPrice: z.coerce.number().min(0).optional(),
   sort: z.enum(PRODUCT_SORT_KEYS).default('rating_desc'),
-  includeHidden: z.coerce.boolean().default(false),
+  includeHidden: z.union([z.boolean(), z.stringbool()]).default(false),
   // We can pass dynamic specs as a JSON string or dot-notation, for simplicity let's assume a JSON string of { key: [values] }
   specs: z
     .string()
@@ -28,7 +28,14 @@ export const productListQuerySchema = z.object({
     .transform((val, ctx) => {
       if (!val) return undefined;
       try {
-        return JSON.parse(val) as Record<string, string[]>;
+        const parsed = z
+          .record(z.string(), z.array(z.string()))
+          .safeParse(JSON.parse(val));
+        if (!parsed.success) {
+          ctx.addIssue({ code: 'custom', message: 'Invalid specs shape' });
+          return undefined;
+        }
+        return parsed.data;
       } catch {
         ctx.addIssue({ code: 'custom', message: 'Invalid specs JSON' });
         return undefined;
