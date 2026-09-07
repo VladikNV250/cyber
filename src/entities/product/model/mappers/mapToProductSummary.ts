@@ -1,13 +1,17 @@
-import { ProductSummary, productSummarySchema } from '../schemas/core';
-import { ProductWithRelations } from '../schemas/details';
+import type { ProductSummary } from '../schemas/core';
+import type { ProductWithRelations } from '../schemas/details';
 
 export function mapToProductSummary(
   productDTO: ProductWithRelations,
 ): ProductSummary {
-  return productSummarySchema.parse({
+  const defaultVariant = productDTO.variants?.[0];
+
+  return {
     id: productDTO.id,
     name: productDTO.name,
-    price: productDTO.minPrice,
-    imageUrl: productDTO.variants?.[0]?.images?.[0],
-  });
+    price: Number(productDTO.minPrice),
+    imageUrl: defaultVariant?.images?.[0],
+    defaultVariantId: defaultVariant?.id,
+    stock: defaultVariant?.stock ?? 0,
+  };
 }

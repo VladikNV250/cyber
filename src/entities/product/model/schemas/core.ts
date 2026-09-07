@@ -35,13 +35,23 @@ export const productVariantSchema = z.object({
   ),
 });
 
+export interface ProductSummary {
+  id: string;
+  name: string;
+  price: number;
+  imageUrl?: string;
+  defaultVariantId?: string;
+  stock?: number;
+}
+
 export const productSummarySchema = z.object({
   id: z.uuid(),
   name: productSchema.shape.name,
   price: z.coerce.number().min(0),
   imageUrl: z.string().optional(),
+  defaultVariantId: z.uuid().optional(),
+  stock: z.coerce.number().int().min(0).optional(),
 });
 
 export type Product = z.infer<typeof productSchema>;
 export type ProductVariant = z.infer<typeof productVariantSchema>;
-export type ProductSummary = z.infer<typeof productSummarySchema>;

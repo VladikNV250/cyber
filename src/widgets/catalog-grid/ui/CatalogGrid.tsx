@@ -34,14 +34,18 @@ export function CatalogGrid({ products, metadata, buildPageUrl }: Props) {
               imageUrl={product.imageUrl}
               actionSlot={
                 <BuyNowButton
-                  product={{
-                    price: product.price,
-                    name: product.name,
-                    productId: product.id,
-                    variantId: '',
-                    imageUrl: undefined,
-                    stock: 1,
-                  }}
+                  product={
+                    product.defaultVariantId
+                      ? {
+                          price: product.price,
+                          name: product.name,
+                          productId: product.id,
+                          variantId: product.defaultVariantId,
+                          imageUrl: product.imageUrl,
+                          stock: product.stock ?? 0,
+                        }
+                      : null
+                  }
                 />
               }
             />
