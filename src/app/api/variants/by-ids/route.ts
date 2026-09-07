@@ -1,28 +1,28 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import { ZodError, z } from 'zod';
 
-import { getProductsByIds } from '@/entities/product/server';
+import { getVariantsByIds } from '@/entities/product/server';
 
 const idsSchema = z.array(z.uuid());
 
 export async function GET(request: NextRequest) {
   try {
     const rawIds = request.nextUrl.searchParams.getAll('ids');
-    const productIds = rawIds
+    const variantIds = rawIds
       .flatMap((id) => id.split(','))
       .map((id) => id.trim())
       .filter(Boolean);
 
-    if (productIds.length === 0) {
+    if (variantIds.length === 0) {
       return NextResponse.json([]);
     }
 
-    const parsedProductIds = idsSchema.parse(productIds);
-    const products = await getProductsByIds(parsedProductIds);
+    const parsedVariantIds = idsSchema.parse(variantIds);
+    const variants = await getVariantsByIds(parsedVariantIds);
 
-    return NextResponse.json(products);
+    return NextResponse.json(variants);
   } catch (error) {
-    console.error('Error fetching products by ids:', error);
+    console.error('Error fetching variants by ids:', error);
     if (error instanceof ZodError) {
       return NextResponse.json(
         { error: 'Validation failed', details: error.issues },

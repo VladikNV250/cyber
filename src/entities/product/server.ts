@@ -2,6 +2,8 @@ export { getProductById } from './api/queries/getProductById';
 export { getProductFilters } from './api/queries/getProductFilters';
 export { getProducts } from './api/queries/getProducts';
 export { getProductsByIds } from './api/queries/getProductsByIds';
+export { getVariantsByIds } from './api/queries/getVariantsByIds';
+export { type ProductVariantWithProduct } from './model/schemas/details';
 export { getRelatedProducts } from './api/queries/getRelatedProducts';
 export { createProduct } from './api/mutations/createProduct';
 export { createProductVariant } from './api/mutations/createProductVariant';

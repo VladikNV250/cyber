@@ -76,18 +76,21 @@ describe('useCart', () => {
   });
 
   it('revalidates with fresh data and updates snapshot', async () => {
-    const freshProducts = [
+    const freshVariants = [
       {
         id: mockVariantId,
-        name: 'Fresh Item Name',
         price: 75,
-        imageUrl: '/fresh-img.png',
+        images: ['/fresh-img.png'],
+        product: {
+          id: mockProductId,
+          name: 'Fresh Item Name',
+        },
       },
     ];
 
     vi.spyOn(global, 'fetch').mockResolvedValueOnce({
       ok: true,
-      json: async () => freshProducts,
+      json: async () => freshVariants,
     } as Response);
 
     const { result } = renderHook(() => useCart(), {
@@ -101,7 +104,7 @@ describe('useCart', () => {
     });
 
     expect(global.fetch).toHaveBeenCalledWith(
-      `/api/products/by-ids?ids=${mockVariantId}`,
+      `/api/variants/by-ids?ids=${mockVariantId}`,
     );
   });
 

@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { ProductSummary } from '@/entities/product';
+import type { ProductWithRelations } from '@/entities/product';
 import * as productService from '@/entities/product/server';
 
 import { GET } from './route';
@@ -19,10 +19,10 @@ describe('GET /api/products/by-ids', () => {
   });
 
   it('handles comma-separated UUIDs (?ids=id1,id2)', async () => {
-    const mockProducts: ProductSummary[] = [
-      { id: validUuid1, name: 'Product 1', price: 100 },
-      { id: validUuid2, name: 'Product 2', price: 200 },
-    ];
+    const mockProducts = [
+      { id: validUuid1, name: 'Product 1', minPrice: 100 },
+      { id: validUuid2, name: 'Product 2', minPrice: 200 },
+    ] as unknown as ProductWithRelations[];
     vi.mocked(productService.getProductsByIds).mockResolvedValueOnce(
       mockProducts,
     );
@@ -42,9 +42,9 @@ describe('GET /api/products/by-ids', () => {
   });
 
   it('handles repeated query params (?ids=id1&ids=id2)', async () => {
-    const mockProducts: ProductSummary[] = [
-      { id: validUuid1, name: 'Product 1', price: 100 },
-    ];
+    const mockProducts = [
+      { id: validUuid1, name: 'Product 1', minPrice: 100 },
+    ] as unknown as ProductWithRelations[];
     vi.mocked(productService.getProductsByIds).mockResolvedValueOnce(
       mockProducts,
     );

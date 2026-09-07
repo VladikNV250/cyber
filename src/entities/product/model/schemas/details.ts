@@ -21,3 +21,14 @@ export const productWithRelationsSchema = productSchema.extend({
 });
 
 export type ProductWithRelations = z.infer<typeof productWithRelationsSchema>;
+
+export const productVariantWithProductSchema = productVariantSchema.extend({
+  product: z.object({
+    id: z.uuid(),
+    name: productSchema.shape.name,
+  }),
+});
+
+export type ProductVariantWithProduct = z.infer<
+  typeof productVariantWithProductSchema
+>;

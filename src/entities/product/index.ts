@@ -2,11 +2,7 @@ export { ProductCard } from './ui/ProductCard/ProductCard';
 export { ProductSpecItem } from './ui/ProductSpecItem/ProductSpecItem';
 export { ProductGallery } from './ui/ProductGallery/ProductGallery';
 
-export {
-  productSchema,
-  productSummarySchema,
-  productVariantSchema,
-} from './model/schemas/core';
+export { productSchema, productVariantSchema } from './model/schemas/core';
 export type {
   Product,
   ProductVariant,
@@ -15,10 +11,12 @@ export type {
 export {
   productDetailsSchema,
   productWithRelationsSchema,
+  productVariantWithProductSchema,
 } from './model/schemas/details';
 export type {
   ProductDetails,
   ProductWithRelations,
+  ProductVariantWithProduct,
 } from './model/schemas/details';
 export {
   createProductSchema,
