@@ -17,7 +17,7 @@ async function getCategoryDynamicSpecs(categoryId?: string) {
     FROM "ProductVariant" pv
     JOIN "Product" p ON pv."productId" = p.id,
     jsonb_each_text(pv.attributes)
-    WHERE p."categoryId" = ${categoryId}
+    WHERE p."categoryId" = ${categoryId}::uuid
       AND p."isActive" = true
     GROUP BY key, value
   `;
