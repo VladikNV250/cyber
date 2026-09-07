@@ -8,6 +8,7 @@ import { type ProductVariantWithProduct } from '@/entities/product';
 export function useCart() {
   const items = useCartStore((state) => state.items);
   const updateSnapshot = useCartStore((state) => state.updateSnapshot);
+  const removeItem = useCartStore((state) => state.removeItem);
 
   const cartItems: CartItem[] = Object.values(items);
   const variantIds = Object.keys(items);
@@ -19,6 +20,14 @@ export function useCart() {
     {
       revalidateOnMount: true,
       onSuccess: (fresh) => {
+        const returnedIds = new Set(fresh.map((v) => v.id));
+
+        variantIds.forEach((id) => {
+          if (!returnedIds.has(id)) {
+            removeItem(id);
+          }
+        });
+
         fresh.forEach((variant) => {
           updateSnapshot(variant.id, {
             name: variant.product.name,

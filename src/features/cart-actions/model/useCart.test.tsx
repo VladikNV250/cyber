@@ -119,4 +119,62 @@ describe('useCart', () => {
     expect(result.current.total).toBe(0);
     expect(fetchSpy).not.toHaveBeenCalled();
   });
+
+  it('removes missing items when API returns a partial response', async () => {
+    const secondVariantId = 'c0eebc99-9c0b-4ef8-bb6d-6bb9bd380a33';
+    const stateWithTwoItems: Partial<CartState> = {
+      items: {
+        [mockVariantId]: {
+          variantId: mockVariantId,
+          productId: mockProductId,
+          quantity: 1,
+          snapshot: {
+            name: 'Item 1',
+            price: 50,
+            image: '/img1.png',
+          },
+        },
+        [secondVariantId]: {
+          variantId: secondVariantId,
+          productId: 'prod-deleted',
+          quantity: 2,
+          snapshot: {
+            name: 'Deleted Variant Item',
+            price: 100,
+            image: '/img2.png',
+          },
+        },
+      },
+    };
+
+    // Return only mockVariantId, omitting secondVariantId
+    const freshVariants = [
+      {
+        id: mockVariantId,
+        price: 60,
+        images: ['/fresh-img.png'],
+        product: {
+          id: mockProductId,
+          name: 'Updated Item 1',
+        },
+      },
+    ];
+
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      ok: true,
+      json: async () => freshVariants,
+    } as Response);
+
+    const { result } = renderHook(() => useCart(), {
+      wrapper: createWrapper(stateWithTwoItems),
+    });
+
+    await waitFor(() => {
+      expect(result.current.cartItems).toHaveLength(1);
+      expect(result.current.cartItems[0].variantId).toBe(mockVariantId);
+      expect(result.current.cartItems[0].snapshot.name).toBe('Updated Item 1');
+      expect(result.current.cartItems[0].snapshot.price).toBe(60);
+      expect(result.current.total).toBe(60);
+    });
+  });
 });
