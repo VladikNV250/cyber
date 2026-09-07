@@ -3,27 +3,36 @@
 import useSWR from 'swr';
 
 import { type CartItem, useCartStore } from '@/entities/cart';
-import type { ProductSummary } from '@/entities/product';
+import { type ProductVariantWithProduct } from '@/entities/product';
 
 export function useCart() {
   const items = useCartStore((state) => state.items);
   const updateSnapshot = useCartStore((state) => state.updateSnapshot);
+  const removeItem = useCartStore((state) => state.removeItem);
 
   const cartItems: CartItem[] = Object.values(items);
   const variantIds = Object.keys(items);
 
-  const { isValidating } = useSWR<ProductSummary[]>(
+  const { isValidating } = useSWR<ProductVariantWithProduct[]>(
     variantIds.length
-      ? `/api/products/by-ids?ids=${variantIds.join(',')}`
+      ? `/api/variants/by-ids?ids=${variantIds.join(',')}`
       : null,
     {
       revalidateOnMount: true,
       onSuccess: (fresh) => {
-        fresh.forEach((product) => {
-          updateSnapshot(product.id, {
-            name: product.name,
-            price: product.price,
-            image: product.imageUrl,
+        const returnedIds = new Set(fresh.map((v) => v.id));
+
+        variantIds.forEach((id) => {
+          if (!returnedIds.has(id)) {
+            removeItem(id);
+          }
+        });
+
+        fresh.forEach((variant) => {
+          updateSnapshot(variant.id, {
+            name: variant.product.name,
+            price: variant.price,
+            image: variant.images[0],
           });
         });
       },

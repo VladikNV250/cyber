@@ -1,29 +1,25 @@
 import { prisma } from '@/shared/api';
 
-import { productSummarySchema } from '../../model/schemas/core';
+import {
+  type ProductWithRelations,
+  productWithRelationsSchema,
+} from '../../model/schemas/details';
 
-export async function getProductsByIds(variantIds: string[]) {
-  if (!variantIds.length) return [];
+export async function getProductsByIds(
+  productIds: string[],
+): Promise<ProductWithRelations[]> {
+  if (!productIds.length) return [];
 
-  const variants = await prisma.productVariant.findMany({
+  const products = await prisma.product.findMany({
     where: {
-      id: { in: variantIds },
+      id: { in: productIds },
     },
     include: {
-      product: {
-        select: {
-          name: true,
-        },
-      },
+      brand: true,
+      category: true,
+      variants: true,
     },
   });
 
-  return variants.map((v) =>
-    productSummarySchema.parse({
-      id: v.id,
-      name: v.product.name,
-      price: v.price,
-      imageUrl: v.images[0] || undefined,
-    }),
-  );
+  return products.map((p) => productWithRelationsSchema.parse(p));
 }
