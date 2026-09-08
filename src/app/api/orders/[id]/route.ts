@@ -11,16 +11,11 @@ export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  let id: string;
   try {
     const rawParams = await params;
-    const { id } = paramsSchema.parse(rawParams);
-
-    const order = await getOrderById(id);
-    if (!order) {
-      return NextResponse.json({ error: 'Order not found' }, { status: 404 });
-    }
-
-    return NextResponse.json(order, { status: 200 });
+    const parsed = paramsSchema.parse(rawParams);
+    id = parsed.id;
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
@@ -29,6 +24,20 @@ export async function GET(
       );
     }
 
+    return NextResponse.json(
+      { error: 'Invalid route parameters' },
+      { status: 400 },
+    );
+  }
+
+  try {
+    const order = await getOrderById(id);
+    if (!order) {
+      return NextResponse.json({ error: 'Order not found' }, { status: 404 });
+    }
+
+    return NextResponse.json(order, { status: 200 });
+  } catch (error) {
     console.error('Unexpected error in GET /api/orders/[id]:', error);
     return NextResponse.json(
       { error: 'Internal Server Error' },

@@ -1,16 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ZodError } from 'zod';
 
-import { OrderCreationError, createOrderInputSchema } from '@/entities/order';
+import {
+  CreateOrderInput,
+  OrderCreationError,
+  createOrderInputSchema,
+} from '@/entities/order';
 import { createOrder } from '@/entities/order/server';
 
 export async function POST(request: NextRequest) {
+  let parsedData: CreateOrderInput;
   try {
     const body = await request.json();
-    const parsedData = createOrderInputSchema.parse(body);
-    const order = await createOrder(parsedData);
-
-    return NextResponse.json(order, { status: 201 });
+    parsedData = createOrderInputSchema.parse(body);
   } catch (error) {
     if (error instanceof ZodError) {
       return NextResponse.json(
@@ -19,6 +21,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+  }
+
+  try {
+    const order = await createOrder({
+      ...parsedData,
+      userId: null,
+    });
+    return NextResponse.json(order, { status: 201 });
+  } catch (error) {
     if (error instanceof OrderCreationError) {
       return NextResponse.json(
         { error: error.message },

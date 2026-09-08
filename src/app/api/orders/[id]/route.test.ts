@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { ZodError } from 'zod';
 
 import * as orderService from '@/entities/order/server';
 
@@ -67,5 +68,29 @@ describe('GET /api/orders/[id]', () => {
     const data = await response.json();
     expect(data.error).toBe('Validation failed');
     expect(orderService.getOrderById).not.toHaveBeenCalled();
+  });
+
+  it('returns 500 when getOrderById service throws an internal ZodError', async () => {
+    const internalZodError = new ZodError([
+      {
+        code: 'custom',
+        path: ['items'],
+        message: 'Internal order schema mismatch',
+      },
+    ]);
+    vi.mocked(orderService.getOrderById).mockRejectedValueOnce(
+      internalZodError,
+    );
+
+    const request = new NextRequest(
+      `http://localhost:3000/api/orders/${validUuid}`,
+    );
+    const response = await GET(request, {
+      params: Promise.resolve({ id: validUuid }),
+    });
+
+    expect(response.status).toBe(500);
+    const data = await response.json();
+    expect(data.error).toBe('Internal Server Error');
   });
 });
