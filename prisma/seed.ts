@@ -1,7 +1,8 @@
-import { PrismaClient } from '../src/generated/prisma/client';
-
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
+
+import { PrismaClient } from '../src/generated/prisma/client';
+
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
@@ -267,6 +268,9 @@ async function main() {
         totalAmount: 15499.0,
         status: 'DELIVERED',
         userId: customer1.id,
+        customerEmail: customer1.email,
+        customerPhone: '+380501234567',
+        customerName: customer1.name ?? 'John Doe',
         shippingMethod: 'NOVA_POST',
         paymentMethod: 'CREDIT_CARD',
         transactionId: 'ch_stripe_mock_12345abcdef',

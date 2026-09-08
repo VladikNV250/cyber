@@ -91,18 +91,25 @@ model Review {
 }
 
 model Order {
-  id          String      @id @default(uuid()) @db.Uuid
-  totalAmount Decimal
-  status      OrderStatus @default(PENDING)
-  userId String @db.Uuid
-  user   User   @relation(fields: [userId], references: [id])
-  items OrderItem[]
-  shippingMethod ShippingMethod
-  paymentMethod  PaymentMethod
+  id              String         @id @default(uuid()) @db.Uuid
+  totalAmount     Decimal
+  status          OrderStatus    @default(PENDING)
+  userId          String?        @db.Uuid
+  user            User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
+  customerEmail   String
+  customerPhone   String
+  customerName    String
+  items           OrderItem[]
+  shippingMethod  ShippingMethod
+  paymentMethod   PaymentMethod
   shippingDetails Json
-  transactionId String? @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  transactionId   String?        @unique
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@index([customerEmail])
+  @@index([customerPhone])
+  @@index([userId])
 }
 
 model OrderItem {
