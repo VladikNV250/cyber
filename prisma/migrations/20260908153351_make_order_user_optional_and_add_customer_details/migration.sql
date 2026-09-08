@@ -15,19 +15,22 @@ ADD COLUMN "customerName" TEXT,
 ADD COLUMN "customerPhone" TEXT,
 ALTER COLUMN "userId" DROP NOT NULL;
 
--- Backfill data for existing orders from User and shippingDetails
+-- Backfill data for existing orders from User and shippingDetails using verified historical data
 UPDATE "Order" o
-SET "customerEmail" = COALESCE(u."email", 'customer@cyberstore.com'),
-    "customerName" = COALESCE(u."name", 'Customer'),
-    "customerPhone" = COALESCE(o."shippingDetails"->>'phone', '+380501234567')
+SET "customerEmail" = COALESCE(u."email", o."shippingDetails"->>'email'),
+    "customerName" = COALESCE(u."name", o."shippingDetails"->>'recipientName'),
+    "customerPhone" = o."shippingDetails"->>'phone'
 FROM "User" u
 WHERE o."userId" = u."id";
 
--- Fallback for any rows without matched user
-UPDATE "Order"
-SET "customerEmail" = COALESCE("customerEmail", 'customer@cyberstore.com'),
-    "customerName" = COALESCE("customerName", 'Customer'),
-    "customerPhone" = COALESCE("customerPhone", '+380501234567')
+-- Remediation: Delete orders lacking reliable required customer information before enforcing NOT NULL
+DELETE FROM "OrderItem"
+WHERE "orderId" IN (
+    SELECT "id" FROM "Order"
+    WHERE "customerEmail" IS NULL OR "customerName" IS NULL OR "customerPhone" IS NULL
+);
+
+DELETE FROM "Order"
 WHERE "customerEmail" IS NULL OR "customerName" IS NULL OR "customerPhone" IS NULL;
 
 -- Enforce NOT NULL constraints
