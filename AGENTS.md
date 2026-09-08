@@ -17,7 +17,7 @@ This project uses Zod 4 (`zod: ^4.x`). Many string validation methods from Zod 3
 - Use `z.url()` or `z.httpUrl()` instead of `z.string().url()`
 - Use `z.emoji()` instead of `z.string().emoji()`
 - Use `z.nanoid()` instead of `z.string().nanoid()`
-- Use `z.cuid2()` instead of `z.string().cuid()` / `z.cuid()`
+- Use `z.cuid()` instead of `z.string().cuid()` for existing CUID contracts; use `z.cuid2()` for fields explicitly representing CUID2 identifiers
 - Use `z.ulid()` instead of `z.string().ulid()`
 - Use `z.ipv4()`, `z.ipv6()`, `z.cidrv4()`, `z.cidrv6()` instead of `z.string().ip()`
 - Use `z.iso.datetime()`, `z.iso.date()`, `z.iso.time()` instead of `z.string().datetime()`
