@@ -5,6 +5,7 @@ export {
 export type {
   CreateOrderInput,
   CreateOrderItemInput,
+  CreateOrderParams,
 } from './model/schemas/createOrder';
 export {
   OrderStatus,

@@ -20,7 +20,6 @@ export const createOrderInputSchema = z.object({
   customerPhone: z
     .e164('Customer phone must be in E.164 format (e.g. +380501234567)')
     .trim(),
-  userId: z.uuid('Invalid user ID').optional().nullable(),
   shippingMethod: shippingMethodSchema,
   paymentMethod: paymentMethodSchema,
   shippingDetails: shippingDetailsSchema,
@@ -31,3 +30,7 @@ export const createOrderInputSchema = z.object({
 
 export type CreateOrderItemInput = z.infer<typeof createOrderItemInputSchema>;
 export type CreateOrderInput = z.infer<typeof createOrderInputSchema>;
+
+export interface CreateOrderParams extends CreateOrderInput {
+  userId?: string | null;
+}
