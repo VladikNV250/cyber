@@ -1,12 +1,20 @@
 import { prisma } from '@/shared/api';
 
 import { OrderCreationError } from '../../model/errors';
-import { CreateOrderInput } from '../../model/schemas/createOrder';
-import { orderDetailsSchema } from '../../model/schemas/details';
+import { CreateOrderParams } from '../../model/schemas/createOrder';
+import { OrderDetails, orderDetailsSchema } from '../../model/schemas/details';
 
-export async function createOrder(data: CreateOrderInput) {
+export async function createOrder(
+  data: CreateOrderParams,
+): Promise<OrderDetails> {
   return prisma.$transaction(async (tx) => {
-    const variantIds = data.items.map((item) => item.variantId);
+    const requestedQuantities = new Map<string, number>();
+    for (const item of data.items) {
+      const current = requestedQuantities.get(item.variantId) ?? 0;
+      requestedQuantities.set(item.variantId, current + item.quantity);
+    }
+
+    const variantIds = Array.from(requestedQuantities.keys());
     const variants = await tx.productVariant.findMany({
       where: {
         id: { in: variantIds },
@@ -18,11 +26,11 @@ export async function createOrder(data: CreateOrderInput) {
 
     const variantMap = new Map(variants.map((v) => [v.id, v]));
 
-    for (const item of data.items) {
-      const variant = variantMap.get(item.variantId);
+    for (const [variantId, totalQty] of requestedQuantities.entries()) {
+      const variant = variantMap.get(variantId);
       if (!variant) {
         throw new OrderCreationError(
-          `Product variant with ID ${item.variantId} was not found`,
+          `Product variant with ID ${variantId} was not found`,
           404,
         );
       }
@@ -34,7 +42,7 @@ export async function createOrder(data: CreateOrderInput) {
         );
       }
 
-      if (variant.stock < item.quantity) {
+      if (variant.stock < totalQty) {
         throw new OrderCreationError(
           `Insufficient stock for "${variant.product.name}" (available: ${variant.stock})`,
           409,
@@ -62,15 +70,27 @@ export async function createOrder(data: CreateOrderInput) {
       };
     });
 
-    for (const item of data.items) {
-      await tx.productVariant.update({
-        where: { id: item.variantId },
+    for (const [variantId, totalQty] of requestedQuantities.entries()) {
+      const updateResult = await tx.productVariant.updateMany({
+        where: {
+          id: variantId,
+          stock: { gte: totalQty },
+        },
         data: {
           stock: {
-            decrement: item.quantity,
+            decrement: totalQty,
           },
         },
       });
+
+      if (updateResult.count === 0) {
+        const variant = variantMap.get(variantId);
+        const name = variant ? ` "${variant.product.name}"` : '';
+        throw new OrderCreationError(
+          `Insufficient stock for product variant${name}`,
+          409,
+        );
+      }
     }
 
     const order = await tx.order.create({
